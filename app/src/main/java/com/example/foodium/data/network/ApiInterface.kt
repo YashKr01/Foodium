@@ -1,7 +1,7 @@
-package com.example.foodium.network
+package com.example.foodium.data.network
 
-import com.example.foodium.model.FoodJoke
-import com.example.foodium.model.RecipesResponse
+import com.example.foodium.data.network.model.FoodJoke
+import com.example.foodium.data.network.model.RecipesResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

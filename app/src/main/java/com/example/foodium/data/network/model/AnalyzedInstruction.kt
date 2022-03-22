@@ -1,4 +1,4 @@
-package com.example.foodium.model
+package com.example.foodium.data.network.model
 
 data class AnalyzedInstruction(
     val name: String,

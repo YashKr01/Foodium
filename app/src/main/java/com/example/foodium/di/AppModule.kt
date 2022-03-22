@@ -3,7 +3,7 @@ package com.example.foodium.di
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.example.foodium.network.ApiInterface
+import com.example.foodium.data.network.ApiInterface
 import com.example.foodium.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
