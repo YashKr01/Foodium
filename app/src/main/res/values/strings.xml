@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Foodium</string>
     <string name="loren_ipsum_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s</string>
+    <string name="sample_recipe_name">Berry Banana Breakfast Smoothie</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="likes">0</string>
+    <string name="veg">Veg</string>
 </resources>
