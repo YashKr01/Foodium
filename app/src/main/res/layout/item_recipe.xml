@@ -141,7 +141,7 @@
             android:id="@+id/image_recipe"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="@dimen/_2sdp"
+            android:layout_margin="@dimen/_4sdp"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
