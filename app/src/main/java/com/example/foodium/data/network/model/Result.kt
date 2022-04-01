@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Result(
     @SerializedName("analyzedInstructions")
-    val instructions: List<AnalyzedInstruction>,
+    val instructions: List<AnalyzedInstruction>?,
     @SerializedName("aggregateLikes")
     val aggregateLikes: Int,
     @SerializedName("cheap")
@@ -12,7 +12,7 @@ data class Result(
     @SerializedName("dairyFree")
     val dairyFree: Boolean,
     @SerializedName("extendedIngredients")
-    val extendedIngredients: List<ExtendedIngredient>,
+    val extendedIngredients: List<ExtendedIngredient>?,
     @SerializedName("glutenFree")
     val glutenFree: Boolean,
     @SerializedName("id")
