@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.foodium.adapters.RecipeAdapter
 import com.example.foodium.databinding.FragmentHomeBinding
 import com.example.foodium.utils.Resource
 import com.example.foodium.viewmodel.HomeViewModel
@@ -31,6 +33,14 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val recipeAdapter = RecipeAdapter()
+        binding.recyclerViewRecipes.apply {
+            setHasFixedSize(false)
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = recipeAdapter
+        }
+
+
         viewModel.recipesList.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Resource.Loading -> {
@@ -41,6 +51,7 @@ class HomeFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     Log.d("STATUS", "onViewCreated: SUCCESS")
+                    recipeAdapter.submitList(result.data)
                     Log.d("STATUS", "onViewCreated: ${result.data}")
                 }
             }
