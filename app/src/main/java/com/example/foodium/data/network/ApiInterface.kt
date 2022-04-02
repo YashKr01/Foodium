@@ -12,10 +12,10 @@ import retrofit2.http.QueryMap
 
 interface ApiInterface {
 
-    @GET("/recipes/complexSearch?apiKey=$API_KEY1&addRecipeInformation=true&fillIngredients=true")
+    @GET("/recipes/complexSearch?apiKey=$API_KEY1&addRecipeInformation=true&fillIngredients=true&number=30")
     suspend fun getRecipes(): RecipesResponse
 
-    @GET("/recipes/complexSearch?apiKey=$API_KEY2")
+    @GET("/recipes/complexSearch?apiKey=$API_KEY2&addRecipeInformation=true&fillIngredients=true")
     suspend fun searchRecipes(
         @QueryMap searchQuery: Map<String, String>
     ): RecipesResponse
