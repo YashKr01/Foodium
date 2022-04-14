@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_4sdp"
-    android:elevation="@dimen/_8sdp"
-    app:cardCornerRadius="@dimen/_8sdp">
+    android:elevation="@dimen/_8sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.28" />
+            app:layout_constraintGuide_percent="0.25" />
 
         <TextView
             android:id="@+id/txt_recipe_title"
@@ -50,6 +48,7 @@
             android:textColor="@color/color_text_light"
             android:textSize="@dimen/_10ssp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/guideline1"
             app:layout_constraintTop_toBottomOf="@id/txt_recipe_title"
             tools:text="@string/loren_ipsum_text" />
@@ -59,6 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="false"
+            android:focusable="false"
             android:fontFamily="@font/ubuntu_medium"
             android:text="@string/likes"
             android:textColor="@color/color_blue"
@@ -80,6 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_2sdp"
             android:clickable="false"
+            android:focusable="false"
             android:fontFamily="@font/ubuntu_medium"
             android:textColor="@color/color_yellow"
             android:textSize="@dimen/_8ssp"
@@ -101,6 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_2sdp"
             android:clickable="false"
+            android:focusable="false"
             android:fontFamily="@font/ubuntu_medium"
             android:text="@string/veg"
             android:textColor="@color/color_green"
@@ -122,25 +124,28 @@
             android:id="@+id/img_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
             android:contentDescription="@string/app_name"
             app:layout_constraintBaseline_toBottomOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/chip_time"
             app:layout_constraintEnd_toEndOf="parent"
+            android:padding="@dimen/_4sdp"
             app:layout_constraintTop_toTopOf="@id/chip_time"
             app:srcCompat="@drawable/ic_favorite_hollow"
             app:tint="@color/colorFavorite" />
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_recipe"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_margin="@dimen/_4sdp"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/rounded"
             tools:src="@drawable/sample_placeholder" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
