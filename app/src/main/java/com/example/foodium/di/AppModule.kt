@@ -1,10 +1,14 @@
 package com.example.foodium.di
 
 import android.content.Context
+import androidx.room.Room
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.example.foodium.data.database.FoodiumDatabase
+import com.example.foodium.data.database.RecipeDao
 import com.example.foodium.data.network.ApiInterface
 import com.example.foodium.utils.Constants.BASE_URL
+import com.example.foodium.utils.Constants.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,5 +49,14 @@ object AppModule {
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiInterface =
         retrofit.create(ApiInterface::class.java)
+
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): FoodiumDatabase =
+        Room.databaseBuilder(context, FoodiumDatabase::class.java, DATABASE_NAME).build()
+
+    @Provides
+    @Singleton
+    fun provideRecipeDao(database: FoodiumDatabase): RecipeDao = database.recipesDao()
 
 }

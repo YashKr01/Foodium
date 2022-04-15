@@ -1,5 +1,9 @@
 package com.example.foodium.data.network.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class ExtendedIngredient(
     val aisle: String,
     val amount: Double,
@@ -11,4 +15,4 @@ data class ExtendedIngredient(
     val original: String,
     val originalName: String,
     val unit: String
-)
+) : Parcelable
