@@ -50,9 +50,7 @@ class HomeFragment : Fragment() {
                     Log.d("STATUS", "onViewCreated: ERROR")
                 }
                 is Resource.Success -> {
-                    Log.d("STATUS", "onViewCreated: SUCCESS")
                     recipeAdapter.submitList(result.data)
-                    Log.d("STATUS", "onViewCreated: ${result.data}")
                 }
             }
         }
