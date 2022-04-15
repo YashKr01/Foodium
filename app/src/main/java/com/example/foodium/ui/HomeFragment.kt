@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodium.adapters.RecipeAdapter
 import com.example.foodium.databinding.FragmentHomeBinding
 import com.example.foodium.utils.Resource
 import com.example.foodium.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -41,16 +43,18 @@ class HomeFragment : Fragment() {
         }
 
 
-        viewModel.recipesList.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is Resource.Loading -> {
-                    Log.d("STATUS", "onViewCreated: LOADING")
-                }
-                is Resource.Error -> {
-                    Log.d("STATUS", "onViewCreated: ERROR")
-                }
-                is Resource.Success -> {
-                    recipeAdapter.submitList(result.data)
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.recipesList.collectLatest {
+                when (it) {
+                    is Resource.Loading -> {
+                        Log.d("STATUS", "onViewCreated: LOADING")
+                    }
+                    is Resource.Error -> {
+                        Log.d("STATUS", "onViewCreated: ERROR")
+                    }
+                    is Resource.Success -> {
+                        recipeAdapter.submitList(it.data)
+                    }
                 }
             }
         }
