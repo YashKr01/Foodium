@@ -9,5 +9,14 @@
         android:id="@+id/homeFragment"
         android:name="com.example.foodium.ui.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_savedRecipesFragment"
+            app:destination="@id/savedRecipesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/savedRecipesFragment"
+        android:name="com.example.foodium.ui.SavedRecipesFragment"
+        android:label="fragment_saved_recipes"
+        tools:layout="@layout/fragment_saved_recipes" />
 </navigation>
