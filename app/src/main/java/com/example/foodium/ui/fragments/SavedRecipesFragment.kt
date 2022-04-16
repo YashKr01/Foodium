@@ -1,4 +1,4 @@
-package com.example.foodium.ui
+package com.example.foodium.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

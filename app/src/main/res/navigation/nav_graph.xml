@@ -7,16 +7,32 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.foodium.ui.HomeFragment"
+        android:name="com.example.foodium.ui.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_savedRecipesFragment"
             app:destination="@id/savedRecipesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_recipeDetailsActivity"
+            app:destination="@id/recipeDetailsActivity" />
     </fragment>
     <fragment
         android:id="@+id/savedRecipesFragment"
-        android:name="com.example.foodium.ui.SavedRecipesFragment"
+        android:name="com.example.foodium.ui.fragments.SavedRecipesFragment"
         android:label="fragment_saved_recipes"
-        tools:layout="@layout/fragment_saved_recipes" />
+        tools:layout="@layout/fragment_saved_recipes" >
+        <action
+            android:id="@+id/action_savedRecipesFragment_to_recipeDetailsActivity"
+            app:destination="@id/recipeDetailsActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/recipeDetailsActivity"
+        android:name="com.example.foodium.ui.activities.RecipeDetailsActivity"
+        android:label="activity_recipe_details"
+        tools:layout="@layout/activity_recipe_details" >
+        <argument
+            android:name="recipe"
+            app:argType="com.example.foodium.data.database.model.RecipeEntity" />
+    </activity>
 </navigation>
