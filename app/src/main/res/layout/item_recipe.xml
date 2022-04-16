@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/_8sdp"
+    android:layout_margin="@dimen/_2sdp"
     android:elevation="@dimen/_8sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -132,6 +134,9 @@
             android:padding="@dimen/_4sdp"
             app:layout_constraintTop_toTopOf="@id/chip_time"
             app:srcCompat="@drawable/ic_favorite_hollow"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:focusable="true"
             app:tint="@color/colorFavorite" />
 
         <com.google.android.material.imageview.ShapeableImageView

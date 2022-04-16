@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="@dimen/_8sdp">
+    android:layout_margin="@dimen/_2sdp"
+    android:elevation="@dimen/_8sdp"
+    app:cardCornerRadius="@dimen/_8sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -125,11 +127,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_6sdp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
             android:contentDescription="@string/app_name"
+            android:focusable="true"
+            android:padding="@dimen/_4sdp"
             app:layout_constraintBaseline_toBottomOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/chip_time"
             app:layout_constraintEnd_toEndOf="parent"
-            android:padding="@dimen/_4sdp"
             app:layout_constraintTop_toTopOf="@id/chip_time"
             app:srcCompat="@drawable/ic_delete"
             app:tint="@color/color_red" />
