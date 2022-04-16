@@ -18,7 +18,7 @@ class RecipeAdapter(
 ) :
     ListAdapter<RecipeEntity, RecipeAdapter.RecipeViewHolder>(RecipeItemComparator()) {
 
-    inner class RecipeViewHolder(
+    class RecipeViewHolder(
         private val binding: ItemRecipeBinding,
         private val saveRecipe: (Int) -> Unit,
         private val deleteRecipe: (Int) -> Unit,

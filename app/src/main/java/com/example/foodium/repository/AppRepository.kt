@@ -64,4 +64,6 @@ class AppRepository @Inject constructor(
 
     suspend fun deleteRecipe(recipeEntity: RecipeEntity) = dao.deleteRecipe(recipeEntity)
 
+    fun getSavedRecipesList() = dao.getRecipesList()
+
 }

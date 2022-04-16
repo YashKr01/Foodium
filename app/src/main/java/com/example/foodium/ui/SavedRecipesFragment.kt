@@ -5,13 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.foodium.R
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.foodium.adapters.SavedRecipesAdapter
 import com.example.foodium.databinding.FragmentSavedRecipesBinding
+import com.example.foodium.viewmodel.SavedRecipesViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
+@AndroidEntryPoint
 class SavedRecipesFragment : Fragment() {
 
     private var _binding: FragmentSavedRecipesBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel by viewModels<SavedRecipesViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,6 +32,20 @@ class SavedRecipesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val savedRecipesAdapter = SavedRecipesAdapter()
+        binding.recyclerViewSavedRecipes.apply {
+            setHasFixedSize(false)
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = savedRecipesAdapter
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.getSavedRecipes().collect {
+                savedRecipesAdapter.submitList(it)
+            }
+        }
+
     }
 
     override fun onDestroyView() {

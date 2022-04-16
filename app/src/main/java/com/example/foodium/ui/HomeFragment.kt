@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodium.adapters.RecipeAdapter
 import com.example.foodium.databinding.FragmentHomeBinding
@@ -60,10 +61,14 @@ class HomeFragment : Fragment() {
                         Log.d("STATUS", "onViewCreated: ERROR")
                     }
                     is Resource.Success -> {
-                        recipeAdapter.submitList(it.data)
+                        recipeAdapter.submitList(it.data?.shuffled())
                     }
                 }
             }
+        }
+
+        binding.floatingActionButton.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSavedRecipesFragment())
         }
 
     }
