@@ -11,10 +11,13 @@ import com.example.foodium.databinding.ItemSavedRecipeBinding
 import com.example.foodium.utils.ExtensionFunctions.hide
 import com.example.foodium.utils.ExtensionFunctions.show
 
-class SavedRecipesAdapter :
+class SavedRecipesAdapter(private val deleteRecipe: (RecipeEntity) -> Unit) :
     ListAdapter<RecipeEntity, SavedRecipesAdapter.SavedRecipeViewHolder>(RecipeItemComparator()) {
 
-    class SavedRecipeViewHolder(private val binding: ItemSavedRecipeBinding) :
+    class SavedRecipeViewHolder(
+        private val binding: ItemSavedRecipeBinding,
+        private val deleteRecipe: (Int) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: RecipeEntity) = binding.apply {
             // title
@@ -37,6 +40,14 @@ class SavedRecipesAdapter :
                 .load(item.image)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageRecipe)
+
+            // Delete Image
+            imgDelete.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION)
+                    deleteRecipe(position)
+            }
+
         }
     }
 
@@ -46,7 +57,12 @@ class SavedRecipesAdapter :
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ),
+            deleteRecipe = { position ->
+                val article = getItem(position)
+                if (article != null)
+                    deleteRecipe(article)
+            }
         )
 
     override fun onBindViewHolder(holder: SavedRecipeViewHolder, position: Int) {

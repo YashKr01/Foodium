@@ -59,7 +59,7 @@ class RecipeAdapter(
                 // on save click listener
                 imgFavorite.setOnClickListener {
                     val position = adapterPosition
-                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                    if (position != RecyclerView.NO_POSITION) {
                         if (item.saved) {
                             deleteRecipe(position)
                             imgFavorite.setImageResource(R.drawable.ic_favorite_hollow)

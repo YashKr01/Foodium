@@ -28,4 +28,8 @@ class SavedRecipesViewModel @Inject constructor(private val repository: AppRepos
         }
     }
 
+    fun deleteRecipe(recipeEntity: RecipeEntity) = viewModelScope.launch {
+        repository.deleteRecipe(recipeEntity)
+    }
+
 }
