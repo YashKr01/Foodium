@@ -61,7 +61,7 @@ class HomeFragment : Fragment() {
                         Log.d("STATUS", "onViewCreated: ERROR")
                     }
                     is Resource.Success -> {
-                        recipeAdapter.submitList(it.data?.shuffled())
+                        recipeAdapter.submitList(it.data)
                     }
                 }
             }

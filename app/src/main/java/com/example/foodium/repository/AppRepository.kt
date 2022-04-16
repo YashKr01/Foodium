@@ -19,6 +19,7 @@ class AppRepository @Inject constructor(
         MutableStateFlow<Resource<List<RecipeEntity>>>(Resource.Loading(null))
     val recipeList get() = _recipesList
 
+    // NETWORK OPERATIONS
     suspend fun getRecipesList() {
         _recipesList.emit(Resource.Loading(null))
         try {
@@ -52,7 +53,7 @@ class AppRepository @Inject constructor(
                 )
 
             }
-            _recipesList.emit(Resource.Success(mappedList))
+            _recipesList.emit(Resource.Success(mappedList.shuffled()))
         } catch (e: IOException) {
             _recipesList.emit(Resource.Error("No Connection", null))
         } catch (e: Exception) {
@@ -60,6 +61,7 @@ class AppRepository @Inject constructor(
         }
     }
 
+    // DATABASE OPERATIONS
     suspend fun insertRecipe(recipeEntity: RecipeEntity) = dao.insertRecipe(recipeEntity)
 
     suspend fun deleteRecipe(recipeEntity: RecipeEntity) = dao.deleteRecipe(recipeEntity)

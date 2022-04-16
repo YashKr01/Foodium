@@ -41,7 +41,7 @@ class SavedRecipesFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.getSavedRecipes().collect {
+            viewModel.savedRecipes.collect {
                 savedRecipesAdapter.submitList(it)
             }
         }
