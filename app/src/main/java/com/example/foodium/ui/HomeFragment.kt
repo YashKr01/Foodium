@@ -35,7 +35,14 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recipeAdapter = RecipeAdapter()
+        val recipeAdapter = RecipeAdapter(
+            saveRecipe = { recipe ->
+                viewModel.saveRecipe(recipe)
+            },
+            deleteRecipe = { recipe ->
+                viewModel.deleteRecipe(recipe)
+            }
+        )
         binding.recyclerViewRecipes.apply {
             setHasFixedSize(false)
             layoutManager = LinearLayoutManager(requireContext())

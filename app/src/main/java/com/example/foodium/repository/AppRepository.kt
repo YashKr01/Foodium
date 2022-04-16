@@ -1,23 +1,34 @@
 package com.example.foodium.repository
 
+import com.example.foodium.data.database.RecipeDao
 import com.example.foodium.data.database.model.RecipeEntity
 import com.example.foodium.data.network.ApiInterface
 import com.example.foodium.utils.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import java.io.IOException
 import java.lang.Exception
 import javax.inject.Inject
 
-class AppRepository @Inject constructor(private val apiInterface: ApiInterface) {
+class AppRepository @Inject constructor(
+    private val apiInterface: ApiInterface,
+    private val dao: RecipeDao
+) {
 
-    private val _recipesList = MutableStateFlow<Resource<List<RecipeEntity>>>(Resource.Loading(null))
+    private val _recipesList =
+        MutableStateFlow<Resource<List<RecipeEntity>>>(Resource.Loading(null))
     val recipeList get() = _recipesList
 
     suspend fun getRecipesList() {
         _recipesList.emit(Resource.Loading(null))
         try {
             val response = apiInterface.getRecipes().results
+            val databaseList = dao.getRecipesList().first()
             val mappedList = response.map { recipe ->
+
+                val isSaved = databaseList.any {
+                    it.recipeId == recipe.recipeId
+                }
 
                 RecipeEntity(
                     instructions = recipe.instructions,
@@ -37,7 +48,7 @@ class AppRepository @Inject constructor(private val apiInterface: ApiInterface) 
                     vegetarian = recipe.vegetarian,
                     veryHealthy = recipe.veryHealthy,
                     popular = recipe.popular,
-                    saved = true
+                    saved = isSaved
                 )
 
             }
@@ -48,5 +59,9 @@ class AppRepository @Inject constructor(private val apiInterface: ApiInterface) 
             _recipesList.emit(Resource.Error(e.message.toString(), null))
         }
     }
+
+    suspend fun insertRecipe(recipeEntity: RecipeEntity) = dao.insertRecipe(recipeEntity)
+
+    suspend fun deleteRecipe(recipeEntity: RecipeEntity) = dao.deleteRecipe(recipeEntity)
 
 }

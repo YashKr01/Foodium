@@ -12,9 +12,9 @@ interface RecipeDao {
     fun getRecipesList(): Flow<List<RecipeEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRecipe(recipe: RecipeEntity)
+    suspend fun insertRecipe(recipe: RecipeEntity)
 
     @Delete
-    fun deleteRecipe(recipe: RecipeEntity)
+    suspend fun deleteRecipe(recipe: RecipeEntity)
 
 }

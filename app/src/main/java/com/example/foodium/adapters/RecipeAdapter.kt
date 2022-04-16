@@ -12,10 +12,17 @@ import com.example.foodium.databinding.ItemRecipeBinding
 import com.example.foodium.utils.ExtensionFunctions.hide
 import com.example.foodium.utils.ExtensionFunctions.show
 
-class RecipeAdapter :
+class RecipeAdapter(
+    private val saveRecipe: (RecipeEntity) -> Unit,
+    private val deleteRecipe: (RecipeEntity) -> Unit,
+) :
     ListAdapter<RecipeEntity, RecipeAdapter.RecipeViewHolder>(RecipeItemComparator()) {
 
-    inner class RecipeViewHolder(private val binding: ItemRecipeBinding) :
+    inner class RecipeViewHolder(
+        private val binding: ItemRecipeBinding,
+        private val saveRecipe: (Int) -> Unit,
+        private val deleteRecipe: (Int) -> Unit,
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: RecipeEntity) =
@@ -49,6 +56,21 @@ class RecipeAdapter :
                     }
                 )
 
+                // on save click listener
+                imgFavorite.setOnClickListener {
+                    val position = adapterPosition
+                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                        if (item.saved) {
+                            deleteRecipe(position)
+                            imgFavorite.setImageResource(R.drawable.ic_favorite_hollow)
+                        } else {
+                            saveRecipe(position)
+                            imgFavorite.setImageResource(R.drawable.ic_favorite_solid)
+                        }
+                        item.saved = !item.saved
+                    }
+                }
+
             }
 
     }
@@ -59,7 +81,15 @@ class RecipeAdapter :
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ),
+            saveRecipe = { position ->
+                val article = getItem(position)
+                if (article != null) saveRecipe(article)
+            },
+            deleteRecipe = { position ->
+                val article = getItem(position)
+                if (article != null) deleteRecipe(article)
+            }
         )
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
