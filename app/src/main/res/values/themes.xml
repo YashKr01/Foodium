@@ -3,4 +3,49 @@
     <style name="Theme.Foodium" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:statusBarColor">@color/color_primary</item>
     </style>
+
+    <style name="Theme.Foodium.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.Foodium.CollapsedTitle">
+        <item name="android:fontFamily">@font/cougrette</item>
+        <item name="android:textSize">@dimen/_14ssp</item>
+    </style>
+
+    <style name="Theme.Foodium.ExpandedTitle">
+        <item name="android:fontFamily">@font/cougrette</item>
+        <item name="android:textSize">@dimen/_20ssp</item>
+    </style>
+
+    <style name="Theme.Foodium.InActiveChip">
+        <item name="chipBackgroundColor">@color/color_white</item>
+        <item name="chipStrokeColor">#B3B3B3</item>
+        <item name="android:textColor">#AAAAAA</item>
+        <item name="chipStrokeWidth">2dp</item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+        <item name="chipIcon">null</item>
+    </style>
+
+    <style name="Theme.Foodium.ActiveChip">
+        <item name="chipBackgroundColor">@color/color_white</item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+        <item name="chipStrokeColor">@color/color_green</item>
+        <item name="chipStrokeWidth">2dp</item>
+        <item name="chipIcon">@drawable/ic_check</item>
+        <item name="chipIconSize">@dimen/_16sdp</item>
+        <item name="chipIconTint">@color/color_green</item>
+        <item name="android:textColor">@color/color_green</item>
+        <item name="iconStartPadding">@dimen/_4sdp</item>
+    </style>
+
+    <style name="Theme.Foodium.ChipTextAppearance">
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:fontFamily">@font/ubuntu_medium</item>
+    </style>
+
 </resources>

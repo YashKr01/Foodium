@@ -6,5 +6,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="likes">0</string>
     <string name="veg">Vegan</string>
+    <string name="vegetarian">Vegetarian</string>
+    <string name="gluten_free">Gluten Free</string>
     <string name="popular">Popular</string>
+    <string name="healthy">Healthy</string>
+    <string name="dairyFree">DairyFree</string>
 </resources>

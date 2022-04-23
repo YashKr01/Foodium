@@ -42,6 +42,16 @@ class HomeFragment : Fragment() {
             },
             deleteRecipe = { recipe ->
                 viewModel.deleteRecipe(recipe)
+            },
+            onRecipeClick = { recipe ->
+                findNavController()
+                    .navigate(
+                        HomeFragmentDirections.actionHomeFragmentToRecipeDetailsActivity(
+                            recipe
+                        )
+                    )
+
+                Log.d("KUMGIUYGIUYG", "onViewCreated: $recipe")
             }
         )
         binding.recyclerViewRecipes.apply {

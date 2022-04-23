@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.foodium" >
+    package="com.example.foodium">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,13 +13,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Foodium" >
+        android:theme="@style/Theme.Foodium">
         <activity
             android:name=".ui.activities.RecipeDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Foodium.NoActionBar" />
         <activity
             android:name=".ui.activities.MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

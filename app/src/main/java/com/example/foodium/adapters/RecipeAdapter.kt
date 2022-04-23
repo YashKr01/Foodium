@@ -15,15 +15,23 @@ import com.example.foodium.utils.ExtensionFunctions.show
 class RecipeAdapter(
     private val saveRecipe: (RecipeEntity) -> Unit,
     private val deleteRecipe: (RecipeEntity) -> Unit,
-) :
-    ListAdapter<RecipeEntity, RecipeAdapter.RecipeViewHolder>(RecipeItemComparator()) {
+    private val onRecipeClick: (RecipeEntity) -> Unit
+) : ListAdapter<RecipeEntity, RecipeAdapter.RecipeViewHolder>(RecipeItemComparator()) {
 
     class RecipeViewHolder(
         private val binding: ItemRecipeBinding,
         private val saveRecipe: (Int) -> Unit,
         private val deleteRecipe: (Int) -> Unit,
-    ) :
-        RecyclerView.ViewHolder(binding.root) {
+        private val onRecipeClick: (Int) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION)
+                    onRecipeClick(position)
+            }
+        }
 
         fun bind(item: RecipeEntity) =
             binding.apply {
@@ -89,6 +97,10 @@ class RecipeAdapter(
             deleteRecipe = { position ->
                 val article = getItem(position)
                 if (article != null) deleteRecipe(article)
+            },
+            onRecipeClick = { position ->
+                val article = getItem(position)
+                if (article != null) onRecipeClick(article)
             }
         )
 
