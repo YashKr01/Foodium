@@ -86,42 +86,48 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/vegetarian"
-                    android:textAppearance="@style/Theme.Foodium.ChipTextAppearance" />
+                    android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
+                    android:textSize="@dimen/_10ssp" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/Theme.Foodium.InActiveChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/gluten_free"
-                    android:textAppearance="@style/Theme.Foodium.ChipTextAppearance" />
+                    android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
+                    android:textSize="@dimen/_10ssp" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/Theme.Foodium.InActiveChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/veg"
-                    android:textAppearance="@style/Theme.Foodium.ChipTextAppearance" />
+                    android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
+                    android:textSize="@dimen/_10ssp" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/Theme.Foodium.InActiveChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/popular"
-                    android:textAppearance="@style/Theme.Foodium.ChipTextAppearance" />
+                    android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
+                    android:textSize="@dimen/_10ssp" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/Theme.Foodium.InActiveChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/healthy"
-                    android:textAppearance="@style/Theme.Foodium.ChipTextAppearance" />
+                    android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
+                    android:textSize="@dimen/_10ssp" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/Theme.Foodium.InActiveChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/dairyFree"
-                    android:textAppearance="@style/Theme.Foodium.ChipTextAppearance" />
+                    android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
+                    android:textSize="@dimen/_10ssp" />
 
             </com.google.android.material.chip.ChipGroup>
 

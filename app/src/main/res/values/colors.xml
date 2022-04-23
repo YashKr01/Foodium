@@ -9,4 +9,6 @@
     <color name="color_text_light">#5E5E5E</color>
     <color name="color_text_dark">#474747</color>
     <color name="colorFavorite">#FF9100</color>
+    <color name="colorInactiveChipStroke">#B3B3B3</color>
+    <color name="colorInactiveText">#AAAAAA</color>
 </resources>

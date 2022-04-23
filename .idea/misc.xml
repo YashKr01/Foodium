@@ -12,12 +12,12 @@
         <entry key="..\:/Users/yash/AndroidStudioProjects/Foodium/app/src/main/res/drawable/ic_time.xml" value="0.1185" />
         <entry key="..\:/Users/yash/AndroidStudioProjects/Foodium/app/src/main/res/font/courgette.xml" value="0.1623931623931624" />
         <entry key="..\:/Users/yash/AndroidStudioProjects/Foodium/app/src/main/res/layout/activity_main.xml" value="0.16770833333333332" />
-        <entry key="..\:/Users/yash/AndroidStudioProjects/Foodium/app/src/main/res/layout/activity_recipe_details.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/yash/AndroidStudioProjects/Foodium/app/src/main/res/layout/activity_recipe_details.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/yash/AndroidStudioProjects/Foodium/app/src/main/res/layout/fragment_home.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/yash/AndroidStudioProjects/Foodium/app/src/main/res/layout/fragment_recipe_details.xml" value="0.14504504504504503" />
         <entry key="..\:/Users/yash/AndroidStudioProjects/Foodium/app/src/main/res/layout/fragment_saved_recipes.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/yash/AndroidStudioProjects/Foodium/app/src/main/res/layout/item_recipe.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/yash/AndroidStudioProjects/Foodium/app/src/main/res/layout/item_saved_recipe.xml" value="0.22" />
+        <entry key="..\:/Users/yash/AndroidStudioProjects/Foodium/app/src/main/res/layout/item_recipe.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/yash/AndroidStudioProjects/Foodium/app/src/main/res/layout/item_saved_recipe.xml" value="0.4466666666666667" />
       </map>
     </option>
   </component>
