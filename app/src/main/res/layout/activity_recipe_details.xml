@@ -15,8 +15,8 @@
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_300sdp"
-            app:collapsedTitleTextAppearance="@style/Theme.Foodium.CollapsedTitle"
+            android:layout_height="@dimen/_250sdp"
+            app:collapsedTitleTextAppearance="@style/Theme.Foodium.ToolbarTitle"
             app:contentScrim="@color/color_primary"
             app:expandedTitleMarginBottom="@dimen/_12sdp"
             app:expandedTitleMarginStart="@dimen/_8sdp"
@@ -63,23 +63,38 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.google.android.material.card.MaterialCardView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/_4sdp"
-            android:clickable="false"
-            android:focusable="false"
-            app:cardCornerRadius="@dimen/_8sdp"
-            app:strokeColor="#E3E3E3"
-            app:strokeWidth="@dimen/_1sdp">
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textRecipeTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:fontFamily="@font/cougrette"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:textColor="@color/color_text_dark"
+                android:textSize="@dimen/_18ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/sample_recipe_name" />
 
             <com.google.android.material.chip.ChipGroup
-                android:layout_width="wrap_content"
+                android:id="@+id/chipGroup"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_4sdp">
+                android:paddingStart="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_4sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textRecipeTitle">
 
                 <com.google.android.material.chip.Chip
                     style="@style/Theme.Foodium.InActiveChip"
@@ -131,7 +146,21 @@
 
             </com.google.android.material.chip.ChipGroup>
 
-        </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:fontFamily="@font/ubuntu_medium"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:textColor="@color/color_text_light"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/chipGroup"
+                tools:text="@string/loren_ipsum_text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 

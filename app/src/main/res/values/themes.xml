@@ -10,13 +10,13 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="Theme.Foodium.CollapsedTitle">
-        <item name="android:fontFamily">@font/cougrette</item>
+    <style name="Theme.Foodium.ToolbarTitle">
+        <item name="android:fontFamily">@font/ubuntu_medium</item>
         <item name="android:textSize">@dimen/_14ssp</item>
     </style>
 
     <style name="Theme.Foodium.ExpandedTitle">
-        <item name="android:fontFamily">@font/cougrette</item>
+        <item name="android:fontFamily">@font/ubuntu_medium</item>
         <item name="android:textSize">@dimen/_20ssp</item>
     </style>
 

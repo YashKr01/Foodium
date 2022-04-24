@@ -18,7 +18,6 @@ class RecipeDetailsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
-        binding.toolbar.title = recipeEntity.recipe.title
 
         Glide.with(applicationContext)
             .load(recipeEntity.recipe.image)
