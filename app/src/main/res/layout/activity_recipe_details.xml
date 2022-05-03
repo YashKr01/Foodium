@@ -15,7 +15,7 @@
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_250sdp"
+            android:layout_height="@dimen/_200sdp"
             app:collapsedTitleTextAppearance="@style/Theme.Foodium.ToolbarTitle"
             app:contentScrim="@color/color_primary"
             app:expandedTitleMarginBottom="@dimen/_12sdp"
@@ -42,7 +42,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_100sdp"
+                    android:layout_height="@dimen/_60sdp"
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/fade_background" />
 
@@ -66,13 +66,14 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textRecipeTitle"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:fontFamily="@font/cougrette"
@@ -81,86 +82,114 @@
                 android:paddingEnd="@dimen/_8sdp"
                 android:textColor="@color/color_text_dark"
                 android:textSize="@dimen/_18ssp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/sample_recipe_name" />
+
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/ratingBar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/color_yellow"
+                android:foregroundTint="@color/color_yellow"
+                android:indeterminateTint="@color/color_yellow"
+                android:isIndicator="true"
+                android:max="10"
+                android:numStars="10"
+                android:padding="@dimen/_8sdp"
+                android:stepSize="1"
+                android:progressTint="@color/color_yellow"
+                android:secondaryProgressTint="@color/color_yellow"
+                tools:rating="3.5" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroup"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/_4sdp"
-                android:paddingEnd="@dimen/_4sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textRecipeTitle">
+                android:paddingEnd="@dimen/_4sdp">
 
                 <com.google.android.material.chip.Chip
-                    style="@style/Theme.Foodium.InActiveChip"
+                    android:id="@+id/chip_vegetarian"
+                    style="@style/Theme.Foodium.ActiveChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/vegetarian"
                     android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/_10ssp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
                 <com.google.android.material.chip.Chip
-                    style="@style/Theme.Foodium.InActiveChip"
+                    android:id="@+id/chip_gluten_free"
+                    style="@style/Theme.Foodium.ActiveChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/gluten_free"
                     android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/_10ssp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
                 <com.google.android.material.chip.Chip
-                    style="@style/Theme.Foodium.InActiveChip"
+                    android:id="@+id/chip_vegan"
+                    style="@style/Theme.Foodium.ActiveChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/veg"
                     android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/_10ssp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
                 <com.google.android.material.chip.Chip
-                    style="@style/Theme.Foodium.InActiveChip"
+                    android:id="@+id/chip_popular"
+                    style="@style/Theme.Foodium.ActiveChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/popular"
                     android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/_10ssp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
                 <com.google.android.material.chip.Chip
-                    style="@style/Theme.Foodium.InActiveChip"
+                    android:id="@+id/chip_healthy"
+                    style="@style/Theme.Foodium.ActiveChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/healthy"
                     android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/_10ssp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
                 <com.google.android.material.chip.Chip
-                    style="@style/Theme.Foodium.InActiveChip"
+                    android:id="@+id/chip_dairy_free"
+                    style="@style/Theme.Foodium.ActiveChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/dairyFree"
                     android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/_10ssp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
             </com.google.android.material.chip.ChipGroup>
 
             <TextView
-                android:layout_width="0dp"
+                android:id="@+id/text_description"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:fontFamily="@font/ubuntu_medium"
+                android:fontFamily="@font/ubuntu_regular"
                 android:paddingStart="@dimen/_8sdp"
                 android:paddingEnd="@dimen/_8sdp"
+                android:textAlignment="inherit"
                 android:textColor="@color/color_text_light"
-                android:textSize="@dimen/_14ssp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/chipGroup"
+                android:textSize="@dimen/_12ssp"
                 tools:text="@string/loren_ipsum_text" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 

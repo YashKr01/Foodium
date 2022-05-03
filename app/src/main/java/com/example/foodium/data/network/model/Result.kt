@@ -36,5 +36,7 @@ data class Result(
     @SerializedName("veryHealthy")
     val veryHealthy: Boolean,
     @SerializedName("veryPopular")
-    val popular: Boolean
+    val popular: Boolean,
+    @SerializedName("healthScore")
+    val healthScore: Double
 )

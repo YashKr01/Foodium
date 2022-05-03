@@ -49,6 +49,7 @@ class AppRepository @Inject constructor(
                     vegetarian = recipe.vegetarian,
                     veryHealthy = recipe.veryHealthy,
                     popular = recipe.popular,
+                    healthScore = recipe.healthScore,
                     saved = isSaved
                 )
 

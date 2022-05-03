@@ -33,5 +33,6 @@ data class RecipeEntity(
     val vegetarian: Boolean,
     val veryHealthy: Boolean,
     val popular: Boolean,
+    val healthScore: Double,
     var saved: Boolean
 ) : Parcelable

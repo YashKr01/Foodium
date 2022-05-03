@@ -20,20 +20,6 @@
         <item name="android:textSize">@dimen/_20ssp</item>
     </style>
 
-    <style name="Theme.Foodium.InActiveChip">
-        <item name="chipBackgroundColor">@color/color_white</item>
-        <item name="chipStrokeColor">@color/colorInactiveChipStroke</item>
-        <item name="android:textColor">@color/colorInactiveText</item>
-        <item name="chipStrokeWidth">1.5dp</item>
-        <item name="android:clickable">false</item>
-        <item name="android:focusable">false</item>
-        <item name="chipIcon">@drawable/ic_check</item>
-        <item name="textStartPadding">2dp</item>
-        <item name="chipIconSize">@dimen/_14sdp</item>
-        <item name="chipIconTint">@color/colorInactiveText</item>
-        <item name="iconStartPadding">@dimen/_4sdp</item>
-    </style>
-
     <style name="Theme.Foodium.ActiveChip">
         <item name="chipBackgroundColor">@color/color_white</item>
         <item name="android:clickable">false</item>
