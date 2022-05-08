@@ -112,15 +112,25 @@ class RecipeDetailsActivity : AppCompatActivity() {
             // Insert/Delete Recipe
             else -> {
 
-                if (recipeEntity.recipe.saved) {
-                    viewModel.deleteRecipe(recipeEntity.recipe)
-                    recipeEntity.recipe.saved = false
-                    changeMenuIcon(item, R.drawable.ic_favorite_hollow)
-                } else {
-                    viewModel.insertRecipe(recipeEntity.recipe)
-                    recipeEntity.recipe.saved = true
-                    changeMenuIcon(item, R.drawable.ic_favorite_solid)
+                try {
+
+                    // If already saved
+                    if (recipeEntity.recipe.saved) {
+                        viewModel.deleteRecipe(recipeEntity.recipe)
+                        recipeEntity.recipe.saved = false
+                        changeMenuIcon(item, R.drawable.ic_favorite_hollow)
+                    }
+
+                    // if not saved
+                    else {
+                        viewModel.insertRecipe(recipeEntity.recipe)
+                        recipeEntity.recipe.saved = true
+                        changeMenuIcon(item, R.drawable.ic_favorite_solid)
+                    }
+                } catch (e: Exception) {
+
                 }
+
                 true
             }
         }
