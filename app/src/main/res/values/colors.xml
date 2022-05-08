@@ -11,4 +11,5 @@
     <color name="colorFavorite">#FF9100</color>
     <color name="colorInactiveChipStroke">#B3B3B3</color>
     <color name="colorInactiveText">#AAAAAA</color>
+    <color name="color_text_link">#40C4FF</color>
 </resources>

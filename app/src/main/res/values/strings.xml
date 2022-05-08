@@ -12,4 +12,6 @@
     <string name="healthy">Healthy</string>
     <string name="dairyFree">DairyFree</string>
     <string name="rating">Rating</string>
+    <string name="share">Share</string>
+    <string name="save">Save</string>
 </resources>

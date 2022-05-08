@@ -15,7 +15,8 @@
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_200sdp"
+            android:layout_height="@dimen/_225sdp"
+            android:background="@color/color_primary"
             app:collapsedTitleTextAppearance="@style/Theme.Foodium.ToolbarTitle"
             app:contentScrim="@color/color_primary"
             app:expandedTitleMarginBottom="@dimen/_12sdp"
@@ -96,9 +97,9 @@
                 android:max="10"
                 android:numStars="10"
                 android:padding="@dimen/_8sdp"
-                android:stepSize="1"
                 android:progressTint="@color/color_yellow"
                 android:secondaryProgressTint="@color/color_yellow"
+                android:stepSize="1"
                 tools:rating="3.5" />
 
             <com.google.android.material.chip.ChipGroup
@@ -177,10 +178,22 @@
             </com.google.android.material.chip.ChipGroup>
 
             <TextView
+                android:id="@+id/textLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_2sdp"
+                android:fontFamily="@font/ubuntu_regular"
+                android:padding="@dimen/_8sdp"
+                android:textColor="@color/color_text_link"
+                android:textSize="@dimen/_12ssp"
+                app:drawableStartCompat="@drawable/ic_link"
+                app:drawableTint="@color/color_text_link"
+                tools:text="https://fullbellysisters.blogspot.com/2012/01/cauliflower-fried-rice-more-veggies.html" />
+
+            <TextView
                 android:id="@+id/text_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
                 android:fontFamily="@font/ubuntu_regular"
                 android:paddingStart="@dimen/_8sdp"
                 android:paddingEnd="@dimen/_8sdp"
