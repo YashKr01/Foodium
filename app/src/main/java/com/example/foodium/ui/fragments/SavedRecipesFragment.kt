@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foodium.adapters.SavedRecipesAdapter
+import com.example.foodium.adapters.SavedRecipeAdapter
 import com.example.foodium.databinding.FragmentSavedRecipesBinding
 import com.example.foodium.viewmodel.SavedRecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +33,7 @@ class SavedRecipesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val savedRecipesAdapter = SavedRecipesAdapter(deleteRecipe = { recipeEntity ->
+        val savedRecipesAdapter = SavedRecipeAdapter(deleteRecipe = { recipeEntity ->
             viewModel.deleteRecipe(recipeEntity)
         })
         binding.recyclerViewSavedRecipes.apply {

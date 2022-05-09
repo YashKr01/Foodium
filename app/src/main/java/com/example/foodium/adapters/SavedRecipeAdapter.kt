@@ -11,8 +11,8 @@ import com.example.foodium.databinding.ItemSavedRecipeBinding
 import com.example.foodium.utils.ExtensionFunctions.hide
 import com.example.foodium.utils.ExtensionFunctions.show
 
-class SavedRecipesAdapter(private val deleteRecipe: (RecipeEntity) -> Unit) :
-    ListAdapter<RecipeEntity, SavedRecipesAdapter.SavedRecipeViewHolder>(RecipeItemComparator()) {
+class SavedRecipeAdapter(private val deleteRecipe: (RecipeEntity) -> Unit) :
+    ListAdapter<RecipeEntity, SavedRecipeAdapter.SavedRecipeViewHolder>(RecipeItemComparator()) {
 
     class SavedRecipeViewHolder(
         private val binding: ItemSavedRecipeBinding,

@@ -64,7 +64,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -191,6 +191,16 @@
                 tools:text="https://fullbellysisters.blogspot.com/2012/01/cauliflower-fried-rice-more-veggies.html" />
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:fontFamily="@font/ubuntu_medium"
+                android:text="@string/description"
+                android:textColor="@color/color_text_dark"
+                android:textSize="@dimen/_16ssp" />
+
+            <TextView
                 android:id="@+id/text_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -201,6 +211,28 @@
                 android:textColor="@color/color_text_light"
                 android:textSize="@dimen/_12ssp"
                 tools:text="@string/loren_ipsum_text" />
+
+            <TextView
+                android:id="@+id/txtIngredientsCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/ubuntu_medium"
+                android:text="@string/ingredients"
+                android:textColor="@color/color_text_dark"
+                android:textSize="@dimen/_16ssp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewIngredient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_24sdp"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_ingredient" />
 
         </LinearLayout>
 

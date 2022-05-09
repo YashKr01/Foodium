@@ -10,9 +10,11 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.navigation.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.foodium.R
+import com.example.foodium.adapters.IngredientAdapter
 import com.example.foodium.data.database.model.RecipeEntity
 import com.example.foodium.databinding.ActivityRecipeDetailsBinding
 import com.example.foodium.viewmodel.RecipeDetailsViewModel
@@ -23,9 +25,11 @@ class RecipeDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecipeDetailsBinding
 
-    private val recipeEntity by navArgs<RecipeDetailsActivityArgs>()
+    private val recipeArgs by navArgs<RecipeDetailsActivityArgs>()
 
     private val viewModel by viewModels<RecipeDetailsViewModel>()
+
+    private val ingredientAdapter by lazy { IngredientAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,11 +38,13 @@ class RecipeDetailsActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        updateUI(recipeEntity.recipe)
+        updateUI(recipeArgs.recipe)
 
         binding.textLink.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(recipeEntity.recipe.sourceUrl)))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(recipeArgs.recipe.sourceUrl)))
         }
+
+        ingredientAdapter.submitList(recipeArgs.recipe.extendedIngredients)
 
     }
 
@@ -73,13 +79,28 @@ class RecipeDetailsActivity : AppCompatActivity() {
             textLink.text = recipeEntity.sourceUrl
             textLink.paintFlags = textLink.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
+            // Ingredients count
+            txtIngredientsCount.text = "Ingredients (${recipeEntity.extendedIngredients?.size})"
+
+            recyclerViewIngredient.apply {
+                layoutManager = LinearLayoutManager(
+                    this@RecipeDetailsActivity,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+
+                setHasFixedSize(false)
+                adapter = ingredientAdapter
+
+            }
+
         }
 
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         try {
-            if (recipeEntity.recipe.saved) {
+            if (recipeArgs.recipe.saved) {
                 val icon = menu?.findItem(R.id.menu_save)
                 icon?.let { changeMenuIcon(it, R.drawable.ic_favorite_solid) }
             }
@@ -103,7 +124,7 @@ class RecipeDetailsActivity : AppCompatActivity() {
                 shareIntent.apply {
                     type = "text/plain"
                     putExtra(Intent.EXTRA_SUBJECT, "Recipe URL")
-                    putExtra(Intent.EXTRA_TEXT, recipeEntity.recipe.sourceUrl)
+                    putExtra(Intent.EXTRA_TEXT, recipeArgs.recipe.sourceUrl)
                     startActivity(this)
                 }
                 true
@@ -115,16 +136,16 @@ class RecipeDetailsActivity : AppCompatActivity() {
                 try {
 
                     // If already saved
-                    if (recipeEntity.recipe.saved) {
-                        viewModel.deleteRecipe(recipeEntity.recipe)
-                        recipeEntity.recipe.saved = false
+                    if (recipeArgs.recipe.saved) {
+                        viewModel.deleteRecipe(recipeArgs.recipe)
+                        recipeArgs.recipe.saved = false
                         changeMenuIcon(item, R.drawable.ic_favorite_hollow)
                     }
 
                     // if not saved
                     else {
-                        viewModel.insertRecipe(recipeEntity.recipe)
-                        recipeEntity.recipe.saved = true
+                        viewModel.insertRecipe(recipeArgs.recipe)
+                        recipeArgs.recipe.saved = true
                         changeMenuIcon(item, R.drawable.ic_favorite_solid)
                     }
                 } catch (e: Exception) {
