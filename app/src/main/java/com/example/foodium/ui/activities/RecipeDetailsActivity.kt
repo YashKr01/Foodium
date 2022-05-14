@@ -19,6 +19,7 @@ import com.example.foodium.data.database.model.RecipeEntity
 import com.example.foodium.databinding.ActivityRecipeDetailsBinding
 import com.example.foodium.viewmodel.RecipeDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import org.jsoup.Jsoup
 
 @AndroidEntryPoint
 class RecipeDetailsActivity : AppCompatActivity() {
@@ -56,7 +57,7 @@ class RecipeDetailsActivity : AppCompatActivity() {
             textRecipeTitle.text = recipeEntity.title
 
             // description
-            textDescription.text = recipeEntity.summary
+            textDescription.text = Jsoup.parse(recipeEntity.summary).text()
 
             // image
             Glide.with(this@RecipeDetailsActivity)
