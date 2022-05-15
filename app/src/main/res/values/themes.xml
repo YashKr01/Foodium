@@ -48,4 +48,13 @@
         <item name="iconStartPadding">4dp</item>
     </style>
 
+    <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="chipBackgroundColor">@color/chip_checked_state</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:padding">@dimen/_4sdp</item>
+        <item name="checkedIcon">@null</item>
+        <item name="checkedIconVisible">false</item>
+    </style>
+
 </resources>
