@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodium.adapters.SavedRecipeAdapter
 import com.example.foodium.databinding.FragmentSavedRecipesBinding
@@ -33,9 +34,16 @@ class SavedRecipesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val savedRecipesAdapter = SavedRecipeAdapter(deleteRecipe = { recipeEntity ->
-            viewModel.deleteRecipe(recipeEntity)
-        })
+        val savedRecipesAdapter = SavedRecipeAdapter(
+            deleteRecipe = { recipeEntity ->
+                viewModel.deleteRecipe(recipeEntity)
+            }, onClick = { recipe ->
+                findNavController()
+                    .navigate(
+                        SavedRecipesFragmentDirections
+                            .actionSavedRecipesFragmentToRecipeDetailsActivity(recipe)
+                    )
+            })
         binding.recyclerViewSavedRecipes.apply {
             setHasFixedSize(false)
             layoutManager = LinearLayoutManager(requireContext())

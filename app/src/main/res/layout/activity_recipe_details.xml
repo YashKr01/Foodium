@@ -204,7 +204,7 @@
                 android:textAlignment="inherit"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:textColor="@color/color_text_light"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_13ssp"
                 tools:text="@string/loren_ipsum_text" />
 
             <TextView

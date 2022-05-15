@@ -91,16 +91,16 @@ class RecipeAdapter(
                 false
             ),
             saveRecipe = { position ->
-                val article = getItem(position)
-                if (article != null) saveRecipe(article)
+                val recipe = getItem(position)
+                if (recipe != null) saveRecipe(recipe)
             },
             deleteRecipe = { position ->
-                val article = getItem(position)
-                if (article != null) deleteRecipe(article)
+                val recipe = getItem(position)
+                if (recipe != null) deleteRecipe(recipe)
             },
             onRecipeClick = { position ->
-                val article = getItem(position)
-                if (article != null) onRecipeClick(article)
+                val recipe = getItem(position)
+                if (recipe != null) onRecipeClick(recipe)
             }
         )
 
