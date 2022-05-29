@@ -17,131 +17,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/app_name" />
 
-    <HorizontalScrollView
-        android:id="@+id/scrollView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCategories"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroup"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/_2sdp"
-            android:paddingEnd="@dimen/_2sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:selectionRequired="true"
-            app:singleLine="true"
-            app:singleSelection="true">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipMainCourse"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:checked="true"
-                android:text="@string/main_course"
-                android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                android:textSize="@dimen/_10sdp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipSideDish"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/side_dish"
-                android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                android:textSize="@dimen/_10sdp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipDessert"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dessert"
-                android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                android:textSize="@dimen/_10sdp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipAppetizer"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/appetizer"
-                android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                android:textSize="@dimen/_10sdp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipSalad"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/salad"
-                android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                android:textSize="@dimen/_10sdp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipBread"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/bread"
-                android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                android:textSize="@dimen/_10sdp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipBreakfast"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/breakfast"
-                android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                android:textSize="@dimen/_10sdp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipSoup"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/soup"
-                android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                android:textSize="@dimen/_10sdp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipBeverage"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/beverage"
-                android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                android:textSize="@dimen/_10sdp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipSauce"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sauce"
-                android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                android:textSize="@dimen/_10sdp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipSnack"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/snack"
-                android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
-                android:textSize="@dimen/_10sdp" />
-
-        </com.google.android.material.chip.ChipGroup>
-
-    </HorizontalScrollView>
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:listitem="@layout/item_category" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewRecipes"
@@ -149,9 +34,8 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scrollView"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewCategories"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_recipe" />
 

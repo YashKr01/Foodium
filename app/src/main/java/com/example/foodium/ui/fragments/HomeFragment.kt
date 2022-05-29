@@ -10,8 +10,22 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.foodium.adapters.Category
+import com.example.foodium.adapters.CategoryAdapter
 import com.example.foodium.adapters.RecipeAdapter
 import com.example.foodium.databinding.FragmentHomeBinding
+import com.example.foodium.utils.Constants
+import com.example.foodium.utils.Constants.APPETIZER
+import com.example.foodium.utils.Constants.BEVERAGE
+import com.example.foodium.utils.Constants.BREAD
+import com.example.foodium.utils.Constants.BREAKFAST
+import com.example.foodium.utils.Constants.DESSERT
+import com.example.foodium.utils.Constants.MAIN_COURSE
+import com.example.foodium.utils.Constants.SALAD
+import com.example.foodium.utils.Constants.SAUCE
+import com.example.foodium.utils.Constants.SIDE_DISH
+import com.example.foodium.utils.Constants.SNACK
+import com.example.foodium.utils.Constants.SOUP
 import com.example.foodium.utils.Resource
 import com.example.foodium.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,6 +50,21 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val categoryAdapter = CategoryAdapter()
+        val categoryList = listOf(
+            Category(MAIN_COURSE),
+            Category(SIDE_DISH),
+            Category(DESSERT),
+            Category(APPETIZER),
+            Category(SALAD),
+            Category(BREAD),
+            Category(BREAKFAST),
+            Category(SOUP),
+            Category(BEVERAGE),
+            Category(SAUCE),
+            Category(SNACK),
+        )
+
         val recipeAdapter = RecipeAdapter(
             saveRecipe = { recipe ->
                 viewModel.saveRecipe(recipe)
@@ -50,16 +79,22 @@ class HomeFragment : Fragment() {
                             recipe
                         )
                     )
-
-                Log.d("KUMGIUYGIUYG", "onViewCreated: $recipe")
             }
         )
+
         binding.recyclerViewRecipes.apply {
             setHasFixedSize(false)
             layoutManager = LinearLayoutManager(requireContext())
             adapter = recipeAdapter
         }
 
+        binding.recyclerViewCategories.apply {
+            setHasFixedSize(false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = categoryAdapter
+            categoryAdapter.submitList(categoryList)
+        }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.recipesList.collectLatest {
