@@ -53,7 +53,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val categoryAdapter = CategoryAdapter {
-            Toast.makeText(requireContext(), it.title, Toast.LENGTH_SHORT).show()
+            viewModel.searchRecipes(it.title)
         }
 
         val recipeAdapter = RecipeAdapter(
