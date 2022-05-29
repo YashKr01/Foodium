@@ -13,7 +13,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(private val repository: AppRepository) : ViewModel() {
 
     init {
-        viewModelScope.launch { repository.getRecipesList() }
+//        viewModelScope.launch { repository.getRecipesList() }
     }
 
     val recipesList get() = repository.recipeList.asStateFlow()

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -26,6 +27,7 @@ import com.example.foodium.utils.Constants.SAUCE
 import com.example.foodium.utils.Constants.SIDE_DISH
 import com.example.foodium.utils.Constants.SNACK
 import com.example.foodium.utils.Constants.SOUP
+import com.example.foodium.utils.Constants.categoryList
 import com.example.foodium.utils.Resource
 import com.example.foodium.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,20 +52,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val categoryAdapter = CategoryAdapter()
-        val categoryList = listOf(
-            Category(MAIN_COURSE),
-            Category(SIDE_DISH),
-            Category(DESSERT),
-            Category(APPETIZER),
-            Category(SALAD),
-            Category(BREAD),
-            Category(BREAKFAST),
-            Category(SOUP),
-            Category(BEVERAGE),
-            Category(SAUCE),
-            Category(SNACK),
-        )
+        val categoryAdapter = CategoryAdapter {
+            Toast.makeText(requireContext(), it.title, Toast.LENGTH_SHORT).show()
+        }
 
         val recipeAdapter = RecipeAdapter(
             saveRecipe = { recipe ->

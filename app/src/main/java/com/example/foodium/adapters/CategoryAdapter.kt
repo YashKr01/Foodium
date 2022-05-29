@@ -1,5 +1,6 @@
 package com.example.foodium.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,10 +8,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodium.databinding.ItemCategoryBinding
 
-class CategoryAdapter :
-    ListAdapter<Category, CategoryAdapter.CategoryViewHolder>(CATEGORY_COMPARATOR) {
-
-    private var selectedPosition = 0
+class CategoryAdapter(
+    private var selectedPosition: Int = 0,
+    private val onCategoryClick: (Category) -> Unit
+) : ListAdapter<Category, CategoryAdapter.CategoryViewHolder>(CATEGORY_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CategoryViewHolder(
         ItemCategoryBinding.inflate(
@@ -21,28 +22,28 @@ class CategoryAdapter :
     )
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+
         holder.bind(getItem(position))
+
         when (selectedPosition) {
             position -> holder.binding.root.isChecked = true
             else -> holder.binding.root.isChecked = false
         }
+
+        holder.binding.root.setOnClickListener {
+            if (position != RecyclerView.NO_POSITION) {
+                val temp = selectedPosition
+                selectedPosition = position
+                onCategoryClick(getItem(position))
+                notifyItemChanged(temp)
+                notifyItemChanged(position)
+            }
+        }
+
     }
 
     inner class CategoryViewHolder(val binding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            binding.root.setOnClickListener {
-                val position = adapterPosition
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-
-                    notifyItemChanged(selectedPosition)
-                    selectedPosition = position
-                    notifyItemChanged(position)
-
-                }
-            }
-        }
 
         fun bind(item: Category) {
             binding.itemChip.text = item.title
