@@ -17,6 +17,8 @@ class HomeViewModel @Inject constructor(private val repository: AppRepository) :
         viewModelScope.launch { repository.getRecipesList(null) }
     }
 
+    var selectedCategory = 0
+
     val recipesList get() = repository.recipeList.asStateFlow()
 
     fun searchRecipes(query: String) = viewModelScope.launch {

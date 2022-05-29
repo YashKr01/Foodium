@@ -1,6 +1,5 @@
 package com.example.foodium.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,7 +9,7 @@ import com.example.foodium.databinding.ItemCategoryBinding
 
 class CategoryAdapter(
     private var selectedPosition: Int = 0,
-    private val onCategoryClick: (Category) -> Unit
+    private val onCategoryClick: (Category, Int) -> Unit
 ) : ListAdapter<Category, CategoryAdapter.CategoryViewHolder>(CATEGORY_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CategoryViewHolder(
@@ -34,7 +33,7 @@ class CategoryAdapter(
             if (position != RecyclerView.NO_POSITION) {
                 val temp = selectedPosition
                 selectedPosition = position
-                onCategoryClick(getItem(position))
+                onCategoryClick(getItem(position), position)
                 notifyItemChanged(temp)
                 notifyItemChanged(position)
             }
