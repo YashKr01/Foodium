@@ -38,43 +38,42 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val categoryAdapter =
-            CategoryAdapter(viewModel.selectedCategory, onCategoryClick = { it, position ->
+        val categoryAdapter = initCategoryAdapter()
+
+        val recipeAdapter = initRecipeAdapter()
+
+        setupRecyclerViews(recipeAdapter, categoryAdapter)
+
+        registerObservers(recipeAdapter)
+
+        binding.floatingActionButton.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSavedRecipesFragment())
+        }
+
+    }
+
+    private fun initCategoryAdapter() = CategoryAdapter(
+        selectedPosition = viewModel.selectedCategory,
+        onCategoryClick = { it, position ->
+            if (position != viewModel.selectedCategory) {
                 viewModel.selectedCategory = position
                 viewModel.searchRecipes(it.title)
-            })
-
-        val recipeAdapter = RecipeAdapter(
-            saveRecipe = { recipe ->
-                viewModel.saveRecipe(recipe)
-            },
-            deleteRecipe = { recipe ->
-                viewModel.deleteRecipe(recipe)
-            },
-            onRecipeClick = { recipe ->
-                findNavController()
-                    .navigate(
-                        HomeFragmentDirections.actionHomeFragmentToRecipeDetailsActivity(
-                            recipe
-                        )
-                    )
             }
-        )
+        })
 
-        binding.recyclerViewRecipes.apply {
-            setHasFixedSize(false)
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = recipeAdapter
+
+    private fun initRecipeAdapter() = RecipeAdapter(
+        saveRecipe = { recipe -> viewModel.saveRecipe(recipe) },
+        deleteRecipe = { recipe -> viewModel.deleteRecipe(recipe) },
+        onRecipeClick = { recipe ->
+            findNavController()
+                .navigate(
+                    HomeFragmentDirections.actionHomeFragmentToRecipeDetailsActivity(recipe)
+                )
         }
+    )
 
-        binding.recyclerViewCategories.apply {
-            setHasFixedSize(false)
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = categoryAdapter
-            categoryAdapter.submitList(categoryList)
-        }
-
+    private fun registerObservers(recipeAdapter: RecipeAdapter) {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.recipesList.collectLatest {
                 when (it) {
@@ -90,11 +89,25 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
 
-        binding.floatingActionButton.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSavedRecipesFragment())
+    private fun setupRecyclerViews(
+        recipeAdapter: RecipeAdapter,
+        categoryAdapter: CategoryAdapter
+    ) {
+        binding.recyclerViewRecipes.apply {
+            setHasFixedSize(false)
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = recipeAdapter
         }
 
+        binding.recyclerViewCategories.apply {
+            setHasFixedSize(false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = categoryAdapter
+            categoryAdapter.submitList(categoryList)
+        }
     }
 
     override fun onDestroyView() {
