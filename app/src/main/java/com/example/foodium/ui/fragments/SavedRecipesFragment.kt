@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodium.adapters.SavedRecipeAdapter
 import com.example.foodium.databinding.FragmentSavedRecipesBinding
+import com.example.foodium.utils.Constants
+import com.example.foodium.utils.Constants.IS_CHANGED
 import com.example.foodium.viewmodel.SavedRecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -37,6 +39,7 @@ class SavedRecipesFragment : Fragment() {
         val savedRecipesAdapter = SavedRecipeAdapter(
             deleteRecipe = { recipeEntity ->
                 viewModel.deleteRecipe(recipeEntity)
+                findNavController().previousBackStackEntry?.savedStateHandle?.set(IS_CHANGED, true)
             }, onClick = { recipe ->
                 findNavController()
                     .navigate(

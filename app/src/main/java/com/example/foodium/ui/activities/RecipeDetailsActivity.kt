@@ -121,13 +121,7 @@ class RecipeDetailsActivity : AppCompatActivity() {
 
             // share RecipeURL
             R.id.menu_share -> {
-                val shareIntent = Intent(Intent.ACTION_SEND)
-                shareIntent.apply {
-                    type = "text/plain"
-                    putExtra(Intent.EXTRA_SUBJECT, "Recipe URL")
-                    putExtra(Intent.EXTRA_TEXT, recipeArgs.recipe.sourceUrl)
-                    startActivity(this)
-                }
+                shareRecipe()
                 true
             }
 
@@ -149,12 +143,23 @@ class RecipeDetailsActivity : AppCompatActivity() {
                         recipeArgs.recipe.saved = true
                         changeMenuIcon(item, R.drawable.ic_favorite_solid)
                     }
+
                 } catch (e: Exception) {
 
                 }
 
                 true
             }
+        }
+    }
+
+    private fun shareRecipe() {
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, "Recipe URL")
+            putExtra(Intent.EXTRA_TEXT, recipeArgs.recipe.sourceUrl)
+            startActivity(this)
         }
     }
 

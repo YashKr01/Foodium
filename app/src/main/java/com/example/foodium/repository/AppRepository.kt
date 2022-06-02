@@ -23,9 +23,12 @@ class AppRepository @Inject constructor(
     suspend fun getRecipesList(query: HashMap<String, String>?) {
         _recipesList.emit(Resource.Loading(null))
         try {
+
             val response = query?.let { apiInterface.searchRecipes(it).results }
                 ?: apiInterface.getRecipes().results
+
             val databaseList = dao.getRecipesList().first()
+
             val mappedList = response.map { recipe ->
 
                 val isSaved = databaseList.any {
