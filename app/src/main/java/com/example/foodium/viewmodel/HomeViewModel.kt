@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.foodium.data.database.model.RecipeEntity
 import com.example.foodium.repository.AppRepository
 import com.example.foodium.utils.Constants.QUERY_TYPE
+import com.example.foodium.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +21,7 @@ class HomeViewModel @Inject constructor(private val repository: AppRepository) :
 
     var selectedCategory = 0
 
-    val recipesList get() = repository.recipeList.asStateFlow()
+    val recipesList get() = repository.recipeList
     val refreshList get() = repository.refreshList
 
     fun searchRecipes(query: String) = viewModelScope.launch {
@@ -37,6 +38,12 @@ class HomeViewModel @Inject constructor(private val repository: AppRepository) :
 
     fun setRefreshQuery() = viewModelScope.launch {
         repository.setRefreshQuery(false)
+    }
+
+    fun getSavedList() = repository.getSavedRecipesList()
+
+    fun updateList(newList: List<RecipeEntity>) = viewModelScope.launch {
+        recipesList.emit(Resource.Success(newList))
     }
 
 }

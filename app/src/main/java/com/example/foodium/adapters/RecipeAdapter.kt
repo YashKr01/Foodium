@@ -28,8 +28,7 @@ class RecipeAdapter(
         init {
             binding.root.setOnClickListener {
                 val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION)
-                    onRecipeClick(position)
+                if (position != RecyclerView.NO_POSITION) onRecipeClick(position)
             }
         }
 

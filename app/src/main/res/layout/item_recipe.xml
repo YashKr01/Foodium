@@ -114,8 +114,8 @@
         app:layout_constraintBottom_toBottomOf="@id/chip_time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/chip_time"
-        app:srcCompat="@drawable/ic_favorite_hollow"
-        app:tint="@color/colorFavorite" />
+        app:tint="@color/colorFavorite"
+        tools:src="@drawable/ic_favorite_hollow" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_recipe"

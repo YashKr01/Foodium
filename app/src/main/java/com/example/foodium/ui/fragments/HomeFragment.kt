@@ -12,19 +12,24 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodium.adapters.CategoryAdapter
 import com.example.foodium.adapters.RecipeAdapter
+import com.example.foodium.data.database.model.RecipeEntity
 import com.example.foodium.databinding.FragmentHomeBinding
 import com.example.foodium.utils.Constants.categoryList
 import com.example.foodium.utils.Resource
 import com.example.foodium.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var recipeAdapter: RecipeAdapter
 
     private val viewModel by viewModels<HomeViewModel>()
 
@@ -40,8 +45,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val categoryAdapter = initCategoryAdapter()
-
-        val recipeAdapter = initRecipeAdapter()
+        initRecipeAdapter()
 
         setupRecyclerViews(recipeAdapter, categoryAdapter)
 
@@ -62,21 +66,21 @@ class HomeFragment : Fragment() {
             }
         })
 
-    private fun initRecipeAdapter() = RecipeAdapter(
-        saveRecipe = { recipe -> viewModel.saveRecipe(recipe) },
-        deleteRecipe = { recipe -> viewModel.deleteRecipe(recipe) },
-        onRecipeClick = { recipe ->
-            findNavController()
-                .navigate(
-                    HomeFragmentDirections.actionHomeFragmentToRecipeDetailsActivity(recipe)
-                )
-        }
-    )
+    private fun initRecipeAdapter() {
+        recipeAdapter = RecipeAdapter(saveRecipe = { recipe -> viewModel.saveRecipe(recipe) },
+            deleteRecipe = { recipe -> viewModel.deleteRecipe(recipe) },
+            onRecipeClick = { recipe ->
+                findNavController()
+                    .navigate(
+                        HomeFragmentDirections.actionHomeFragmentToRecipeDetailsActivity(recipe)
+                    )
+            })
+    }
 
     private fun registerObservers(recipeAdapter: RecipeAdapter) {
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.recipesList.collectLatest {
+            viewModel.recipesList.asStateFlow().collectLatest {
                 when (it) {
                     is Resource.Loading -> {
                         Log.d("STATUS", "onViewCreated: LOADING")
@@ -92,10 +96,52 @@ class HomeFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.refreshList.distinctUntilChanged().collectLatest {
-                Log.d("YASH", "registerObservers: $it")
+            viewModel.refreshList.distinctUntilChanged().collectLatest { refresh ->
+                if (refresh) refreshList(recipeAdapter.currentList)
                 viewModel.setRefreshQuery()
             }
+        }
+
+    }
+
+    private suspend fun refreshList(currentList: MutableList<RecipeEntity>) {
+
+        val savedList = viewModel.getSavedList().firstOrNull()
+
+        savedList?.let {
+
+            val newList = currentList.map { recipe ->
+
+                val isSaved = it.any { savedRecipe ->
+                    savedRecipe.recipeId == recipe.recipeId
+                }
+
+                RecipeEntity(
+                    instructions = recipe.instructions,
+                    aggregateLikes = recipe.aggregateLikes,
+                    cheap = recipe.cheap,
+                    dairyFree = recipe.dairyFree,
+                    extendedIngredients = recipe.extendedIngredients,
+                    glutenFree = recipe.glutenFree,
+                    recipeId = recipe.recipeId,
+                    image = recipe.image,
+                    readyInMinutes = recipe.readyInMinutes,
+                    sourceName = recipe.sourceName,
+                    sourceUrl = recipe.sourceUrl,
+                    summary = recipe.summary,
+                    title = recipe.title,
+                    vegan = recipe.vegan,
+                    vegetarian = recipe.vegetarian,
+                    veryHealthy = recipe.veryHealthy,
+                    popular = recipe.popular,
+                    healthScore = recipe.healthScore,
+                    saved = isSaved
+                )
+
+            }
+
+            viewModel.updateList(newList)
+
         }
 
     }
