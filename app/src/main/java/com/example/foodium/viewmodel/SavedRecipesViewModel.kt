@@ -32,4 +32,8 @@ class SavedRecipesViewModel @Inject constructor(private val repository: AppRepos
         repository.deleteRecipe(recipeEntity)
     }
 
+    fun setRefreshQuery(refreshList: Boolean) = viewModelScope.launch {
+        repository.setRefreshQuery(refreshList)
+    }
+
 }

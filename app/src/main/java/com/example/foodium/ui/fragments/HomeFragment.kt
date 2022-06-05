@@ -7,19 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodium.adapters.CategoryAdapter
 import com.example.foodium.adapters.RecipeAdapter
 import com.example.foodium.databinding.FragmentHomeBinding
-import com.example.foodium.utils.Constants.IS_CHANGED
 import com.example.foodium.utils.Constants.categoryList
 import com.example.foodium.utils.Resource
 import com.example.foodium.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -92,12 +91,11 @@ class HomeFragment : Fragment() {
             }
         }
 
-        Transformations.distinctUntilChanged(
-            findNavController()
-                .currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(IS_CHANGED)!!
-        ).observe(viewLifecycleOwner) { changed ->
-            Log.d("YASH", "onViewCreated: $changed")
-            findNavController().currentBackStackEntry?.savedStateHandle?.set(IS_CHANGED, false)
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.refreshList.distinctUntilChanged().collectLatest {
+                Log.d("YASH", "registerObservers: $it")
+                viewModel.setRefreshQuery()
+            }
         }
 
     }

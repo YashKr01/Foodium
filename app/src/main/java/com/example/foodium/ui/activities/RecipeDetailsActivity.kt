@@ -144,6 +144,8 @@ class RecipeDetailsActivity : AppCompatActivity() {
                         changeMenuIcon(item, R.drawable.ic_favorite_solid)
                     }
 
+                    setRefreshQuery()
+
                 } catch (e: Exception) {
 
                 }
@@ -152,6 +154,8 @@ class RecipeDetailsActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun setRefreshQuery() = viewModel.setRefreshQuery(true)
 
     private fun shareRecipe() {
         val shareIntent = Intent(Intent.ACTION_SEND)

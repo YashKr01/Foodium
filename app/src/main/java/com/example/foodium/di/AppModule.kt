@@ -9,6 +9,7 @@ import com.example.foodium.data.database.RecipeDao
 import com.example.foodium.data.network.ApiInterface
 import com.example.foodium.utils.Constants.BASE_URL
 import com.example.foodium.utils.Constants.DATABASE_NAME
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

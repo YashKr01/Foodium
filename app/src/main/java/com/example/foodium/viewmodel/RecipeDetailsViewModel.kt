@@ -19,4 +19,8 @@ class RecipeDetailsViewModel @Inject constructor(private val repository: AppRepo
         repository.deleteRecipe(recipe)
     }
 
+    fun setRefreshQuery(refreshList: Boolean) = viewModelScope.launch {
+        repository.setRefreshQuery(refreshList)
+    }
+
 }

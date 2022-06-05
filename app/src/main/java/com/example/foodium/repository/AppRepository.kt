@@ -2,22 +2,26 @@ package com.example.foodium.repository
 
 import com.example.foodium.data.database.RecipeDao
 import com.example.foodium.data.database.model.RecipeEntity
+import com.example.foodium.data.datastore.PreferenceStorage
 import com.example.foodium.data.network.ApiInterface
 import com.example.foodium.utils.Resource
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.*
 import java.io.IOException
 import java.lang.Exception
 import javax.inject.Inject
 
 class AppRepository @Inject constructor(
     private val apiInterface: ApiInterface,
-    private val dao: RecipeDao
+    private val dao: RecipeDao,
+    private val preferenceStorage: PreferenceStorage
 ) {
 
     private val _recipesList =
         MutableStateFlow<Resource<List<RecipeEntity>>>(Resource.Loading(null))
     val recipeList get() = _recipesList
+
+    private val _refreshList = preferenceStorage.refreshList
+    val refreshList get() = _refreshList
 
     // NETWORK OPERATIONS
     suspend fun getRecipesList(query: HashMap<String, String>?) {
@@ -72,5 +76,7 @@ class AppRepository @Inject constructor(
     suspend fun deleteRecipe(recipeEntity: RecipeEntity) = dao.deleteRecipe(recipeEntity)
 
     fun getSavedRecipesList() = dao.getRecipesList()
+
+    suspend fun setRefreshQuery(refreshList: Boolean) = preferenceStorage.setRefresh(refreshList)
 
 }
