@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import com.example.foodium.adapters.RecipeAdapter
 import com.example.foodium.data.database.model.RecipeEntity
 import com.example.foodium.databinding.FragmentHomeBinding
 import com.example.foodium.utils.Constants.categoryList
+import com.example.foodium.utils.NetworkUtils
 import com.example.foodium.utils.Resource
 import com.example.foodium.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -102,6 +104,18 @@ class HomeFragment : Fragment() {
             }
         }
 
+        Transformations.distinctUntilChanged(NetworkUtils.getNetworkLiveData(requireContext()))
+            .observe(viewLifecycleOwner) { connection ->
+                when (connection) {
+                    true -> {
+
+                    }
+                    false -> {
+
+                    }
+                }
+            }
+
     }
 
     private suspend fun refreshList(currentList: MutableList<RecipeEntity>) {
@@ -150,6 +164,7 @@ class HomeFragment : Fragment() {
         recipeAdapter: RecipeAdapter,
         categoryAdapter: CategoryAdapter
     ) {
+
         binding.recyclerViewRecipes.apply {
             setHasFixedSize(false)
             layoutManager = LinearLayoutManager(requireContext())
