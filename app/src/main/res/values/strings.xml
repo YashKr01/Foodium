@@ -27,4 +27,6 @@
     <string name="beverage">Beverage</string>
     <string name="sauce">Sauce</string>
     <string name="snack">Snack</string>
+    <string name="text_no_connectivity">No Connection</string>
+    <string name="text_connectivity">Back Online</string>
 </resources>

@@ -26,8 +26,33 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/networkStatusLayout"
         tools:listitem="@layout/item_category" />
+
+    <LinearLayout
+        android:id="@+id/networkStatusLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorStatusNotConnected"
+        android:orientation="vertical"
+        android:padding="@dimen/_6sdp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/txtNetworkStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/_10ssp"
+            android:fontFamily="@font/ubuntu_regular"
+            android:textColor="@color/color_white"
+            tools:text="No Connection" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewRecipes"

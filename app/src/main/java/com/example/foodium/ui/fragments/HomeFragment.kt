@@ -1,21 +1,28 @@
 package com.example.foodium.ui.fragments
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat.animate
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.foodium.R
 import com.example.foodium.adapters.CategoryAdapter
 import com.example.foodium.adapters.RecipeAdapter
 import com.example.foodium.data.database.model.RecipeEntity
 import com.example.foodium.databinding.FragmentHomeBinding
 import com.example.foodium.utils.Constants.categoryList
+import com.example.foodium.utils.ExtensionFunctions.getColorRes
+import com.example.foodium.utils.ExtensionFunctions.hide
+import com.example.foodium.utils.ExtensionFunctions.show
 import com.example.foodium.utils.NetworkUtils
 import com.example.foodium.utils.Resource
 import com.example.foodium.viewmodel.HomeViewModel
@@ -108,14 +115,40 @@ class HomeFragment : Fragment() {
             .observe(viewLifecycleOwner) { connection ->
                 when (connection) {
                     true -> {
-
+                        showNoConnectionLayout()
                     }
                     false -> {
-
+                        hideNoConnectionLayout()
                     }
                 }
             }
 
+    }
+
+    private fun hideNoConnectionLayout() {
+        binding.txtNetworkStatus.text =
+            getString(R.string.text_no_connectivity)
+        binding.networkStatusLayout.apply {
+            show()
+            setBackgroundColor(requireContext().getColorRes(R.color.colorStatusNotConnected))
+        }
+    }
+
+    private fun showNoConnectionLayout() {
+        binding.txtNetworkStatus.text =
+            getString(R.string.text_connectivity)
+        binding.networkStatusLayout.apply {
+            setBackgroundColor(requireContext().getColorRes(R.color.colorStatusConnected))
+            animate()
+                .alpha(1f)
+                .setStartDelay(500L)
+                .setDuration(500L)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        hide()
+                    }
+                })
+        }
     }
 
     private suspend fun refreshList(currentList: MutableList<RecipeEntity>) {
@@ -160,10 +193,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun setupRecyclerViews(
-        recipeAdapter: RecipeAdapter,
-        categoryAdapter: CategoryAdapter
-    ) {
+    private fun setupRecyclerViews(recipeAdapter: RecipeAdapter, categoryAdapter: CategoryAdapter) {
 
         binding.recyclerViewRecipes.apply {
             setHasFixedSize(false)

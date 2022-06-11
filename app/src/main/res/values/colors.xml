@@ -12,4 +12,6 @@
     <color name="colorInactiveChipStroke">#B3B3B3</color>
     <color name="colorInactiveText">#AAAAAA</color>
     <color name="color_text_link">#40C4FF</color>
+    <color name="colorStatusConnected">#43A047</color>
+    <color name="colorStatusNotConnected">#DF3A3A</color>
 </resources>
