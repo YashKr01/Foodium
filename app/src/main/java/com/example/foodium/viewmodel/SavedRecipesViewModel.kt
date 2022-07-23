@@ -36,4 +36,8 @@ class SavedRecipesViewModel @Inject constructor(private val repository: AppRepos
         repository.setRefreshQuery(refreshList)
     }
 
+    fun deleteAllRecipe() = viewModelScope.launch {
+        repository.deleteAllRecipes()
+    }
+
 }

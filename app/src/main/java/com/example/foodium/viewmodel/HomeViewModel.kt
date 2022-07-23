@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foodium.data.database.model.RecipeEntity
 import com.example.foodium.repository.AppRepository
+import com.example.foodium.utils.Constants
+import com.example.foodium.utils.Constants.QUERY_API_KEY
 import com.example.foodium.utils.Constants.QUERY_TYPE
 import com.example.foodium.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +27,12 @@ class HomeViewModel @Inject constructor(private val repository: AppRepository) :
     val refreshList get() = repository.refreshList
 
     fun searchRecipes(query: String) = viewModelScope.launch {
-        repository.getRecipesList(hashMapOf(Pair(QUERY_TYPE, query)))
+        repository.getRecipesList(
+            hashMapOf(
+                Pair(QUERY_TYPE, query),
+                Pair(QUERY_API_KEY, Constants.API_KEY.random())
+            )
+        )
     }
 
     fun saveRecipe(recipeEntity: RecipeEntity) = viewModelScope.launch {

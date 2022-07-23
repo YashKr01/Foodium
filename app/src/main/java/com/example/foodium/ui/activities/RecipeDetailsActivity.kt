@@ -147,7 +147,7 @@ class RecipeDetailsActivity : AppCompatActivity() {
                     setRefreshQuery()
 
                 } catch (e: Exception) {
-
+                    e.printStackTrace()
                 }
 
                 true

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface RecipeDao {
 
 
-    @Query("SELECT * FROM RECIPE_DATABASE")
+    @Query("SELECT * FROM recipes_table")
     fun getRecipesList(): Flow<List<RecipeEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -16,5 +16,8 @@ interface RecipeDao {
 
     @Delete
     suspend fun deleteRecipe(recipe: RecipeEntity)
+
+    @Query("DELETE FROM recipes_table")
+    suspend fun deleteAllRecipes()
 
 }

@@ -79,4 +79,6 @@ class AppRepository @Inject constructor(
 
     suspend fun setRefreshQuery(refreshList: Boolean) = preferenceStorage.setRefresh(refreshList)
 
+    suspend fun deleteAllRecipes() = dao.deleteAllRecipes()
+
 }

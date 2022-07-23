@@ -1,14 +1,15 @@
 package com.example.foodium.ui.fragments
 
 import android.os.Bundle
+import android.view.*
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.foodium.R
 import com.example.foodium.adapters.SavedRecipeAdapter
 import com.example.foodium.databinding.FragmentSavedRecipesBinding
 import com.example.foodium.viewmodel.SavedRecipesViewModel
@@ -22,6 +23,7 @@ class SavedRecipesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel by viewModels<SavedRecipesViewModel>()
+    private lateinit var savedRecipesAdapter: SavedRecipeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +36,10 @@ class SavedRecipesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val savedRecipesAdapter = SavedRecipeAdapter(
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        setHasOptionsMenu(true)
+
+        savedRecipesAdapter = SavedRecipeAdapter(
             deleteRecipe = { recipeEntity ->
                 viewModel.deleteRecipe(recipeEntity)
                 setRefreshQuery()
@@ -45,6 +50,7 @@ class SavedRecipesFragment : Fragment() {
                             .actionSavedRecipesFragmentToRecipeDetailsActivity(recipe)
                     )
             })
+
         binding.recyclerViewSavedRecipes.apply {
             setHasFixedSize(false)
             layoutManager = LinearLayoutManager(requireContext())
@@ -60,6 +66,31 @@ class SavedRecipesFragment : Fragment() {
     }
 
     private fun setRefreshQuery() = viewModel.setRefreshQuery(true)
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.saved_recipes_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        showAlertDialog()
+        return true
+    }
+
+    private fun showAlertDialog() {
+        val dialog = AlertDialog.Builder(requireActivity())
+        dialog.apply {
+            setMessage("Would you like to delete all saved recipes?")
+            setPositiveButton("OK") { _, _ ->
+                viewModel.deleteAllRecipe()
+            }
+            setNegativeButton("Cancel") { _, _ ->
+            }
+        }
+
+        dialog.create().show()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
