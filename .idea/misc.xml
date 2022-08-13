@@ -30,6 +30,9 @@
         <entry key="..\:/Users/yashk_k3f19t9/StudioProjects/Foodium/app/src/main/res/layout/item_saved_recipe.xml" value="0.22350427350427352" />
         <entry key="..\:/Users/yashk_k3f19t9/StudioProjects/Foodium/app/src/main/res/menu/recipe_details_menu.xml" value="0.22136752136752136" />
         <entry key="..\:/Users/yashk_k3f19t9/StudioProjects/Foodium/app/src/main/res/menu/saved_recipes_menu.xml" value="0.2205128205128205" />
+        <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.1935" />
+        <entry key="app/src/main/res/layout/fragment_saved_recipes.xml" value="0.2931623931623932" />
+        <entry key="app/src/main/res/menu/saved_recipes_menu.xml" value="0.28847771236333053" />
       </map>
     </option>
   </component>

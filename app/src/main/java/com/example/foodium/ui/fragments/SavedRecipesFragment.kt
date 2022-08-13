@@ -68,13 +68,25 @@ class SavedRecipesFragment : Fragment() {
     private fun setRefreshQuery() = viewModel.setRefreshQuery(true)
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
         inflater.inflate(R.menu.saved_recipes_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        showAlertDialog()
+        when(item.itemId) {
+            R.id.menu_delete_all -> {
+                showAlertDialog()
+            }
+            R.id.menu_sort_by_name -> {
+                // TODO : SORT BY NAME
+            }
+            R.id.menu_sort_by_likes -> {
+                // TODO : SORT BY LIKES
+            }
+            R.id.menu_sort_by_time -> {
+                // TODO : SORT BY TIME
+            }
+        }
         return true
     }
 
@@ -84,6 +96,7 @@ class SavedRecipesFragment : Fragment() {
             setMessage("Would you like to delete all saved recipes?")
             setPositiveButton("OK") { _, _ ->
                 viewModel.deleteAllRecipe()
+                viewModel.setRefreshQuery(true)
             }
             setNegativeButton("Cancel") { _, _ ->
             }
