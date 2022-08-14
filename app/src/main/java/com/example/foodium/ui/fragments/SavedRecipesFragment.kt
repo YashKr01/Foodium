@@ -1,6 +1,7 @@
 package com.example.foodium.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodium.R
 import com.example.foodium.adapters.SavedRecipeAdapter
 import com.example.foodium.databinding.FragmentSavedRecipesBinding
+import com.example.foodium.utils.SortOrder
 import com.example.foodium.viewmodel.SavedRecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -63,6 +65,12 @@ class SavedRecipesFragment : Fragment() {
             }
         }
 
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.sortOrder.collect { sortOrder ->
+                viewModel.getSavedListByOrder(sortOrder)
+            }
+        }
+
     }
 
     private fun setRefreshQuery() = viewModel.setRefreshQuery(true)
@@ -78,13 +86,13 @@ class SavedRecipesFragment : Fragment() {
                 showAlertDialog()
             }
             R.id.menu_sort_by_name -> {
-                // TODO : SORT BY NAME
+                viewModel.setSortOrder(SortOrder.BY_NAME)
             }
             R.id.menu_sort_by_likes -> {
-                // TODO : SORT BY LIKES
+                viewModel.setSortOrder(SortOrder.BY_LIKES)
             }
             R.id.menu_sort_by_time -> {
-                // TODO : SORT BY TIME
+                viewModel.setSortOrder(SortOrder.BY_TIME)
             }
         }
         return true

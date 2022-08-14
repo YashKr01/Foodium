@@ -5,6 +5,7 @@ import com.example.foodium.data.database.model.RecipeEntity
 import com.example.foodium.data.datastore.PreferenceStorage
 import com.example.foodium.data.network.ApiInterface
 import com.example.foodium.utils.Resource
+import com.example.foodium.utils.SortOrder
 import kotlinx.coroutines.flow.*
 import java.io.IOException
 import java.lang.Exception
@@ -22,6 +23,9 @@ class AppRepository @Inject constructor(
 
     private val _refreshList = preferenceStorage.refreshList
     val refreshList get() = _refreshList
+
+    private val _sortOrder = preferenceStorage.sortOrder
+    val sortOrder get() = _sortOrder
 
     // NETWORK OPERATIONS
     suspend fun getRecipesList(query: HashMap<String, String>?) {
@@ -77,8 +81,12 @@ class AppRepository @Inject constructor(
 
     fun getSavedRecipesList() = dao.getRecipesList()
 
+    fun getSavedRecipesListByOrder(sortOrder: SortOrder) = dao.getRecipesListByOrder(sortOrder)
+
     suspend fun setRefreshQuery(refreshList: Boolean) = preferenceStorage.setRefresh(refreshList)
 
     suspend fun deleteAllRecipes() = dao.deleteAllRecipes()
+
+    suspend fun setSortOrder(sortOrder: SortOrder) = preferenceStorage.setSortOrder(sortOrder)
 
 }
