@@ -71,7 +71,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/_18sdp">
 
             <TextView
                 android:id="@+id/textRecipeTitle"
@@ -225,10 +226,31 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_28sdp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_ingredient" />
+
+            <TextView
+                android:id="@+id/txtInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/ubuntu_medium"
+                android:text="@string/instructions"
+                android:textColor="@color/color_text_dark"
+                android:textSize="@dimen/_16ssp"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:listitem="@layout/item_recipe_instruction" />
 
         </LinearLayout>
 

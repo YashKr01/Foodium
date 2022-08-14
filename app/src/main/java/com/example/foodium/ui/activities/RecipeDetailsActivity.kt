@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.navigation.navArgs
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.foodium.R
 import com.example.foodium.adapters.IngredientAdapter
+import com.example.foodium.adapters.InstructionsAdapter
 import com.example.foodium.data.database.model.RecipeEntity
 import com.example.foodium.databinding.ActivityRecipeDetailsBinding
 import com.example.foodium.viewmodel.RecipeDetailsViewModel
@@ -31,6 +33,8 @@ class RecipeDetailsActivity : AppCompatActivity() {
     private val viewModel by viewModels<RecipeDetailsViewModel>()
 
     private val ingredientAdapter by lazy { IngredientAdapter() }
+
+    private val instructionAdapter by lazy { InstructionsAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,6 +97,19 @@ class RecipeDetailsActivity : AppCompatActivity() {
                 setHasFixedSize(false)
                 adapter = ingredientAdapter
 
+            }
+
+            if (!recipeEntity.instructions.isNullOrEmpty()) {
+                recipeEntity.instructions[0].steps?.let {
+                    binding.txtInstructions.visibility = View.VISIBLE
+                    binding.recyclerViewInstructions.apply {
+                        visibility = View.VISIBLE
+                        layoutManager = LinearLayoutManager(this@RecipeDetailsActivity)
+                        setHasFixedSize(false)
+                        adapter = instructionAdapter
+                        instructionAdapter.submitList(it)
+                    }
+                }
             }
 
         }
