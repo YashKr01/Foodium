@@ -17,6 +17,7 @@ import com.example.foodium.utils.SortOrder
 import com.example.foodium.viewmodel.SavedRecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 
 @AndroidEntryPoint
 class SavedRecipesFragment : Fragment() {
@@ -80,6 +81,17 @@ class SavedRecipesFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            when(viewModel.sortOrder.first()) {
+                SortOrder.BY_NAME -> menu.findItem(R.id.menu_sort_by_name).isChecked = true
+                SortOrder.BY_LIKES -> menu.findItem(R.id.menu_sort_by_likes).isChecked = true
+                SortOrder.BY_TIME -> menu.findItem(R.id.menu_sort_by_time).isChecked = true
+            }
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.menu_delete_all -> {
@@ -87,12 +99,15 @@ class SavedRecipesFragment : Fragment() {
             }
             R.id.menu_sort_by_name -> {
                 viewModel.setSortOrder(SortOrder.BY_NAME)
+                item.isChecked = true
             }
             R.id.menu_sort_by_likes -> {
                 viewModel.setSortOrder(SortOrder.BY_LIKES)
+                item.isChecked = true
             }
             R.id.menu_sort_by_time -> {
                 viewModel.setSortOrder(SortOrder.BY_TIME)
+                item.isChecked = true
             }
         }
         return true
