@@ -13,9 +13,7 @@ interface ApiInterface {
     suspend fun getRecipes(@Query("apiKey") apiKey: String = Constants.API_KEY.random()): RecipesResponse
 
     @GET("/recipes/complexSearch?addRecipeInformation=true&fillIngredients=true")
-    suspend fun searchRecipes(
-        @QueryMap searchQuery: Map<String, String>
-    ): RecipesResponse
+    suspend fun searchRecipes(@QueryMap searchQuery: Map<String, String>): RecipesResponse
 
     @GET("food/jokes/random?apiKey=")
     suspend fun getFoodJoke(): FoodJoke
