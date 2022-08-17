@@ -1,4 +1,4 @@
-package com.example.foodium
+package com.techK.foodium
 
 import org.junit.Test
 

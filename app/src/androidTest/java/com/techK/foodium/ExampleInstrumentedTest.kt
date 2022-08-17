@@ -1,4 +1,4 @@
-package com.example.foodium
+package com.techK.foodium
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -1,4 +1,4 @@
-package com.example.foodium
+package com.techK.foodium
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
