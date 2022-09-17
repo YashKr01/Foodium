@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface RecipeApi {
 
-    @GET("/recipes/complexSearch?addRecipeInformation=true&fillIngredients=true&number=50")
+    @GET("recipes/complexSearch?addRecipeInformation=true&fillIngredients=true&number=50")
     suspend fun getRecipes(@Query("apiKey") apiKey: String = Constants.API_KEY.random()): RecipesResponse
 
 }

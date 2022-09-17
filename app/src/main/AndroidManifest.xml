@@ -7,12 +7,16 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
+        android:name=".presentation.di.FoodiumApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Foodium">
+        <activity
+            android:name=".presentation.recipe_details.RecipeDetailsActivity"
+            android:exported="false" />
         <activity
             android:name="com.techK.foodium.MainActivity"
             android:exported="true">

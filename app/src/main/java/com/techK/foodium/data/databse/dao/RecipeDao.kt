@@ -1,4 +1,4 @@
-package com.techK.foodium.data.databse
+package com.techK.foodium.data.databse.dao
 
 import androidx.room.Dao
 

@@ -1,4 +1,35 @@
 <resources>
     <string name="app_name">Foodium</string>
+    <string name="loren_ipsum_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s</string>
+    <string name="sample_recipe_name">Berry Banana Breakfast Smoothie</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="likes">0</string>
+    <string name="veg">Vegan</string>
+    <string name="vegetarian">Vegetarian</string>
+    <string name="gluten_free">Gluten Free</string>
+    <string name="popular">Popular</string>
+    <string name="healthy">Healthy</string>
+    <string name="dairyFree">DairyFree</string>
+    <string name="rating">Rating</string>
+    <string name="share">Share</string>
+    <string name="save">Save</string>
+    <string name="description">Description</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="main_course">Main Course</string>
+    <string name="side_dish">Side Dish</string>
+    <string name="dessert">Dessert</string>
+    <string name="appetizer">Appetizer</string>
+    <string name="salad">Salad</string>
+    <string name="bread">Bread</string>
+    <string name="breakfast">Breakfast</string>
+    <string name="soup">Soup</string>
+    <string name="beverage">Beverage</string>
+    <string name="sauce">Sauce</string>
+    <string name="snack">Snack</string>
+    <string name="text_no_connectivity">No Connection</string>
+    <string name="text_connectivity">Back Online</string>
+    <string name="delete">delete</string>
+    <string name="delete_all">Delete All</string>
+    <string name="instructions">Instructions</string>
 </resources>

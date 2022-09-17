@@ -3,8 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_check.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/ic_favorite_hollow.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/ic_favorite_solid.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/ic_like.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/ic_saved.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/ic_time.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/ic_veg.xml" value="0.1805" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2931623931623932" />
         <entry key="app/src/main/res/layout/activity_recipe_details.xml" value="0.2931623931623932" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2931623931623932" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_saved_recipes.xml" value="0.2931623931623932" />
+        <entry key="app/src/main/res/layout/item_category.xml" value="0.2923076923076923" />
+        <entry key="app/src/main/res/layout/item_recipe.xml" value="0.2923076923076923" />
       </map>
     </option>
   </component>

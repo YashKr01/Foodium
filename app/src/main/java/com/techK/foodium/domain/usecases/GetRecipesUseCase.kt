@@ -11,7 +11,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class GetRecipesUseCase @Inject constructor(
-    private val api: RecipeApi
+    private val api: RecipeApi,
 ) {
 
     operator fun invoke(): Flow<Resource<List<Result>>> = flow {
