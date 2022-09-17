@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.techK.foodium.presentation.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_savedRecipesFragment"
+            app:destination="@id/savedRecipesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_recipeDetailsActivity"
+            app:destination="@id/recipeDetailsActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/savedRecipesFragment"
+        android:name="com.techK.foodium.presentation.saved_recipes.SavedRecipesFragment"
+        android:label="fragment_saved_recipes"
+        tools:layout="@layout/fragment_saved_recipes" />
+    <activity
+        android:id="@+id/recipeDetailsActivity"
+        android:name="com.techK.foodium.presentation.recipe_details.RecipeDetailsActivity"
+        android:label="activity_recipe_details"
+        tools:layout="@layout/activity_recipe_details" />
+</navigation>
