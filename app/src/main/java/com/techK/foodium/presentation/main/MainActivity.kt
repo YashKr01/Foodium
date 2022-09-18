@@ -1,7 +1,8 @@
-package com.techK.foodium
+package com.techK.foodium.presentation.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.techK.foodium.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

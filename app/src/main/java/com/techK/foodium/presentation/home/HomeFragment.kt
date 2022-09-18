@@ -23,6 +23,7 @@ import com.techK.foodium.domain.utils.Resource
 import com.techK.foodium.presentation.adapters.list_adapters.CategoryAdapter
 import com.techK.foodium.presentation.adapters.list_adapters.RecipeAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
@@ -106,13 +107,14 @@ class HomeFragment : Fragment() {
             viewModel.recipes.collectLatest { result ->
                 when (result) {
                     is Resource.Success -> {
+                        successState()
                         recipesAdapter.submitList(result.data)
                     }
                     is Resource.Error -> {
-                        // TODO : HANDLE ERROR
+
                     }
                     is Resource.Loading -> {
-                        // TODO : HANDLE LOADING
+//                        loadingState()
                     }
                 }
             }
@@ -129,6 +131,22 @@ class HomeFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun successState() {
+        binding.apply {
+            shimmerLayout.stopShimmer()
+            shimmerLayout.visibility = View.GONE
+            recyclerViewRecipes.visibility = View.VISIBLE
+        }
+    }
+
+    private fun loadingState() {
+        binding.apply {
+            recyclerViewRecipes.visibility = View.GONE
+            shimmerLayout.visibility = View.VISIBLE
+            shimmerLayout.startShimmer()
+        }
     }
 
     private fun showNoConnectionLayout() {

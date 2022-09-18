@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:name=".presentation.di.FoodiumApp"
+        android:name=".di.FoodiumApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,7 +18,7 @@
             android:name=".presentation.recipe_details.RecipeDetailsActivity"
             android:exported="false" />
         <activity
-            android:name="com.techK.foodium.MainActivity"
+            android:name="com.techK.foodium.presentation.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

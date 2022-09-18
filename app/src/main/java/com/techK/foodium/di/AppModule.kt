@@ -1,4 +1,4 @@
-package com.techK.foodium.presentation.di
+package com.techK.foodium.di
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector

@@ -13,10 +13,11 @@
         <entry key="app/src/main/res/drawable/ic_veg.xml" value="0.1805" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2931623931623932" />
         <entry key="app/src/main/res/layout/activity_recipe_details.xml" value="0.2931623931623932" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.309009009009009" />
         <entry key="app/src/main/res/layout/fragment_saved_recipes.xml" value="0.2931623931623932" />
         <entry key="app/src/main/res/layout/item_category.xml" value="0.2923076923076923" />
         <entry key="app/src/main/res/layout/item_recipe.xml" value="0.2923076923076923" />
+        <entry key="app/src/main/res/layout/item_shimmer.xml" value="0.45" />
       </map>
     </option>
   </component>

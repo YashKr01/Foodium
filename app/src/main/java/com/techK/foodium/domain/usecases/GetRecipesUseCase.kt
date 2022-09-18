@@ -21,7 +21,7 @@ class GetRecipesUseCase @Inject constructor(
             val recipeList = response.results.map {
                 it.toRecipe()
             }
-            emit(Resource.Success(recipeList))
+            emit(Resource.Success(recipeList.shuffled()))
         } catch (e: HttpException) {
             emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error Occurred"))
         } catch (e: IOException) {

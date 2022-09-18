@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="rounded">
-        <item name="cornerSize">5%</item>
+        <item name="cornerSize">8%</item>
+    </style>
+    <style name="shimmer_rounded">
+        <item name="cornerSize">45%</item>
+    </style>
+    <style name="shimmer_banner">
+        <item name="cornerSize">20%</item>
     </style>
 </resources>
