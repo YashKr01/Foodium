@@ -4,6 +4,8 @@ import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.techK.foodium.data.network.RecipeApi
+import com.techK.foodium.data.repository.RecipeRepositoryImpl
+import com.techK.foodium.domain.repository.RecipeRepository
 import com.techK.foodium.domain.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -45,5 +47,11 @@ object AppModule {
     @Singleton
     fun provideApiService(retrofit: Retrofit): RecipeApi =
         retrofit.create(RecipeApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideRepository(repositoryImpl: RecipeRepositoryImpl): RecipeRepository {
+        return repositoryImpl
+    }
 
 }

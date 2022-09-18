@@ -1,6 +1,7 @@
 package com.techK.foodium.data.response
 
 import com.google.gson.annotations.SerializedName
+import com.techK.foodium.domain.entities.Recipe
 
 data class Result(
     @SerializedName("aggregateLikes")
@@ -84,5 +85,29 @@ data class Result(
     @SerializedName("veryPopular")
     val veryPopular: Boolean,
     @SerializedName("weightWatcherSmartPoints")
-    val weightWatcherSmartPoints: Int
+    val weightWatcherSmartPoints: Int,
 )
+
+fun Result.toRecipe(): Recipe {
+    return Recipe(
+        id = id,
+        instructions = analyzedInstructions,
+        author = author,
+        aggregateLikes = aggregateLikes,
+        cheap = cheap,
+        time = readyInMinutes,
+        ingredients = extendedIngredients,
+        healthScore = healthScore,
+        image = image,
+        imageType = imageType,
+        likes = likes,
+        readyInMinutes = readyInMinutes,
+        sourceName = sourceName,
+        sourceUrl = sourceUrl,
+        summary = summary,
+        title = title,
+        vegan = vegan,
+        vegetarian = vegetarian,
+        veryPopular = veryPopular
+    )
+}

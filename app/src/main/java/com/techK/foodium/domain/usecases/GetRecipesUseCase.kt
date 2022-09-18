@@ -1,8 +1,8 @@
 package com.techK.foodium.domain.usecases
 
 import com.techK.foodium.data.network.RecipeApi
-import com.techK.foodium.data.response.RecipesResponse
-import com.techK.foodium.data.response.Result
+import com.techK.foodium.data.response.toRecipe
+import com.techK.foodium.domain.entities.Recipe
 import com.techK.foodium.domain.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,11 +14,14 @@ class GetRecipesUseCase @Inject constructor(
     private val api: RecipeApi,
 ) {
 
-    operator fun invoke(): Flow<Resource<List<Result>>> = flow {
+    operator fun invoke(): Flow<Resource<List<Recipe>>> = flow {
         try {
             emit(Resource.Loading())
             val response = api.getRecipes()
-            emit(Resource.Success(response.results))
+            val recipeList = response.results.map {
+                it.toRecipe()
+            }
+            emit(Resource.Success(recipeList))
         } catch (e: HttpException) {
             emit(Resource.Error(message = e.localizedMessage ?: "Unknown Error Occurred"))
         } catch (e: IOException) {

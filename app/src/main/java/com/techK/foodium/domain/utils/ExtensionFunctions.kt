@@ -17,4 +17,14 @@ object ExtensionFunctions {
 
     fun Context.getColorRes(@ColorRes id: Int) = ContextCompat.getColor(this, id)
 
+    fun View.scale(
+        alpha: Float = 0f,
+        scaleBy: Float = 0f,
+        duration: Long = 0L,
+        startingDelay: Long = 0,
+    ) {
+        animate().alpha(alpha).scaleX(scaleBy).scaleY(scaleBy)
+            .setStartDelay(startingDelay).setDuration(duration).start()
+    }
+
 }

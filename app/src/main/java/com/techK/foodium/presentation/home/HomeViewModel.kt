@@ -3,13 +3,12 @@ package com.techK.foodium.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.techK.foodium.data.NetworkObserver
-import com.techK.foodium.data.response.Result
+import com.techK.foodium.domain.entities.Recipe
 import com.techK.foodium.domain.usecases.GetRecipesUseCase
 import com.techK.foodium.domain.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,7 +19,8 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     var selectedCategory: Int = 0
-    private val _recipes = MutableStateFlow<Resource<List<Result>>>(Resource.Loading())
+
+    private val _recipes = MutableStateFlow<Resource<List<Recipe>>>(Resource.Loading())
     val recipes get() = _recipes.asStateFlow()
 
     private val _connection = MutableStateFlow(true)

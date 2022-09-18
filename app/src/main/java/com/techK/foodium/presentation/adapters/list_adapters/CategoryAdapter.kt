@@ -1,4 +1,4 @@
-package com.techK.foodium.presentation.adapters
+package com.techK.foodium.presentation.adapters.list_adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
