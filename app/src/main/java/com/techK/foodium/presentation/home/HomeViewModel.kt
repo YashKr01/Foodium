@@ -19,6 +19,7 @@ class HomeViewModel @Inject constructor(
     private val networkObserver: NetworkObserver,
 ) : ViewModel() {
 
+    var selectedCategory: Int = 0
     private val _recipes = MutableStateFlow<Resource<List<Result>>>(Resource.Loading())
     val recipes get() = _recipes.asStateFlow()
 

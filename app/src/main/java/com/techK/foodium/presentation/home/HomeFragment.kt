@@ -9,15 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.techK.foodium.R
-import com.techK.foodium.data.NetworkObserver
 import com.techK.foodium.databinding.FragmentHomeBinding
+import com.techK.foodium.domain.utils.Constants
 import com.techK.foodium.domain.utils.ExtensionFunctions.getColorRes
 import com.techK.foodium.domain.utils.ExtensionFunctions.hide
 import com.techK.foodium.domain.utils.ExtensionFunctions.show
+import com.techK.foodium.presentation.adapters.CategoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -26,6 +27,8 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel by viewModels<HomeViewModel>()
+
+    private lateinit var categoryAdapter: CategoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +42,29 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        init()
         setupObservers()
+
+    }
+
+    private fun init() {
+
+        categoryAdapter = CategoryAdapter(
+            selectedPosition = viewModel.selectedCategory,
+            onCategoryClick = { it, position ->
+                if (position != viewModel.selectedCategory) {
+                    viewModel.selectedCategory = position
+                    // TODO : Implement Search
+                }
+            })
+
+        binding.recyclerViewCategories.apply {
+            setHasFixedSize(false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = categoryAdapter
+            categoryAdapter.submitList(Constants.categoryList)
+        }
 
     }
 
