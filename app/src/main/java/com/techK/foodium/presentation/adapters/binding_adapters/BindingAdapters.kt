@@ -19,7 +19,7 @@ fun Chip.setVisibility(vegan: Boolean) {
 fun ShapeableImageView.loadImage(url: String) {
     Glide.with(this)
         .load(url)
-        .transition(DrawableTransitionOptions.withCrossFade())
+        .transition(DrawableTransitionOptions.withCrossFade(500))
         .placeholder(R.drawable.img_placeholder)
         .error(R.drawable.img_error_placeholder)
         .into(this)

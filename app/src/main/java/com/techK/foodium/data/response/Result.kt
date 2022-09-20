@@ -5,87 +5,85 @@ import com.techK.foodium.domain.entities.Recipe
 
 data class Result(
     @SerializedName("aggregateLikes")
-    val aggregateLikes: Int,
+    val aggregateLikes: Int = 0,
     @SerializedName("analyzedInstructions")
-    val analyzedInstructions: List<AnalyzedInstruction>,
+    val analyzedInstructions: List<AnalyzedInstruction> = listOf(),
     @SerializedName("author")
-    val author: String?,
+    val author: String = "",
     @SerializedName("cheap")
-    val cheap: Boolean,
+    val cheap: Boolean = false,
     @SerializedName("cookingMinutes")
-    val cookingMinutes: Int,
+    val cookingMinutes: Int = 0,
     @SerializedName("creditsText")
-    val creditsText: String,
+    val creditsText: String = "",
     @SerializedName("cuisines")
-    val cuisines: List<String>,
+    val cuisines: List<String> = listOf(),
     @SerializedName("dairyFree")
-    val dairyFree: Boolean,
+    val dairyFree: Boolean = false,
     @SerializedName("diets")
-    val diets: List<String>,
+    val diets: List<String> = listOf(),
     @SerializedName("dishTypes")
-    val dishTypes: List<String>,
+    val dishTypes: List<String> = listOf(),
     @SerializedName("extendedIngredients")
-    val extendedIngredients: List<ExtendedIngredient>,
+    val extendedIngredients: List<ExtendedIngredient> = listOf(),
     @SerializedName("gaps")
-    val gaps: String,
+    val gaps: String = "",
     @SerializedName("glutenFree")
-    val glutenFree: Boolean,
+    val glutenFree: Boolean = false,
     @SerializedName("healthScore")
-    val healthScore: Int,
+    val healthScore: Int = 0,
     @SerializedName("id")
-    val id: Int,
+    val id: Int = 0,
     @SerializedName("image")
-    val image: String,
+    val image: String = "",
     @SerializedName("imageType")
-    val imageType: String,
+    val imageType: String = "",
     @SerializedName("license")
-    val license: String?,
+    val license: String = "",
     @SerializedName("likes")
-    val likes: Int,
+    val likes: Int = 0,
     @SerializedName("lowFodmap")
-    val lowFodmap: Boolean,
+    val lowFodmap: Boolean = false,
     @SerializedName("missedIngredientCount")
-    val missedIngredientCount: Int,
-    @SerializedName("missedIngredients")
-    val missedIngredients: List<MissedIngredient>,
+    val missedIngredientCount: Int = 0,
     @SerializedName("occasions")
-    val occasions: List<String>,
+    val occasions: List<String> = listOf(),
     @SerializedName("preparationMinutes")
-    val preparationMinutes: Int,
+    val preparationMinutes: Int = 0,
     @SerializedName("pricePerServing")
-    val pricePerServing: Double,
+    val pricePerServing: Double = 0.0,
     @SerializedName("readyInMinutes")
-    val readyInMinutes: Int,
+    val readyInMinutes: Int = 0,
     @SerializedName("servings")
-    val servings: Int,
+    val servings: Int = 0,
     @SerializedName("sourceName")
-    val sourceName: String,
+    val sourceName: String = "",
     @SerializedName("sourceUrl")
-    val sourceUrl: String,
+    val sourceUrl: String = "",
     @SerializedName("spoonacularSourceUrl")
-    val spoonacularSourceUrl: String,
+    val spoonacularSourceUrl: String = "",
     @SerializedName("summary")
-    val summary: String,
+    val summary: String = "",
     @SerializedName("sustainable")
-    val sustainable: Boolean,
+    val sustainable: Boolean = false,
     @SerializedName("title")
-    val title: String,
+    val title: String = "",
     @SerializedName("unusedIngredients")
-    val unusedIngredients: List<Any>,
+    val unusedIngredients: List<Any> = listOf(),
     @SerializedName("usedIngredientCount")
-    val usedIngredientCount: Int,
+    val usedIngredientCount: Int = 0,
     @SerializedName("usedIngredients")
-    val usedIngredients: List<Any>,
+    val usedIngredients: List<Any> = listOf(),
     @SerializedName("vegan")
-    val vegan: Boolean,
+    val vegan: Boolean = false,
     @SerializedName("vegetarian")
-    val vegetarian: Boolean,
+    val vegetarian: Boolean = false,
     @SerializedName("veryHealthy")
-    val veryHealthy: Boolean,
+    val veryHealthy: Boolean = false,
     @SerializedName("veryPopular")
-    val veryPopular: Boolean,
+    val veryPopular: Boolean = false,
     @SerializedName("weightWatcherSmartPoints")
-    val weightWatcherSmartPoints: Int,
+    val weightWatcherSmartPoints: Int = 0,
 )
 
 fun Result.toRecipe(): Recipe {
