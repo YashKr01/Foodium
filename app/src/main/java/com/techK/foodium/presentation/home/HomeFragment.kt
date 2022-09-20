@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.techK.foodium.R
 import com.techK.foodium.databinding.FragmentHomeBinding
@@ -93,6 +94,11 @@ class HomeFragment : Fragment() {
             setHasFixedSize(false)
             layoutManager = LinearLayoutManager(requireContext())
             adapter = recipesAdapter
+        }
+
+        binding.floatingActionButton.setOnClickListener {
+            val navigation = HomeFragmentDirections.actionHomeFragmentToSavedRecipesFragment()
+            findNavController().navigate(navigation)
         }
 
     }
