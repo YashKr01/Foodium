@@ -104,16 +104,15 @@ class HomeFragment : Fragment() {
             viewModel.recipes.collectLatest { result ->
                 when (result) {
                     is Resource.Success -> {
-                        val animation = AnimationUtils
-                            .loadLayoutAnimation(requireContext(), R.anim.recipe_layout_animation)
-                        binding.recyclerViewRecipes.layoutAnimation = animation
+
+                        successState()
                         recipesAdapter.submitList(result.data)
                     }
                     is Resource.Error -> {
 
                     }
                     is Resource.Loading -> {
-
+                        loadingState()
                     }
                 }
             }
@@ -130,6 +129,25 @@ class HomeFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun successState() {
+        binding.apply {
+            val animation = AnimationUtils
+                .loadLayoutAnimation(requireContext(), R.anim.recipe_layout_animation)
+            recyclerViewRecipes.layoutAnimation = animation
+            recyclerViewRecipes.visibility = View.VISIBLE
+            shimmerLayout.stopShimmer()
+            shimmerLayout.visibility = View.GONE
+        }
+    }
+
+    private fun loadingState() {
+        binding.apply {
+            recyclerViewRecipes.visibility = View.GONE
+            shimmerLayout.visibility = View.VISIBLE
+            shimmerLayout.startShimmer()
+        }
     }
 
     private fun showNoConnectionLayout() {

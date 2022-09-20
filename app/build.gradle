@@ -25,6 +25,7 @@ android {
         buildConfigField "String", "API_KEY2","\"${properties.getProperty("API_KEY2")}\""
         buildConfigField "String", "API_KEY3","\"${properties.getProperty("API_KEY3")}\""
         buildConfigField "String", "API_KEY4","\"${properties.getProperty("API_KEY4")}\""
+        buildConfigField "String", "API_KEY5","\"${properties.getProperty("API_KEY5")}\""
 
     }
 
