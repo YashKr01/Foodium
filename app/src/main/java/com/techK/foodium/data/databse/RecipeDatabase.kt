@@ -11,6 +11,6 @@ import com.techK.foodium.domain.entities.Recipe
 @TypeConverters(DataConverters::class)
 abstract class RecipeDatabase : RoomDatabase() {
 
-    abstract val dao: RecipeDao
+    abstract fun getRecipeDao(): RecipeDao
 
 }

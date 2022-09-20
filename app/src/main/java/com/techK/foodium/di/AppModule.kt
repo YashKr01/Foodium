@@ -1,12 +1,16 @@
 package com.techK.foodium.di
 
 import android.content.Context
+import androidx.room.Room
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.techK.foodium.data.databse.RecipeDatabase
+import com.techK.foodium.data.databse.dao.RecipeDao
 import com.techK.foodium.data.network.RecipeApi
 import com.techK.foodium.data.repository.RecipeRepositoryImpl
 import com.techK.foodium.domain.repository.RecipeRepository
 import com.techK.foodium.domain.utils.Constants.BASE_URL
+import com.techK.foodium.domain.utils.Constants.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -53,5 +57,14 @@ object AppModule {
     fun provideRepository(repositoryImpl: RecipeRepositoryImpl): RecipeRepository {
         return repositoryImpl
     }
+
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): RecipeDatabase =
+        Room.databaseBuilder(context, RecipeDatabase::class.java, DATABASE_NAME).build()
+
+    @Provides
+    @Singleton
+    fun provideRecipeDao(database: RecipeDatabase): RecipeDao = database.getRecipeDao()
 
 }

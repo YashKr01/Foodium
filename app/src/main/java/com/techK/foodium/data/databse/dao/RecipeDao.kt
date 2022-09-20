@@ -9,24 +9,24 @@ import kotlinx.coroutines.flow.Flow
 interface RecipeDao {
 
     @Query("SELECT * FROM recipes")
-    fun getRecipesListByOrder(sortOrder: SortOrder): Flow<List<Recipe>> =
+    fun getSavedRecipesByOrder(sortOrder: SortOrder): Flow<List<Recipe>> =
         when (sortOrder) {
-            SortOrder.BY_NAME -> sortByName()
-            SortOrder.BY_LIKES -> sortByLikes()
-            SortOrder.BY_TIME -> sortByTime()
+            SortOrder.BY_NAME -> sortSavedRecipesByName()
+            SortOrder.BY_LIKES -> sortSavedRecipesByLikes()
+            SortOrder.BY_TIME -> sortSavedRecipesByTime()
         }
 
     @Query("SELECT * FROM recipes")
-    fun getRecipesList(): Flow<List<Recipe>>
+    fun getSavedRecipes(): Flow<List<Recipe>>
 
     @Query("SELECT * FROM recipes ORDER BY title ASC")
-    fun sortByName(): Flow<List<Recipe>>
+    fun sortSavedRecipesByName(): Flow<List<Recipe>>
 
     @Query("SELECT * FROM recipes ORDER BY aggregateLikes DESC")
-    fun sortByLikes(): Flow<List<Recipe>>
+    fun sortSavedRecipesByLikes(): Flow<List<Recipe>>
 
     @Query("SELECT * FROM recipes ORDER BY readyInMinutes ASC")
-    fun sortByTime(): Flow<List<Recipe>>
+    fun sortSavedRecipesByTime(): Flow<List<Recipe>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRecipe(recipe: Recipe)
