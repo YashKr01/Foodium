@@ -26,5 +26,9 @@
         android:id="@+id/recipeDetailsActivity"
         android:name="com.techK.foodium.presentation.recipe_details.RecipeDetailsActivity"
         android:label="activity_recipe_details"
-        tools:layout="@layout/activity_recipe_details" />
+        tools:layout="@layout/activity_recipe_details" >
+        <argument
+            android:name="recipe"
+            app:argType="com.techK.foodium.domain.entities.Recipe" />
+    </activity>
 </navigation>
