@@ -15,7 +15,7 @@ class GetRecipesUseCase @Inject constructor(
     private val api: RecipeRepository,
 ) {
 
-    operator fun invoke(): Flow<Resource<List<Recipe>>> = flow {
+    suspend operator fun invoke(): Flow<Resource<List<Recipe>>> = flow {
         try {
             emit(Resource.Loading())
             val response = api.getRecipes()

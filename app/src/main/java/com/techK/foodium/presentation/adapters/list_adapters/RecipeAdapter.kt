@@ -3,6 +3,7 @@ package com.techK.foodium.presentation.adapters.list_adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,22 +17,25 @@ class RecipeAdapter(
     private val onRecipeClick: (Recipe) -> Unit,
 ) : ListAdapter<Recipe, RecipeAdapter.RecipeViewHolder>(RECIPE_COMPARATOR) {
 
-    class RecipeViewHolder(
+    inner class RecipeViewHolder(
         private val binding: ItemRecipeBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.imgFavorite.visibility = View.VISIBLE
+            binding.imgSave.visibility = View.VISIBLE
         }
 
         fun bind(item: Recipe) {
-            binding.recipe = item
-            binding.imgFavorite.setImageResource(
-                when {
-                    item.saved -> R.drawable.ic_favorite_solid
-                    else -> R.drawable.ic_favorite_hollow
-                }
-            )
+
+            binding.apply {
+                recipe = item
+                recipeAdapter = this@RecipeAdapter
+                imgSave.setImageResource(
+                    if (item.saved) R.drawable.ic_favorite_solid
+                    else R.drawable.ic_favorite_hollow
+                )
+                executePendingBindings()
+            }
         }
 
     }
@@ -56,6 +60,24 @@ class RecipeAdapter(
             override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe): Boolean =
                 oldItem == newItem
         }
+    }
+
+    fun onSaveClick(recipe: Recipe, view: ImageView) {
+        when (recipe.saved) {
+            true -> {
+                deleteRecipe(recipe)
+                view.setImageLevel(R.drawable.ic_favorite_hollow)
+            }
+            false -> {
+                saveRecipe(recipe)
+                view.setImageResource(R.drawable.ic_favorite_solid)
+            }
+        }
+        recipe.saved = !recipe.saved
+    }
+
+    fun onItemClick(recipe: Recipe) {
+        this.onRecipeClick(recipe)
     }
 
 }

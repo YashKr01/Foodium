@@ -29,7 +29,7 @@ interface RecipeDao {
     fun sortSavedRecipesByTime(): Flow<List<Recipe>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRecipe(recipe: Recipe)
+    suspend fun saveRecipe(recipe: Recipe)
 
     @Delete
     suspend fun deleteRecipe(recipe: Recipe)

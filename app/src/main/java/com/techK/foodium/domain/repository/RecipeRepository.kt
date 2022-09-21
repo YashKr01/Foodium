@@ -10,4 +10,8 @@ interface RecipeRepository {
 
     suspend fun getSavedRecipes(): Flow<List<Recipe>>
 
+    suspend fun saveRecipe(recipe: Recipe)
+
+    suspend fun deleteRecipe(recipe: Recipe)
+
 }

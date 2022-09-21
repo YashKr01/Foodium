@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.techK.foodium.R
 import com.techK.foodium.databinding.FragmentHomeBinding
+import com.techK.foodium.domain.entities.Recipe
 import com.techK.foodium.domain.utils.Constants
 import com.techK.foodium.domain.utils.ExtensionFunctions.getColorRes
 import com.techK.foodium.domain.utils.ExtensionFunctions.hide
@@ -79,13 +80,14 @@ class HomeFragment : Fragment() {
         // recipe adapter
         recipesAdapter = RecipeAdapter(
             saveRecipe = { recipe ->
-
+                viewModel.saveRecipe(recipe)
             },
             deleteRecipe = { recipe ->
-
+                viewModel.deleteRecipe(recipe)
             },
             onRecipeClick = { recipe ->
-
+                val nav = HomeFragmentDirections.actionHomeFragmentToRecipeDetailsActivity(recipe)
+                findNavController().navigate(nav)
             }
         )
 
@@ -109,17 +111,9 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.recipes.collectLatest { result ->
                 when (result) {
-                    is Resource.Success -> {
-
-                        successState()
-                        recipesAdapter.submitList(result.data)
-                    }
-                    is Resource.Error -> {
-
-                    }
-                    is Resource.Loading -> {
-                        loadingState()
-                    }
+                    is Resource.Success -> successState(result.data)
+                    is Resource.Error -> errorState()
+                    is Resource.Loading -> loadingState()
                 }
             }
 
@@ -137,7 +131,15 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun successState() {
+    private fun errorState() {
+        binding.apply {
+            recyclerViewRecipes.visibility = View.GONE
+            shimmerLayout.stopShimmer()
+            shimmerLayout.visibility = View.GONE
+        }
+    }
+
+    private fun successState(data: List<Recipe>?) {
         binding.apply {
             val animation = AnimationUtils
                 .loadLayoutAnimation(requireContext(), R.anim.recipe_layout_animation)
@@ -145,6 +147,7 @@ class HomeFragment : Fragment() {
             recyclerViewRecipes.visibility = View.VISIBLE
             shimmerLayout.stopShimmer()
             shimmerLayout.visibility = View.GONE
+            recipesAdapter.submitList(data)
         }
     }
 
@@ -166,8 +169,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun hideNoConnectionLayout() {
-        binding.txtNetworkStatus.text =
-            getString(R.string.text_connectivity)
+        binding.txtNetworkStatus.text = getString(R.string.text_connectivity)
         binding.networkStatusLayout.apply {
             setBackgroundColor(requireContext().getColorRes(R.color.colorStatusConnected))
             animate()

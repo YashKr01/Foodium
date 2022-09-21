@@ -31,6 +31,6 @@ fun Chip.setIntText(query: Int) {
 }
 
 @BindingAdapter("setJSoupText")
-fun TextView.setJSoupText(input:String) {
+fun TextView.setJSoupText(input: String) {
     text = Jsoup.parse(input).text()
 }

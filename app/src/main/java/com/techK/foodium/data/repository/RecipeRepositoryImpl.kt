@@ -6,7 +6,6 @@ import com.techK.foodium.data.response.RecipesResponse
 import com.techK.foodium.domain.entities.Recipe
 import com.techK.foodium.domain.repository.RecipeRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class RecipeRepositoryImpl @Inject constructor(
@@ -20,6 +19,14 @@ class RecipeRepositoryImpl @Inject constructor(
 
     override suspend fun getSavedRecipes(): Flow<List<Recipe>> {
         return dao.getSavedRecipes()
+    }
+
+    override suspend fun saveRecipe(recipe: Recipe) {
+        dao.saveRecipe(recipe)
+    }
+
+    override suspend fun deleteRecipe(recipe: Recipe) {
+        dao.deleteRecipe(recipe)
     }
 
 }
