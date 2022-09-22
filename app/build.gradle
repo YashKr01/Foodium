@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.techK.foodium"
         minSdk 24
-        targetSdk 31
+        targetSdk 33
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -25,7 +25,6 @@ android {
         buildConfigField "String", "API_KEY2","\"${properties.getProperty("API_KEY2")}\""
         buildConfigField "String", "API_KEY3","\"${properties.getProperty("API_KEY3")}\""
         buildConfigField "String", "API_KEY4","\"${properties.getProperty("API_KEY4")}\""
-        buildConfigField "String", "API_KEY5","\"${properties.getProperty("API_KEY5")}\""
 
     }
 

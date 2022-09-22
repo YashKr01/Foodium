@@ -42,8 +42,7 @@ object Constants {
         BuildConfig.API_KEY1,
         BuildConfig.API_KEY2,
         BuildConfig.API_KEY3,
-        BuildConfig.API_KEY4,
-        BuildConfig.API_KEY5
+        BuildConfig.API_KEY4
     )
 
 }

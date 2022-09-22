@@ -25,11 +25,6 @@ fun ShapeableImageView.loadImage(url: String) {
         .into(this)
 }
 
-@BindingAdapter("setIntText")
-fun Chip.setIntText(query: Int) {
-    text = query.toString()
-}
-
 @BindingAdapter("setJSoupText")
 fun TextView.setJSoupText(input: String) {
     text = Jsoup.parse(input).text()
