@@ -66,7 +66,7 @@ class RecipeAdapter(
         when (recipe.saved) {
             true -> {
                 deleteRecipe(recipe)
-                view.setImageLevel(R.drawable.ic_favorite_hollow)
+                view.setImageResource(R.drawable.ic_favorite_hollow)
             }
             false -> {
                 saveRecipe(recipe)

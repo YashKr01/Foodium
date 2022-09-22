@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -112,7 +113,7 @@ class HomeFragment : Fragment() {
             viewModel.recipes.collectLatest { result ->
                 when (result) {
                     is Resource.Success -> successState(result.data)
-                    is Resource.Error -> errorState()
+                    is Resource.Error -> errorState(result.message)
                     is Resource.Loading -> loadingState()
                 }
             }
@@ -131,8 +132,9 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun errorState() {
+    private fun errorState(message: String?) {
         binding.apply {
+            Toast.makeText(requireContext(), "$message", Toast.LENGTH_SHORT).show()
             recyclerViewRecipes.visibility = View.GONE
             shimmerLayout.stopShimmer()
             shimmerLayout.visibility = View.GONE
