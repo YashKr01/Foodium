@@ -130,6 +130,14 @@ class HomeFragment : Fragment() {
             }
         }
 
+        // observe refresh query
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.refreshQuery.collect { refresh ->
+                if (refresh) viewModel.refreshList(recipesAdapter.currentList)
+                viewModel.setRefreshQuery(false)
+            }
+        }
+
     }
 
     private fun errorState(message: String?) {

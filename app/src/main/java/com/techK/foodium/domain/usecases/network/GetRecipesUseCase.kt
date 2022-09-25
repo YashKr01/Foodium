@@ -12,14 +12,14 @@ import java.io.IOException
 import javax.inject.Inject
 
 class GetRecipesUseCase @Inject constructor(
-    private val api: RecipeRepository,
+    private val repository: RecipeRepository,
 ) {
 
     suspend operator fun invoke(): Flow<Resource<List<Recipe>>> = flow {
         try {
             emit(Resource.Loading())
-            val response = api.getRecipes()
-            val savedList = api.getSavedRecipes().first()
+            val response = repository.getRecipes()
+            val savedList = repository.getSavedRecipes().first()
             val recipeList = response.results.map { recipe ->
                 val isSaved = savedList.any { it.id == recipe.id }
                 if (!isSaved) recipe.toRecipe()

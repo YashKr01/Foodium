@@ -5,8 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.techK.foodium.data.NetworkObserver
 import com.techK.foodium.domain.entities.Recipe
 import com.techK.foodium.domain.usecases.database.DeleteRecipeUseCase
+import com.techK.foodium.domain.usecases.database.RefreshListUseCase
 import com.techK.foodium.domain.usecases.network.GetRecipesUseCase
 import com.techK.foodium.domain.usecases.database.SaveRecipeUseCase
+import com.techK.foodium.domain.usecases.datastore.GetRefreshQueryUseCase
+import com.techK.foodium.domain.usecases.datastore.SetRefreshQueryUseCase
 import com.techK.foodium.domain.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +23,9 @@ class HomeViewModel @Inject constructor(
     private val saveRecipeUseCase: SaveRecipeUseCase,
     private val deleteRecipeUseCase: DeleteRecipeUseCase,
     private val networkObserver: NetworkObserver,
+    private val getRefreshQueryUseCase: GetRefreshQueryUseCase,
+    private val setRefreshQueryUseCase: SetRefreshQueryUseCase,
+    private val refreshListUseCase: RefreshListUseCase,
 ) : ViewModel() {
 
     var selectedCategory: Int = 0
@@ -30,9 +36,13 @@ class HomeViewModel @Inject constructor(
     private val _connection = MutableStateFlow(true)
     val connection get() = _connection.asStateFlow()
 
+    private val _refreshQuery = MutableStateFlow(false)
+    val refreshQuery get() = _refreshQuery.asStateFlow()
+
     init {
         getRecipes()
         observeConnection()
+        getRefreshQuery()
     }
 
     private fun getRecipes() = viewModelScope.launch {
@@ -53,6 +63,20 @@ class HomeViewModel @Inject constructor(
 
     fun deleteRecipe(recipe: Recipe) = viewModelScope.launch {
         deleteRecipeUseCase(recipe)
+    }
+
+    fun setRefreshQuery(refresh: Boolean) = viewModelScope.launch {
+        setRefreshQueryUseCase(refresh)
+    }
+
+    private fun getRefreshQuery() = viewModelScope.launch {
+        getRefreshQueryUseCase().collect { _refreshQuery.emit(it) }
+    }
+
+    fun refreshList(currentList: MutableList<Recipe>) = viewModelScope.launch {
+        refreshListUseCase(currentList).collect {
+            _recipes.emit(Resource.Success(data = it))
+        }
     }
 
 }
