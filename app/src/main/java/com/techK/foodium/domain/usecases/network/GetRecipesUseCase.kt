@@ -1,4 +1,4 @@
-package com.techK.foodium.domain.usecases
+package com.techK.foodium.domain.usecases.network
 
 import com.techK.foodium.data.response.toRecipe
 import com.techK.foodium.domain.entities.Recipe
@@ -25,7 +25,7 @@ class GetRecipesUseCase @Inject constructor(
                     it.id == recipe.id
                 }
                 if (!isSaved) recipe.toRecipe()
-                else recipe.toRecipe().copy(saved = isSaved)
+                else recipe.toRecipe().copy(saved = true)
             }
             emit(Resource.Success(recipeList.shuffled()))
         } catch (e: HttpException) {

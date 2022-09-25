@@ -9,16 +9,11 @@
             name="recipe"
             type="com.techK.foodium.domain.entities.Recipe" />
 
-        <variable
-            name="recipeAdapter"
-            type="com.techK.foodium.presentation.adapters.list_adapters.RecipeAdapter" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> recipeAdapter.onItemClick(recipe)}"
         android:padding="@dimen/_2sdp">
 
         <androidx.constraintlayout.widget.Guideline
@@ -128,7 +123,6 @@
             android:clickable="true"
             android:contentDescription="@string/app_name"
             android:focusable="true"
-            android:onClick="@{() -> recipeAdapter.onSaveClick(recipe, imgSave)}"
             android:padding="@dimen/_4sdp"
             android:visibility="gone"
             app:layout_constraintBaseline_toBottomOf="parent"

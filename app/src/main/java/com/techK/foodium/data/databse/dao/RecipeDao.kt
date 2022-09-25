@@ -4,6 +4,7 @@ import androidx.room.*
 import com.techK.foodium.domain.entities.Recipe
 import com.techK.foodium.domain.enums.SortOrder
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
 @Dao
 interface RecipeDao {
@@ -14,6 +15,7 @@ interface RecipeDao {
             SortOrder.BY_NAME -> sortSavedRecipesByName()
             SortOrder.BY_LIKES -> sortSavedRecipesByLikes()
             SortOrder.BY_TIME -> sortSavedRecipesByTime()
+            SortOrder.NONE -> emptyFlow()
         }
 
     @Query("SELECT * FROM recipes")

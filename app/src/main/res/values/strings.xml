@@ -32,4 +32,11 @@
     <string name="delete">delete</string>
     <string name="delete_all">Delete All</string>
     <string name="instructions">Instructions</string>
+    <string name="sort_by_name">Sort By Name</string>
+    <string name="sort_by_likes">Sort By Likes</string>
+    <string name="sort_by_time">Sort By Time</string>
+    <string name="sort_by">Sort By</string>
+    <string name="delete_confirm_message">Would you like to delete all saved recipes?</string>
+    <string name="text_ok">OK</string>
+    <string name="text_cancel">Cancel</string>
 </resources>

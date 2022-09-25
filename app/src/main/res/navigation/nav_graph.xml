@@ -21,7 +21,11 @@
         android:id="@+id/savedRecipesFragment"
         android:name="com.techK.foodium.presentation.saved_recipes.SavedRecipesFragment"
         android:label="fragment_saved_recipes"
-        tools:layout="@layout/fragment_saved_recipes" />
+        tools:layout="@layout/fragment_saved_recipes" >
+        <action
+            android:id="@+id/action_savedRecipesFragment_to_recipeDetailsActivity"
+            app:destination="@id/recipeDetailsActivity" />
+    </fragment>
     <activity
         android:id="@+id/recipeDetailsActivity"
         android:name="com.techK.foodium.presentation.recipe_details.RecipeDetailsActivity"

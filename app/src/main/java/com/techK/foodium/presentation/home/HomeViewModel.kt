@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.techK.foodium.data.NetworkObserver
 import com.techK.foodium.domain.entities.Recipe
-import com.techK.foodium.domain.usecases.DeleteRecipeUseCase
-import com.techK.foodium.domain.usecases.GetRecipesUseCase
-import com.techK.foodium.domain.usecases.SaveRecipeUseCase
+import com.techK.foodium.domain.usecases.database.DeleteRecipeUseCase
+import com.techK.foodium.domain.usecases.network.GetRecipesUseCase
+import com.techK.foodium.domain.usecases.database.SaveRecipeUseCase
 import com.techK.foodium.domain.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/menu_delete_all"
+        android:icon="@drawable/ic_delete_all"
+        android:title="@string/delete_all"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_sort"
+        android:icon="@drawable/ic_sort"
+        android:title="@string/sort_by"
+        app:showAsAction="ifRoom">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/menu_sort_by_name"
+                    android:title="@string/sort_by_name" />
+
+                <item
+                    android:id="@+id/menu_sort_by_likes"
+                    android:title="@string/sort_by_likes" />
+
+                <item
+                    android:id="@+id/menu_sort_by_time"
+                    android:title="@string/sort_by_time" />
+
+            </group>
+
+        </menu>
+
+    </item>
+
+</menu>
