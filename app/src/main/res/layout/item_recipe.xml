@@ -142,13 +142,13 @@
             android:contentDescription="@string/app_name"
             android:focusable="true"
             android:padding="@dimen/_4sdp"
+            android:src="@drawable/ic_delete"
             android:visibility="gone"
             app:layout_constraintBaseline_toBottomOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/chip_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/chip_time"
             app:tint="@color/color_red"
-            tools:src="@drawable/ic_delete"
             tools:visibility="visible" />
 
         <com.google.android.material.imageview.ShapeableImageView

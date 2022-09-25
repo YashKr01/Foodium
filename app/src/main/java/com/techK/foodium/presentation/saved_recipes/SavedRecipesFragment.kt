@@ -2,7 +2,6 @@ package com.techK.foodium.presentation.saved_recipes
 
 import android.os.Bundle
 import android.view.*
-import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
@@ -103,9 +102,6 @@ class SavedRecipesFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.savedRecipes.collectLatest {
-                val animation = AnimationUtils.loadLayoutAnimation(requireContext(),
-                    R.anim.recipe_layout_animation)
-                binding.recyclerViewSavedRecipes.layoutAnimation = animation
                 savedRecipesAdapter.submitList(it)
             }
         }
