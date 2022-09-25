@@ -7,12 +7,17 @@ import kotlinx.coroutines.flow.Flow
 
 interface RecipeRepository {
 
+    // region:: DataStore
     suspend fun getRefreshQuery(): Flow<Boolean>
 
-    val sortOrder : Flow<SortOrder>
+    suspend fun getSortOrder(): Flow<SortOrder>
 
-    suspend fun getRecipes(): RecipesResponse
+    suspend fun setRefresh(refresh: Boolean)
 
+    suspend fun setSortOrder(sortOrder: SortOrder)
+    // endregion
+
+    // region:: Database
     suspend fun getSavedRecipes(): Flow<List<Recipe>>
 
     suspend fun getRecipesByOrder(sortOrder: SortOrder): Flow<List<Recipe>>
@@ -21,10 +26,11 @@ interface RecipeRepository {
 
     suspend fun deleteRecipe(recipe: Recipe)
 
-    suspend fun setRefresh(refresh: Boolean)
-
-    suspend fun setSortOrder(sortOrder: SortOrder)
-
     suspend fun deleteAllRecipes()
+    // endregion
+
+    // region:: API Responses
+    suspend fun getRecipes(): RecipesResponse
+    // endregion
 
 }

@@ -24,9 +24,6 @@ class HomeViewModel @Inject constructor(
 
     var selectedCategory: Int = 0
 
-    private val _query = MutableStateFlow("Trending")
-    val query get() = _query.asStateFlow()
-
     private val _recipes = MutableStateFlow<Resource<List<Recipe>>>(Resource.Loading())
     val recipes get() = _recipes.asStateFlow()
 
@@ -56,10 +53,6 @@ class HomeViewModel @Inject constructor(
 
     fun deleteRecipe(recipe: Recipe) = viewModelScope.launch {
         deleteRecipeUseCase(recipe)
-    }
-
-    fun setQuery(query: String) = viewModelScope.launch {
-        _query.emit(query)
     }
 
 }

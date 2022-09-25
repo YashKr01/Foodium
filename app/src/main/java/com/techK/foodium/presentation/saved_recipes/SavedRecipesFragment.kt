@@ -1,10 +1,8 @@
 package com.techK.foodium.presentation.saved_recipes
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +18,6 @@ import com.techK.foodium.domain.enums.SortOrder
 import com.techK.foodium.presentation.adapters.list_adapters.SavedRecipeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 
 @AndroidEntryPoint
 class SavedRecipesFragment : Fragment() {
@@ -54,10 +51,9 @@ class SavedRecipesFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 viewModel.sortOrder.collectLatest { order ->
                     when (order) {
-                        SortOrder.BY_NAME -> menu.findItem(R.id.menu_sort_by_name).isChecked = true
-                        SortOrder.BY_LIKES -> menu.findItem(R.id.menu_sort_by_likes).isChecked =
-                            true
-                        SortOrder.BY_TIME -> menu.findItem(R.id.menu_sort_by_time).isChecked = true
+                        SortOrder.BY_NAME -> checkMenuItem(menu, R.id.menu_sort_by_name)
+                        SortOrder.BY_LIKES -> checkMenuItem(menu, R.id.menu_sort_by_likes)
+                        SortOrder.BY_TIME -> checkMenuItem(menu, R.id.menu_sort_by_time)
                         SortOrder.NONE -> Unit
                     }
                     viewModel.getSavedListByOrder(order)
@@ -68,18 +64,9 @@ class SavedRecipesFragment : Fragment() {
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
             when (menuItem.itemId) {
                 R.id.menu_delete_all -> showAlertDialog()
-                R.id.menu_sort_by_name -> {
-                    viewModel.setSortOrder(SortOrder.BY_NAME)
-                    menuItem.isChecked = true
-                }
-                R.id.menu_sort_by_likes -> {
-                    viewModel.setSortOrder(SortOrder.BY_LIKES)
-                    menuItem.isChecked = true
-                }
-                R.id.menu_sort_by_time -> {
-                    viewModel.setSortOrder(SortOrder.BY_TIME)
-                    menuItem.isChecked = true
-                }
+                R.id.menu_sort_by_name -> viewModel.setSortOrder(SortOrder.BY_NAME)
+                R.id.menu_sort_by_likes -> viewModel.setSortOrder(SortOrder.BY_LIKES)
+                R.id.menu_sort_by_time -> viewModel.setSortOrder(SortOrder.BY_TIME)
             }
             return true
         }
@@ -116,7 +103,8 @@ class SavedRecipesFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.savedRecipes.collectLatest {
-                val animation = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.recipe_layout_animation)
+                val animation = AnimationUtils.loadLayoutAnimation(requireContext(),
+                    R.anim.recipe_layout_animation)
                 binding.recyclerViewSavedRecipes.layoutAnimation = animation
                 savedRecipesAdapter.submitList(it)
             }
@@ -138,6 +126,10 @@ class SavedRecipesFragment : Fragment() {
         }
 
         dialog.create().show()
+    }
+
+    private fun checkMenuItem(menu: Menu, id: Int) {
+        menu.findItem(id).isChecked = true
     }
 
     override fun onDestroyView() {

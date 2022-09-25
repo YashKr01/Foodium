@@ -41,9 +41,10 @@ class RecipesDataStoreImpl @Inject constructor(
         }.collect { emit(it) }
     }
 
-    override val sortOrder: Flow<SortOrder>
-        get() = context.dataStore.data.map {
+    override suspend fun getSortOrder(): Flow<SortOrder> = flow {
+        context.dataStore.data.map {
             SortOrder.valueOf(it[SORT_PREFERENCE] ?: SortOrder.BY_NAME.name)
-        }
+        }.collect { emit(it) }
+    }
 
 }

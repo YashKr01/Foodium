@@ -10,8 +10,10 @@ class GetSortOrderUserCase @Inject constructor(
     private val repository: RecipeRepository,
 ) {
 
-    operator fun invoke(): Flow<SortOrder>  {
-        return repository.sortOrder
+    suspend operator fun invoke(): Flow<SortOrder> = flow {
+        repository.getSortOrder().collect {
+            emit(it)
+        }
     }
 
 }

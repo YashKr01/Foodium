@@ -21,9 +21,7 @@ class GetRecipesUseCase @Inject constructor(
             val response = api.getRecipes()
             val savedList = api.getSavedRecipes().first()
             val recipeList = response.results.map { recipe ->
-                val isSaved = savedList.any {
-                    it.id == recipe.id
-                }
+                val isSaved = savedList.any { it.id == recipe.id }
                 if (!isSaved) recipe.toRecipe()
                 else recipe.toRecipe().copy(saved = true)
             }

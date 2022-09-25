@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface RecipesDataStore {
 
-    val sortOrder: Flow<SortOrder>
+    suspend fun getSortOrder(): Flow<SortOrder>
 
     suspend fun getRefreshQuery(): Flow<Boolean>
 

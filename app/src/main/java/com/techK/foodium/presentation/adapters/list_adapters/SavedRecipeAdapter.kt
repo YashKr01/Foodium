@@ -20,14 +20,17 @@ class SavedRecipeAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.imgDelete.visibility = View.VISIBLE
-            binding.root.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) onRecipeClick(position)
-            }
-            binding.imgDelete.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) deleteRecipe(position)
+            binding.apply {
+                imgSave.visibility = View.GONE
+                imgDelete.visibility = View.VISIBLE
+                root.setOnClickListener {
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION) onRecipeClick(position)
+                }
+                imgDelete.setOnClickListener {
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION) deleteRecipe(position)
+                }
             }
         }
 

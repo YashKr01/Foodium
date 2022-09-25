@@ -17,17 +17,25 @@ class RecipeRepositoryImpl @Inject constructor(
     private val datastore: RecipesDataStore,
 ) : RecipeRepository {
 
+    // region:: DataStore
     override suspend fun getRefreshQuery(): Flow<Boolean> = flow {
         datastore.getRefreshQuery().collect { emit(it) }
     }
 
-    override val sortOrder: Flow<SortOrder>
-        get() = datastore.sortOrder
-
-    override suspend fun getRecipes(): RecipesResponse {
-        return api.getRecipes()
+    override suspend fun getSortOrder(): Flow<SortOrder> = flow {
+        datastore.getSortOrder().collect { emit(it) }
     }
 
+    override suspend fun setRefresh(refresh: Boolean) {
+        datastore.setRefresh(refresh)
+    }
+
+    override suspend fun setSortOrder(sortOrder: SortOrder) {
+        datastore.setSortOrder(sortOrder)
+    }
+    // endregion
+
+    // region:: Database
     override suspend fun getSavedRecipes(): Flow<List<Recipe>> {
         return dao.getSavedRecipes()
     }
@@ -40,14 +48,6 @@ class RecipeRepositoryImpl @Inject constructor(
         dao.deleteRecipe(recipe)
     }
 
-    override suspend fun setRefresh(refresh: Boolean) {
-        datastore.setRefresh(refresh)
-    }
-
-    override suspend fun setSortOrder(sortOrder: SortOrder) {
-        datastore.setSortOrder(sortOrder)
-    }
-
     override suspend fun deleteAllRecipes() {
         dao.deleteAllRecipes()
     }
@@ -55,5 +55,12 @@ class RecipeRepositoryImpl @Inject constructor(
     override suspend fun getRecipesByOrder(sortOrder: SortOrder): Flow<List<Recipe>> {
         return dao.getSavedRecipesByOrder(sortOrder)
     }
+    // endregion
+
+    // region:: API
+    override suspend fun getRecipes(): RecipesResponse {
+        return api.getRecipes()
+    }
+    // endregion
 
 }

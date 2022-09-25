@@ -18,12 +18,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SavedRecipesViewModel @Inject constructor(
-    private val deleteRecipe: DeleteRecipeUseCase,
-    private val deleteAll: DeleteAllRecipesUseCase,
-    private val getRecipesByOrder: GetRecipesByOrderUseCase,
-    private val getSortOrder: GetSortOrderUserCase,
-    private val setRefreshQuery: SetRefreshQueryUseCase,
-    private val setSortOrder: SetSortOrderUserCase,
+    private val deleteRecipeUseCase: DeleteRecipeUseCase,
+    private val deleteAllRecipesUseCase: DeleteAllRecipesUseCase,
+    private val getRecipesByOrderUseCase: GetRecipesByOrderUseCase,
+    private val getSortOrderUserCase: GetSortOrderUserCase,
+    private val setRefreshQueryUseCase: SetRefreshQueryUseCase,
+    private val setSortOrderUserCase: SetSortOrderUserCase,
 ) : ViewModel() {
 
     private val _sortOrder = MutableStateFlow(SortOrder.NONE)
@@ -37,31 +37,31 @@ class SavedRecipesViewModel @Inject constructor(
     }
 
     private fun getSortOrder() = viewModelScope.launch {
-        getSortOrder.invoke().collect {
+        getSortOrderUserCase().collect {
             _sortOrder.emit(it)
         }
     }
 
     fun getSavedListByOrder(sortOrder: SortOrder) = viewModelScope.launch {
-        getRecipesByOrder.invoke(sortOrder).collect {
+        getRecipesByOrderUseCase(sortOrder).collect {
             _savedRecipes.emit(it)
         }
     }
 
     fun deleteRecipe(recipe: Recipe) = viewModelScope.launch {
-        deleteRecipe.invoke(recipe)
+        deleteRecipeUseCase(recipe)
     }
 
     fun setRefreshQuery(refreshList: Boolean) = viewModelScope.launch {
-        setRefreshQuery.invoke(refreshList)
+        setRefreshQueryUseCase(refreshList)
     }
 
     fun deleteAllRecipe() = viewModelScope.launch {
-        deleteAll.invoke()
+        deleteAllRecipesUseCase()
     }
 
     fun setSortOrder(sortOrder: SortOrder) = viewModelScope.launch {
-        setSortOrder.invoke(sortOrder)
+        setSortOrderUserCase(sortOrder)
     }
 
 }
