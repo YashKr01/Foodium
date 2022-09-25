@@ -3,7 +3,6 @@ package com.techK.foodium.presentation.home
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,13 +21,14 @@ import com.techK.foodium.domain.utils.ExtensionFunctions.hide
 import com.techK.foodium.domain.utils.ExtensionFunctions.scale
 import com.techK.foodium.domain.utils.ExtensionFunctions.show
 import com.techK.foodium.domain.utils.Resource
+import com.techK.foodium.presentation.BaseFragment
 import com.techK.foodium.presentation.adapters.list_adapters.CategoryAdapter
 import com.techK.foodium.presentation.adapters.list_adapters.RecipeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -47,15 +47,7 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        init()
-        setupObservers()
-
-    }
-
-    private fun init() {
+    override fun init() {
 
         binding.floatingActionButton.scale(1f, 1f, 500L, 300L)
 
@@ -106,7 +98,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun setupObservers() {
+    override fun setupObservers() {
 
         // observe recipe
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {

@@ -3,7 +3,6 @@ package com.techK.foodium.presentation.saved_recipes
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
@@ -14,12 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.techK.foodium.R
 import com.techK.foodium.databinding.FragmentSavedRecipesBinding
 import com.techK.foodium.domain.enums.SortOrder
+import com.techK.foodium.presentation.BaseFragment
 import com.techK.foodium.presentation.adapters.list_adapters.SavedRecipeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class SavedRecipesFragment : Fragment() {
+class SavedRecipesFragment : BaseFragment() {
 
     private var _binding: FragmentSavedRecipesBinding? = null
     private val binding get() = _binding!!
@@ -33,14 +33,6 @@ class SavedRecipesFragment : Fragment() {
     ): View {
         _binding = FragmentSavedRecipesBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        init()
-        setupObservers()
-
     }
 
     private val menuProvider = object : MenuProvider {
@@ -71,7 +63,7 @@ class SavedRecipesFragment : Fragment() {
         }
     }
 
-    private fun init() {
+    override fun init() {
 
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
@@ -98,7 +90,7 @@ class SavedRecipesFragment : Fragment() {
 
     }
 
-    private fun setupObservers() {
+    override fun setupObservers() {
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.savedRecipes.collectLatest {
