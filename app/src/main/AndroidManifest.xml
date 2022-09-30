@@ -16,6 +16,7 @@
         android:theme="@style/Theme.Foodium">
         <activity
             android:name=".presentation.recipe_details.RecipeDetailsActivity"
+            android:theme="@style/Theme.Foodium.NoActionBar"
             android:exported="false" />
         <activity
             android:name="com.techK.foodium.presentation.main.MainActivity"

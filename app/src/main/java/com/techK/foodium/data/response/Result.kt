@@ -52,6 +52,9 @@ fun Result.toRecipe(): Recipe {
         title = title,
         vegan = vegan,
         vegetarian = vegetarian,
-        veryPopular = veryPopular
+        veryPopular = veryPopular,
+        glutenFree = glutenFree,
+        veryHealthy = veryHealthy,
+        dairyFree = dairyFree
     )
 }

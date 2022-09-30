@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="ingredient"
+            type="com.techK.foodium.data.response.ExtendedIngredient" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_2sdp"
+        app:cardCornerRadius="@dimen/_4sdp"
+        app:cardElevation="@dimen/_2sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_4sdp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgIngredient"
+                loadImage="@{@string/ingredient_base(ingredient.image)}"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/rounded"
+                tools:src="@drawable/sample_placeholder" />
+
+            <TextView
+                android:id="@+id/txtIngredientName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:fontFamily="@font/ubuntu_medium"
+                android:text="@{ingredient.name}"
+                android:textAllCaps="true"
+                android:textColor="@color/color_text_dark"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@id/imgIngredient"
+                app:layout_constraintTop_toTopOf="@id/imgIngredient"
+                tools:text="coconut oil" />
+
+            <TextView
+                android:id="@+id/txtIngredientConsistency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:fontFamily="@font/ubuntu_regular"
+                android:text="@{ingredient.consistency}"
+                android:textColor="@color/color_text_light"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintStart_toStartOf="@id/txtIngredientName"
+                app:layout_constraintTop_toBottomOf="@id/txtIngredientName"
+                tools:text="Solid" />
+
+            <TextView
+                android:id="@+id/txtIngredientQuantity"
+                setQuantity="@{ingredient}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:fontFamily="@font/ubuntu_regular"
+                android:textColor="@color/color_text_light"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintStart_toStartOf="@id/txtIngredientName"
+                app:layout_constraintTop_toBottomOf="@id/txtIngredientConsistency"
+                tools:text="3.0 cups" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

@@ -1,8 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.recipe_details.RecipeDetailsActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="recipe"
+            type="com.techK.foodium.domain.entities.Recipe" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".presentation.recipe_details.RecipeDetailsActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                android:background="@color/color_primary"
+                app:collapsedTitleTextAppearance="@style/Theme.Foodium.ToolbarTitle"
+                app:contentScrim="@color/color_primary"
+                app:expandedTitleMarginBottom="@dimen/_12sdp"
+                app:expandedTitleMarginStart="@dimen/_8sdp"
+                app:expandedTitleTextAppearance="@style/Theme.Foodium.ExpandedTitle"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:statusBarScrim="@color/color_primary"
+                app:toolbarId="@id/toolbar">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fitsSystemWindows="true">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imageRecipe"
+                        loadImage="@{recipe.image}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/app_name"
+                        android:fitsSystemWindows="true"
+                        android:scaleType="centerCrop"
+                        app:layout_collapseMode="parallax"
+                        tools:src="@drawable/sample_placeholder" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_60sdp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/fade_background" />
+
+                </RelativeLayout>
+
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:title="@string/app_name" />
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/_18sdp">
+
+                <TextView
+                    android:id="@+id/textRecipeTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/cougrette"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:text="@{recipe.title}"
+                    android:textColor="@color/color_text_dark"
+                    android:textSize="@dimen/_18ssp"
+                    tools:text="@string/sample_recipe_name" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    showRating="@{recipe}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/color_yellow"
+                    android:foregroundTint="@color/color_yellow"
+                    android:indeterminateTint="@color/color_yellow"
+                    android:isIndicator="true"
+                    android:max="10"
+                    android:numStars="10"
+                    android:padding="@dimen/_8sdp"
+                    android:progressTint="@color/color_yellow"
+                    android:secondaryProgressTint="@color/color_yellow"
+                    android:stepSize="1"
+                    tools:rating="3.5" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_4sdp"
+                    android:paddingEnd="@dimen/_4sdp">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_vegetarian"
+                        style="@style/Theme.Foodium.ActiveChip"
+                        setVisible="@{recipe.vegetarian}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/vegetarian"
+                        android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
+                        android:textSize="@dimen/_10ssp"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_gluten_free"
+                        style="@style/Theme.Foodium.ActiveChip"
+                        setVisible="@{recipe.glutenFree}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gluten_free"
+                        android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
+                        android:textSize="@dimen/_10ssp"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_vegan"
+                        style="@style/Theme.Foodium.ActiveChip"
+                        setVisible="@{recipe.vegan}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/veg"
+                        android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
+                        android:textSize="@dimen/_10ssp"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_popular"
+                        style="@style/Theme.Foodium.ActiveChip"
+                        setVisible="@{recipe.veryPopular}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/popular"
+                        android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
+                        android:textSize="@dimen/_10ssp"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_healthy"
+                        style="@style/Theme.Foodium.ActiveChip"
+                        setVisible="@{recipe.veryHealthy}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/healthy"
+                        android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
+                        android:textSize="@dimen/_10ssp"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_dairy_free"
+                        style="@style/Theme.Foodium.ActiveChip"
+                        setVisible="@{recipe.dairyFree}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dairyFree"
+                        android:textAppearance="@style/Theme.Foodium.ChipTextAppearance"
+                        android:textSize="@dimen/_10ssp"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+                <TextView
+                    android:id="@+id/textLink"
+                    underline="@{recipe.sourceUrl}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/ubuntu_regular"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:text="@{recipe.sourceUrl}"
+                    android:textColor="@color/color_text_link"
+                    android:textSize="@dimen/_12ssp"
+                    app:drawableStartCompat="@drawable/ic_link"
+                    app:drawableTint="@color/color_text_link"
+                    tools:text="https://fullbellysisters.blogspot.com/2012/01/cauliflower-fried-rice-more-veggies.html" />
+
+                <TextView
+                    android:id="@+id/text_description"
+                    setJSoupText="@{recipe.summary}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/ubuntu_regular"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:textAlignment="inherit"
+                    android:textColor="@color/color_text_light"
+                    android:textSize="@dimen/_13ssp"
+                    tools:text="@string/loren_ipsum_text" />
+
+                <TextView
+                    android:id="@+id/txtIngredientsCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:fontFamily="@font/ubuntu_medium"
+                    android:text="@{@string/ingredients + `(` + recipe.ingredients.size() + `)`}"
+                    android:textColor="@color/color_text_dark"
+                    android:textSize="@dimen/_16ssp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewIngredient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_ingredient" />
+
+                <TextView
+                    android:id="@+id/txtInstructions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:fontFamily="@font/ubuntu_medium"
+                    android:text="@string/instructions"
+                    android:textColor="@color/color_text_dark"
+                    android:textSize="@dimen/_16ssp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewInstructions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_recipe_instruction" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

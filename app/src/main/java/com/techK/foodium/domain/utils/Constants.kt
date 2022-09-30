@@ -26,7 +26,6 @@ object Constants {
 
     const val QUERY_TYPE = "type"
     const val QUERY_API_KEY = "apiKey"
-    const val BASE_IMAGE_URL = "https://spoonacular.com/cdn/ingredients_100x100/"
 
     const val USER_PREFERENCES_NAME = "user_preferences"
 

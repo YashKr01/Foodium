@@ -39,4 +39,5 @@
     <string name="delete_confirm_message">Would you like to delete all saved recipes?</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">Cancel</string>
+    <string name="ingredient_base">https://spoonacular.com/cdn/ingredients_100x100/%s</string>
 </resources>

@@ -30,5 +30,8 @@ data class Recipe(
     val vegan: Boolean,
     val vegetarian: Boolean,
     val veryPopular: Boolean,
+    val glutenFree: Boolean,
+    val veryHealthy: Boolean,
+    val dairyFree: Boolean,
     var saved: Boolean = false,
 ) : Parcelable

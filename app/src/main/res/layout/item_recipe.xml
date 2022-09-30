@@ -98,7 +98,7 @@
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_veg"
             style="@style/Theme.Foodium.ChipItem"
-            setVeganVisibility="@{recipe.vegan}"
+            setVisible="@{recipe.vegan}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_2sdp"
