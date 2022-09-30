@@ -2,19 +2,23 @@ package com.techK.foodium.presentation.recipe_details
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.techK.foodium.R
 import com.techK.foodium.databinding.ActivityRecipeDetailsBinding
 import com.techK.foodium.presentation.adapters.list_adapters.IngredientAdapter
 import com.techK.foodium.presentation.adapters.list_adapters.InstructionsAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipeDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecipeDetailsBinding
@@ -37,8 +41,50 @@ class RecipeDetailsActivity : AppCompatActivity() {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(recipeArgs.recipe.sourceUrl)))
         }
 
+        addMenuProvider(menuProvider)
+
         setupAdapters()
 
+    }
+
+    private val menuProvider = object : MenuProvider {
+        override fun onPrepareMenu(menu: Menu) {
+            super.onPrepareMenu(menu)
+            if (recipeArgs.recipe.saved) {
+                val icon = menu.findItem(R.id.menu_save)
+                changeMenuIcon(icon, R.drawable.ic_favorite_solid)
+            }
+        }
+
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.recipe_details_menu, menu)
+        }
+
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_share -> {
+                    shareRecipe()
+                    true
+                }
+                else -> {
+                    when (recipeArgs.recipe.saved) {
+                        true -> {
+                            viewModel.deleteRecipe(recipeArgs.recipe)
+                            recipeArgs.recipe.saved = false
+                            changeMenuIcon(menuItem, R.drawable.ic_favorite_hollow)
+                        }
+                        false -> {
+                            viewModel.insertRecipe(recipeArgs.recipe)
+                            recipeArgs.recipe.saved = true
+                            changeMenuIcon(menuItem, R.drawable.ic_favorite_solid)
+                        }
+                    }
+
+                    viewModel.setRefreshQuery(true)
+                    true
+                }
+            }
+        }
     }
 
     private fun setupAdapters() {
