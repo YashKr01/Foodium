@@ -2,6 +2,9 @@ package com.techK.foodium.domain.usecases.network
 
 import com.techK.foodium.data.response.toRecipe
 import com.techK.foodium.domain.repository.RecipeRepository
+import com.techK.foodium.domain.utils.Constants
+import com.techK.foodium.domain.utils.Constants.QUERY_API_KEY
+import com.techK.foodium.domain.utils.Constants.QUERY_TYPE
 import com.techK.foodium.domain.utils.Resource
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -9,14 +12,19 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetRecipesUseCase @Inject constructor(
+class SearchRecipesUseCase @Inject constructor(
     private val repository: RecipeRepository,
 ) {
 
-    suspend operator fun invoke() = flow {
+    suspend operator fun invoke(query: String) = flow {
         try {
             emit(Resource.Loading())
-            val response = repository.getRecipes()
+            val response = repository.searchRecipes(
+                hashMapOf(
+                    Pair(QUERY_TYPE, query),
+                    Pair(QUERY_API_KEY, Constants.API_KEY.random())
+                )
+            )
             val savedList = repository.getSavedRecipes().first()
             val recipeList = response.results.map { recipe ->
                 val isSaved = savedList.any { it.id == recipe.id }

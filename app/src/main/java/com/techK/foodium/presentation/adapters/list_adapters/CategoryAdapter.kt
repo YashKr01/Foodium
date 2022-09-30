@@ -13,13 +13,13 @@ class CategoryAdapter(
     private val onCategoryClick: (Category, Int) -> Unit,
 ) : ListAdapter<Category, CategoryAdapter.CategoryViewHolder>(CATEGORY_COMPARATOR) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CategoryViewHolder(
-        ItemCategoryBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
+        return CategoryViewHolder(
+            ItemCategoryBinding.inflate(LayoutInflater.from(parent.context),
+                parent,
+                false)
         )
-    )
+    }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
 

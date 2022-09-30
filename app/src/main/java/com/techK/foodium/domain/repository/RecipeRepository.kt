@@ -31,6 +31,9 @@ interface RecipeRepository {
 
     // region:: API Responses
     suspend fun getRecipes(): RecipesResponse
+
+    suspend fun searchRecipes(queryMap: HashMap<String, String>): RecipesResponse
+
     // endregion
 
 }

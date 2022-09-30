@@ -43,7 +43,6 @@ class HomeFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -51,24 +50,27 @@ class HomeFragment : BaseFragment() {
 
         binding.floatingActionButton.scale(1f, 1f, 500L, 300L)
 
-        // category adapter
-        categoryAdapter = CategoryAdapter(
-            selectedPosition = viewModel.selectedCategory,
-            onCategoryClick = { it, position ->
-                if (position != viewModel.selectedCategory) {
-                    viewModel.selectedCategory = position
-                    // TODO : Implement Search
-                }
-            })
+        setupAdapters()
+        setupRecyclerViews()
 
-        // category recycler view
-        binding.recyclerViewCategories.apply {
-            setHasFixedSize(false)
-            adapter = categoryAdapter
-            categoryAdapter.submitList(Constants.categoryList)
+        binding.floatingActionButton.setOnClickListener {
+            val navigation = HomeFragmentDirections.actionHomeFragmentToSavedRecipesFragment()
+            findNavController().navigate(navigation)
         }
 
-        // recipe adapter
+    }
+
+    private fun setupAdapters() {
+
+        categoryAdapter = CategoryAdapter(
+            selectedPosition = viewModel.selectedPosition.value,
+            onCategoryClick = { category, position ->
+                viewModel.setSelectedPosition(position)
+                viewModel.setSelectedQuery(category)
+                viewModel.searchRecipe(category)
+            }
+        )
+
         recipesAdapter = RecipeAdapter(
             saveRecipe = { recipe ->
                 viewModel.saveRecipe(recipe)
@@ -84,17 +86,20 @@ class HomeFragment : BaseFragment() {
             }
         )
 
-        // recipes recycler view
+    }
+
+    private fun setupRecyclerViews() {
+        binding.recyclerViewCategories.apply {
+            setHasFixedSize(false)
+            adapter = categoryAdapter
+            categoryAdapter.submitList(Constants.categoryList)
+        }
+
         binding.recyclerViewRecipes.apply {
             setHasFixedSize(false)
+            itemAnimator = null
             adapter = recipesAdapter
         }
-
-        binding.floatingActionButton.setOnClickListener {
-            val navigation = HomeFragmentDirections.actionHomeFragmentToSavedRecipesFragment()
-            findNavController().navigate(navigation)
-        }
-
     }
 
     private fun showSnackBar(saved: Boolean) {
@@ -149,8 +154,8 @@ class HomeFragment : BaseFragment() {
 
     private fun successState(data: List<Recipe>?) {
         binding.apply {
-            val animation = AnimationUtils
-                .loadLayoutAnimation(requireContext(), R.anim.recipe_layout_animation)
+            val animation = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.recipe_layout_animation)
+            recyclerViewRecipes.layoutManager?.scrollToPosition(0)
             recyclerViewRecipes.layoutAnimation = animation
             recyclerViewRecipes.visibility = View.VISIBLE
             shimmerLayout.stopShimmer()

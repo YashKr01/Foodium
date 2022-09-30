@@ -61,6 +61,11 @@ class RecipeRepositoryImpl @Inject constructor(
     override suspend fun getRecipes(): RecipesResponse {
         return api.getRecipes()
     }
+
+    override suspend fun searchRecipes(queryMap: HashMap<String, String>): RecipesResponse {
+        return api.searchRecipes(queryMap)
+    }
+
     // endregion
 
 }
