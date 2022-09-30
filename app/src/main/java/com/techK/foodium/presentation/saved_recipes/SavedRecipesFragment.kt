@@ -10,8 +10,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.techK.foodium.R
 import com.techK.foodium.databinding.FragmentSavedRecipesBinding
+import com.techK.foodium.domain.entities.Recipe
 import com.techK.foodium.domain.enums.SortOrder
 import com.techK.foodium.presentation.BaseFragment
 import com.techK.foodium.presentation.adapters.list_adapters.SavedRecipeAdapter
@@ -70,8 +72,9 @@ class SavedRecipesFragment : BaseFragment() {
         requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         savedRecipesAdapter = SavedRecipeAdapter(
-            deleteRecipe = { recipeEntity ->
-                viewModel.deleteRecipe(recipeEntity)
+            deleteRecipe = { recipe ->
+                viewModel.deleteRecipe(recipe)
+                showSnackBar(recipe)
                 viewModel.setRefreshQuery(true)
             },
             onRecipeClick = { recipe ->
@@ -98,6 +101,16 @@ class SavedRecipesFragment : BaseFragment() {
             }
         }
 
+    }
+
+    private fun showSnackBar(recipe: Recipe) {
+        Snackbar.make(
+            binding.root,
+            "Recipe Deleted",
+            Snackbar.LENGTH_SHORT
+        ).setAction("UNDO") {
+            viewModel.saveRecipe(recipe)
+        }.show()
     }
 
     private fun showAlertDialog() {

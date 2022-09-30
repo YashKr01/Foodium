@@ -7,6 +7,7 @@ import com.techK.foodium.domain.enums.SortOrder
 import com.techK.foodium.domain.usecases.database.DeleteAllRecipesUseCase
 import com.techK.foodium.domain.usecases.database.DeleteRecipeUseCase
 import com.techK.foodium.domain.usecases.database.GetRecipesByOrderUseCase
+import com.techK.foodium.domain.usecases.database.SaveRecipeUseCase
 import com.techK.foodium.domain.usecases.datastore.GetSortOrderUserCase
 import com.techK.foodium.domain.usecases.datastore.SetRefreshQueryUseCase
 import com.techK.foodium.domain.usecases.datastore.SetSortOrderUserCase
@@ -24,6 +25,7 @@ class SavedRecipesViewModel @Inject constructor(
     private val getSortOrderUserCase: GetSortOrderUserCase,
     private val setRefreshQueryUseCase: SetRefreshQueryUseCase,
     private val setSortOrderUserCase: SetSortOrderUserCase,
+    private val saveRecipeUseCase: SaveRecipeUseCase,
 ) : ViewModel() {
 
     private val _sortOrder = MutableStateFlow(SortOrder.NONE)
@@ -62,6 +64,10 @@ class SavedRecipesViewModel @Inject constructor(
 
     fun setSortOrder(sortOrder: SortOrder) = viewModelScope.launch {
         setSortOrderUserCase(sortOrder)
+    }
+
+    fun saveRecipe(recipe: Recipe) = viewModelScope.launch {
+        saveRecipeUseCase(recipe)
     }
 
 }

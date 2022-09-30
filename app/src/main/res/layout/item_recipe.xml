@@ -66,6 +66,7 @@
             style="@style/Theme.Foodium.ChipItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="false"
             android:focusable="false"
             android:text="@{String.valueOf(recipe.aggregateLikes)}"
             android:textColor="@color/color_blue"
@@ -75,7 +76,8 @@
             app:chipStrokeColor="@color/color_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/txt_recipe_description"
-            app:layout_constraintTop_toBottomOf="@id/txt_recipe_description" />
+            app:layout_constraintTop_toBottomOf="@id/txt_recipe_description"
+            app:rippleColor="@null" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_time"
@@ -83,6 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_2sdp"
+            android:clickable="false"
             android:focusable="false"
             android:text="@{String.valueOf(recipe.readyInMinutes)}"
             android:textColor="@color/color_yellow"
@@ -93,6 +96,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/chip_likes"
             app:layout_constraintTop_toBottomOf="@id/txt_recipe_description"
+            app:rippleColor="@null"
             tools:text="45" />
 
         <com.google.android.material.chip.Chip
@@ -102,6 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_2sdp"
+            android:clickable="false"
             android:focusable="false"
             android:text="@string/veg"
             android:textColor="@color/color_green"
@@ -112,6 +117,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/chip_time"
             app:layout_constraintTop_toBottomOf="@id/txt_recipe_description"
+            app:rippleColor="@null"
             tools:visibility="visible" />
 
         <ImageView

@@ -8,6 +8,8 @@
         android:layout_height="match_parent"
         tools:context=".presentation.home.HomeFragment">
 
+
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="0dp"
@@ -27,8 +29,8 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/networkStatusLayout"
-            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_category" />
 
         <LinearLayout
@@ -91,7 +93,9 @@
             android:id="@+id/recyclerViewRecipes"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:orientation="vertical"
             android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

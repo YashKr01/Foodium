@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.techK.foodium.R
 import com.techK.foodium.databinding.ActivityRecipeDetailsBinding
 import com.techK.foodium.presentation.adapters.list_adapters.IngredientAdapter
@@ -48,6 +49,7 @@ class RecipeDetailsActivity : AppCompatActivity() {
     }
 
     private val menuProvider = object : MenuProvider {
+
         override fun onPrepareMenu(menu: Menu) {
             super.onPrepareMenu(menu)
             if (recipeArgs.recipe.saved) {
@@ -72,11 +74,13 @@ class RecipeDetailsActivity : AppCompatActivity() {
                             viewModel.deleteRecipe(recipeArgs.recipe)
                             recipeArgs.recipe.saved = false
                             changeMenuIcon(menuItem, R.drawable.ic_favorite_hollow)
+                            showSnackBar(true)
                         }
                         false -> {
                             viewModel.insertRecipe(recipeArgs.recipe)
                             recipeArgs.recipe.saved = true
                             changeMenuIcon(menuItem, R.drawable.ic_favorite_solid)
+                            showSnackBar(false)
                         }
                     }
 
@@ -84,6 +88,13 @@ class RecipeDetailsActivity : AppCompatActivity() {
                     true
                 }
             }
+        }
+    }
+
+    private fun showSnackBar(saved: Boolean) {
+        when (saved) {
+            true -> Snackbar.make(binding.root, "Recipe Deleted", Snackbar.LENGTH_SHORT).show()
+            false -> Snackbar.make(binding.root, "Recipe Saved", Snackbar.LENGTH_SHORT).show()
         }
     }
 

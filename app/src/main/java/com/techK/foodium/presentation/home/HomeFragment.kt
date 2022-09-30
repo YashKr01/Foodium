@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.techK.foodium.R
 import com.techK.foodium.databinding.FragmentHomeBinding
 import com.techK.foodium.domain.entities.Recipe
@@ -64,8 +64,6 @@ class HomeFragment : BaseFragment() {
         // category recycler view
         binding.recyclerViewCategories.apply {
             setHasFixedSize(false)
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = categoryAdapter
             categoryAdapter.submitList(Constants.categoryList)
         }
@@ -74,9 +72,11 @@ class HomeFragment : BaseFragment() {
         recipesAdapter = RecipeAdapter(
             saveRecipe = { recipe ->
                 viewModel.saveRecipe(recipe)
+                showSnackBar(false)
             },
             deleteRecipe = { recipe ->
                 viewModel.deleteRecipe(recipe)
+                showSnackBar(true)
             },
             onRecipeClick = { recipe ->
                 val nav = HomeFragmentDirections.actionHomeFragmentToRecipeDetailsActivity(recipe)
@@ -87,7 +87,6 @@ class HomeFragment : BaseFragment() {
         // recipes recycler view
         binding.recyclerViewRecipes.apply {
             setHasFixedSize(false)
-            layoutManager = LinearLayoutManager(requireContext())
             adapter = recipesAdapter
         }
 
@@ -96,6 +95,13 @@ class HomeFragment : BaseFragment() {
             findNavController().navigate(navigation)
         }
 
+    }
+
+    private fun showSnackBar(saved: Boolean) {
+        when (saved) {
+            true -> Snackbar.make(binding.root, "Recipe Deleted", Snackbar.LENGTH_SHORT).show()
+            false -> Snackbar.make(binding.root, "Recipe Saved", Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     override fun setupObservers() {
