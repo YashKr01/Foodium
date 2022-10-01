@@ -10,9 +10,11 @@ import com.techK.foodium.domain.usecases.datastore.SetRefreshQueryUseCase
 import com.techK.foodium.domain.usecases.datastore.SetSortOrderUserCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,6 +35,9 @@ class SavedRecipesViewModel @Inject constructor(
 
     private val _savedRecipes = MutableStateFlow<List<Recipe>>(emptyList())
     val savedRecipes get() = _savedRecipes.asStateFlow()
+
+    private val _event = Channel<SavedRecipesEvent>()
+    val event = _event.receiveAsFlow()
 
     val searchQuery = MutableStateFlow("")
     private var searchJob: Job? = null
@@ -55,14 +60,13 @@ class SavedRecipesViewModel @Inject constructor(
 
     fun deleteRecipe(recipe: Recipe) = viewModelScope.launch {
         deleteRecipeUseCase(recipe)
-    }
-
-    fun setRefreshQuery(refreshList: Boolean) = viewModelScope.launch {
-        setRefreshQueryUseCase(refreshList)
+        setRefreshQueryUseCase(true)
+        _event.send(SavedRecipesEvent.ShowRecipeDeletedMessage(recipe))
     }
 
     fun deleteAllRecipe() = viewModelScope.launch {
         deleteAllRecipesUseCase()
+        setRefreshQueryUseCase(true)
     }
 
     fun setSortOrder(sortOrder: SortOrder) = viewModelScope.launch {
@@ -99,6 +103,10 @@ class SavedRecipesViewModel @Inject constructor(
             }
             SortOrder.NONE -> Unit
         }
+    }
+
+    fun navigateToDetailsScreen(recipe: Recipe) = viewModelScope.launch {
+        _event.send(SavedRecipesEvent.NavigateToDetailsScreen(recipe))
     }
 
 }

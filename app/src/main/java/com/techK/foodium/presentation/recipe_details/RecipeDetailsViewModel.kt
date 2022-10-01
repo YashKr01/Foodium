@@ -7,6 +7,8 @@ import com.techK.foodium.domain.usecases.database.DeleteRecipeUseCase
 import com.techK.foodium.domain.usecases.database.SaveRecipeUseCase
 import com.techK.foodium.domain.usecases.datastore.SetRefreshQueryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,17 +19,23 @@ class RecipeDetailsViewModel @Inject constructor(
     private val deleteRecipeUseCase: DeleteRecipeUseCase,
 ) : ViewModel() {
 
-    fun setRefreshQuery(refresh: Boolean) = viewModelScope.launch {
-        setRefreshQueryUseCase(refresh)
-    }
+    private val _events = Channel<RecipeDetailsEvents>()
+    val events = _events.receiveAsFlow()
 
     fun deleteRecipe(recipe: Recipe) = viewModelScope.launch {
         deleteRecipeUseCase(recipe)
+        setRefreshQueryUseCase(true)
+        _events.send(RecipeDetailsEvents.DeleteRecipe)
     }
 
-    fun insertRecipe(recipe: Recipe) = viewModelScope.launch {
+    fun saveRecipe(recipe: Recipe) = viewModelScope.launch {
         saveRecipeUseCase(recipe)
+        setRefreshQueryUseCase(true)
+        _events.send(RecipeDetailsEvents.SaveRecipe)
     }
 
+    fun shareRecipe(recipe: Recipe) = viewModelScope.launch {
+        _events.send(RecipeDetailsEvents.ShareRecipe(recipe))
+    }
 
 }

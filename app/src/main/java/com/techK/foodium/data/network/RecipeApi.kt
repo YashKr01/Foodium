@@ -1,7 +1,7 @@
 package com.techK.foodium.data.network
 
 import com.techK.foodium.data.response.RecipesResponse
-import com.techK.foodium.domain.utils.Constants
+import com.techK.foodium.utils.Constants
 import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.http.QueryMap

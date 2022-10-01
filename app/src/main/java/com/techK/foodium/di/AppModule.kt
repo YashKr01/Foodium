@@ -9,8 +9,8 @@ import com.techK.foodium.data.databse.dao.RecipeDao
 import com.techK.foodium.data.network.RecipeApi
 import com.techK.foodium.data.repository.RecipeRepositoryImpl
 import com.techK.foodium.domain.repository.RecipeRepository
-import com.techK.foodium.domain.utils.Constants.BASE_URL
-import com.techK.foodium.domain.utils.Constants.DATABASE_NAME
+import com.techK.foodium.utils.Constants.BASE_URL
+import com.techK.foodium.utils.Constants.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

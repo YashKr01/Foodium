@@ -50,7 +50,7 @@ class SavedRecipesFragment : BaseFragment(), SearchView.OnQueryTextListener {
                         SortOrder.BY_TIME -> checkMenuItem(menu, R.id.menu_sort_by_time)
                         SortOrder.NONE -> Unit
                     }
-                    when(viewModel.searchQuery.value.isEmpty()) {
+                    when (viewModel.searchQuery.value.isEmpty()) {
                         true -> viewModel.getSavedListByOrder(order)
                         false -> viewModel.sortCurrentList(viewModel.sortOrder.value)
                     }
@@ -91,16 +91,8 @@ class SavedRecipesFragment : BaseFragment(), SearchView.OnQueryTextListener {
         requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         savedRecipesAdapter = SavedRecipeAdapter(
-            deleteRecipe = { recipe ->
-                viewModel.deleteRecipe(recipe)
-                showSnackBar(recipe)
-                viewModel.setRefreshQuery(true)
-            },
-            onRecipeClick = { recipe ->
-                val navDirection = SavedRecipesFragmentDirections
-                    .actionSavedRecipesFragmentToRecipeDetailsActivity(recipe)
-                findNavController().navigate(navDirection)
-            }
+            deleteRecipe = { recipe -> viewModel.deleteRecipe(recipe) },
+            onRecipeClick = { recipe -> viewModel.navigateToDetailsScreen(recipe) }
         )
 
         binding.recyclerViewSavedRecipes.apply {
@@ -117,6 +109,19 @@ class SavedRecipesFragment : BaseFragment(), SearchView.OnQueryTextListener {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.savedRecipes.collectLatest {
                 savedRecipesAdapter.submitList(it)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.event.collectLatest { event ->
+                when (event) {
+                    is SavedRecipesEvent.ShowRecipeDeletedMessage -> showSnackBar(event.recipe)
+                    is SavedRecipesEvent.NavigateToDetailsScreen -> findNavController().navigate(
+                        SavedRecipesFragmentDirections
+                            .actionSavedRecipesFragmentToRecipeDetailsActivity(
+                                event.recipe)
+                    )
+                }
             }
         }
 
@@ -138,7 +143,6 @@ class SavedRecipesFragment : BaseFragment(), SearchView.OnQueryTextListener {
             setMessage(getString(R.string.delete_confirm_message))
             setPositiveButton(getString(R.string.text_ok)) { _, _ ->
                 viewModel.deleteAllRecipe()
-                viewModel.setRefreshQuery(true)
             }
             setNegativeButton(getString(R.string.text_cancel)) { _, _ ->
 

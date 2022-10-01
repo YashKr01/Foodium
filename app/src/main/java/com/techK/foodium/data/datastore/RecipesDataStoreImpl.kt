@@ -6,9 +6,9 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import com.techK.foodium.domain.enums.SortOrder
-import com.techK.foodium.domain.utils.Constants.REFRESH_LIST
-import com.techK.foodium.domain.utils.Constants.SORT_PREFERENCE
-import com.techK.foodium.domain.utils.Constants.USER_PREFERENCES_NAME
+import com.techK.foodium.utils.Constants.REFRESH_LIST
+import com.techK.foodium.utils.Constants.SORT_PREFERENCE
+import com.techK.foodium.utils.Constants.USER_PREFERENCES_NAME
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

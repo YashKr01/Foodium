@@ -1,4 +1,4 @@
-package com.techK.foodium.domain.utils
+package com.techK.foodium.utils
 
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -31,10 +31,7 @@ object Constants {
 
     val REFRESH_LIST = booleanPreferencesKey("refresh_required")
     val SORT_PREFERENCE = stringPreferencesKey("sort_preference")
-
-    const val JOKE_TABLE_NAME = "joke_table"
-    const val RECIPE_TABLE_NAME = "recipes_table"
-
+    
     const val DATABASE_NAME = "foodium_database"
 
     val API_KEY = listOf(

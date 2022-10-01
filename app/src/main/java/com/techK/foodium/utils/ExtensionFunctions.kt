@@ -1,4 +1,4 @@
-package com.techK.foodium.domain.utils
+package com.techK.foodium.utils
 
 import android.content.Context
 import android.view.View

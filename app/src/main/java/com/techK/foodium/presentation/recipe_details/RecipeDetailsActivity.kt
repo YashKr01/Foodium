@@ -11,13 +11,16 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.techK.foodium.R
 import com.techK.foodium.databinding.ActivityRecipeDetailsBinding
+import com.techK.foodium.domain.entities.Recipe
 import com.techK.foodium.presentation.adapters.list_adapters.IngredientAdapter
 import com.techK.foodium.presentation.adapters.list_adapters.InstructionsAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class RecipeDetailsActivity : AppCompatActivity() {
@@ -44,8 +47,22 @@ class RecipeDetailsActivity : AppCompatActivity() {
 
         addMenuProvider(menuProvider)
 
+        setupObservers()
+
         setupAdapters()
 
+    }
+
+    private fun setupObservers() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.events.collectLatest { event ->
+                when (event) {
+                    is RecipeDetailsEvents.ShareRecipe -> shareRecipe(event.recipe)
+                    is RecipeDetailsEvents.SaveRecipe -> showSnackBar(false)
+                    is RecipeDetailsEvents.DeleteRecipe -> showSnackBar(true)
+                }
+            }
+        }
     }
 
     private val menuProvider = object : MenuProvider {
@@ -65,7 +82,7 @@ class RecipeDetailsActivity : AppCompatActivity() {
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
             return when (menuItem.itemId) {
                 R.id.menu_share -> {
-                    shareRecipe()
+                    viewModel.shareRecipe(recipeArgs.recipe)
                     true
                 }
                 else -> {
@@ -74,17 +91,13 @@ class RecipeDetailsActivity : AppCompatActivity() {
                             viewModel.deleteRecipe(recipeArgs.recipe)
                             recipeArgs.recipe.saved = false
                             changeMenuIcon(menuItem, R.drawable.ic_favorite_hollow)
-                            showSnackBar(true)
                         }
                         false -> {
-                            viewModel.insertRecipe(recipeArgs.recipe)
+                            viewModel.saveRecipe(recipeArgs.recipe)
                             recipeArgs.recipe.saved = true
                             changeMenuIcon(menuItem, R.drawable.ic_favorite_solid)
-                            showSnackBar(false)
                         }
                     }
-
-                    viewModel.setRefreshQuery(true)
                     true
                 }
             }
@@ -139,12 +152,12 @@ class RecipeDetailsActivity : AppCompatActivity() {
 
     }
 
-    private fun shareRecipe() {
+    private fun shareRecipe(recipe: Recipe) {
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.apply {
             type = "text/plain"
             putExtra(Intent.EXTRA_SUBJECT, "Recipe URL")
-            putExtra(Intent.EXTRA_TEXT, recipeArgs.recipe.sourceUrl)
+            putExtra(Intent.EXTRA_TEXT, recipe.sourceUrl)
             startActivity(this)
         }
     }

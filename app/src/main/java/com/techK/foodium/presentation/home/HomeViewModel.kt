@@ -12,10 +12,12 @@ import com.techK.foodium.domain.usecases.datastore.GetRefreshQueryUseCase
 import com.techK.foodium.domain.usecases.datastore.SetRefreshQueryUseCase
 import com.techK.foodium.domain.usecases.network.GetRecipesUseCase
 import com.techK.foodium.domain.usecases.network.SearchRecipesUseCase
-import com.techK.foodium.domain.utils.Resource
+import com.techK.foodium.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,6 +48,9 @@ class HomeViewModel @Inject constructor(
     private val _query = MutableStateFlow(Category(""))
     val query get() = _query.asStateFlow()
 
+    private val _event = Channel<HomeEvent>()
+    val event = _event.receiveAsFlow()
+
     init {
         getRecipes()
         observeConnection()
@@ -66,10 +71,12 @@ class HomeViewModel @Inject constructor(
 
     fun saveRecipe(recipe: Recipe) = viewModelScope.launch {
         saveRecipeUseCase(recipe)
+        _event.send(HomeEvent.ShowRecipeSavedMessage)
     }
 
     fun deleteRecipe(recipe: Recipe) = viewModelScope.launch {
         deleteRecipeUseCase(recipe)
+        _event.send(HomeEvent.ShowRecipeDeletedMessage)
     }
 
     fun setRefreshQuery(refresh: Boolean) = viewModelScope.launch {
@@ -98,6 +105,10 @@ class HomeViewModel @Inject constructor(
         searchRecipesUseCase(category.title).collect {
             _recipes.emit(it)
         }
+    }
+
+    fun navigateToDetailsScreen(recipe: Recipe) = viewModelScope.launch {
+        _event.send(HomeEvent.NavigateToDetailsScreen(recipe))
     }
 
 }

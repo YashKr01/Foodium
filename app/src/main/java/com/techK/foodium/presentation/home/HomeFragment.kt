@@ -15,12 +15,12 @@ import com.google.android.material.snackbar.Snackbar
 import com.techK.foodium.R
 import com.techK.foodium.databinding.FragmentHomeBinding
 import com.techK.foodium.domain.entities.Recipe
-import com.techK.foodium.domain.utils.Constants
-import com.techK.foodium.domain.utils.ExtensionFunctions.getColorRes
-import com.techK.foodium.domain.utils.ExtensionFunctions.hide
-import com.techK.foodium.domain.utils.ExtensionFunctions.scale
-import com.techK.foodium.domain.utils.ExtensionFunctions.show
-import com.techK.foodium.domain.utils.Resource
+import com.techK.foodium.utils.Constants
+import com.techK.foodium.utils.ExtensionFunctions.getColorRes
+import com.techK.foodium.utils.ExtensionFunctions.hide
+import com.techK.foodium.utils.ExtensionFunctions.scale
+import com.techK.foodium.utils.ExtensionFunctions.show
+import com.techK.foodium.utils.Resource
 import com.techK.foodium.presentation.BaseFragment
 import com.techK.foodium.presentation.adapters.list_adapters.CategoryAdapter
 import com.techK.foodium.presentation.adapters.list_adapters.RecipeAdapter
@@ -60,6 +60,48 @@ class HomeFragment : BaseFragment() {
 
     }
 
+    override fun setupObservers() {
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.recipes.collectLatest { result ->
+                when (result) {
+                    is Resource.Success -> successState(result.data)
+                    is Resource.Error -> errorState(result.message)
+                    is Resource.Loading -> loadingState()
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.connection.collectLatest { connected ->
+                when (connected) {
+                    true -> hideNoConnectionLayout()
+                    false -> showNoConnectionLayout()
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.refreshQuery.collect { refresh ->
+                if (refresh) viewModel.refreshList(recipesAdapter.currentList)
+                viewModel.setRefreshQuery(false)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.event.collectLatest { event ->
+                when (event) {
+                    is HomeEvent.ShowRecipeDeletedMessage -> showSnackBar(true)
+                    is HomeEvent.ShowRecipeSavedMessage -> showSnackBar(false)
+                    is HomeEvent.NavigateToDetailsScreen -> findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToRecipeDetailsActivity(event.recipe)
+                    )
+                }
+            }
+        }
+
+    }
+
     private fun setupAdapters() {
 
         categoryAdapter = CategoryAdapter(
@@ -72,18 +114,9 @@ class HomeFragment : BaseFragment() {
         )
 
         recipesAdapter = RecipeAdapter(
-            saveRecipe = { recipe ->
-                viewModel.saveRecipe(recipe)
-                showSnackBar(false)
-            },
-            deleteRecipe = { recipe ->
-                viewModel.deleteRecipe(recipe)
-                showSnackBar(true)
-            },
-            onRecipeClick = { recipe ->
-                val nav = HomeFragmentDirections.actionHomeFragmentToRecipeDetailsActivity(recipe)
-                findNavController().navigate(nav)
-            }
+            saveRecipe = { recipe -> viewModel.saveRecipe(recipe) },
+            deleteRecipe = { recipe -> viewModel.deleteRecipe(recipe) },
+            onRecipeClick = { recipe -> viewModel.navigateToDetailsScreen(recipe) }
         )
 
     }
@@ -109,40 +142,6 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-    override fun setupObservers() {
-
-        // observe recipe
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.recipes.collectLatest { result ->
-                when (result) {
-                    is Resource.Success -> successState(result.data)
-                    is Resource.Error -> errorState(result.message)
-                    is Resource.Loading -> loadingState()
-                }
-            }
-
-        }
-
-        // observe connection
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.connection.collectLatest { connected ->
-                when (connected) {
-                    true -> hideNoConnectionLayout()
-                    false -> showNoConnectionLayout()
-                }
-            }
-        }
-
-        // observe refresh query
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.refreshQuery.collect { refresh ->
-                if (refresh) viewModel.refreshList(recipesAdapter.currentList)
-                viewModel.setRefreshQuery(false)
-            }
-        }
-
-    }
-
     private fun errorState(message: String?) {
         binding.apply {
             Toast.makeText(requireContext(), "$message", Toast.LENGTH_SHORT).show()
@@ -154,7 +153,8 @@ class HomeFragment : BaseFragment() {
 
     private fun successState(data: List<Recipe>?) {
         binding.apply {
-            val animation = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.recipe_layout_animation)
+            val animation =
+                AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.recipe_layout_animation)
             recyclerViewRecipes.layoutManager?.scrollToPosition(0)
             recyclerViewRecipes.layoutAnimation = animation
             recyclerViewRecipes.visibility = View.VISIBLE

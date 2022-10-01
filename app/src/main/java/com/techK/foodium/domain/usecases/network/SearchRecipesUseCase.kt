@@ -2,10 +2,10 @@ package com.techK.foodium.domain.usecases.network
 
 import com.techK.foodium.data.response.toRecipe
 import com.techK.foodium.domain.repository.RecipeRepository
-import com.techK.foodium.domain.utils.Constants
-import com.techK.foodium.domain.utils.Constants.QUERY_API_KEY
-import com.techK.foodium.domain.utils.Constants.QUERY_TYPE
-import com.techK.foodium.domain.utils.Resource
+import com.techK.foodium.utils.Constants
+import com.techK.foodium.utils.Constants.QUERY_API_KEY
+import com.techK.foodium.utils.Constants.QUERY_TYPE
+import com.techK.foodium.utils.Resource
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
