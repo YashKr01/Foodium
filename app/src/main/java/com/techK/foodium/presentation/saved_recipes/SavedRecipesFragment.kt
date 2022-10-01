@@ -50,8 +50,10 @@ class SavedRecipesFragment : BaseFragment(), SearchView.OnQueryTextListener {
                         SortOrder.BY_TIME -> checkMenuItem(menu, R.id.menu_sort_by_time)
                         SortOrder.NONE -> Unit
                     }
-                    if (viewModel.searchQuery.value.isEmpty())
-                        viewModel.getSavedListByOrder(order)
+                    when(viewModel.searchQuery.value.isEmpty()) {
+                        true -> viewModel.getSavedListByOrder(order)
+                        false -> viewModel.sortCurrentList(viewModel.sortOrder.value)
+                    }
                 }
             }
 

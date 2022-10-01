@@ -77,9 +77,27 @@ class SavedRecipesViewModel @Inject constructor(
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             delay(500L)
-            searchRecipeUseCase(query, sortOrder.value).collect{
+            searchRecipeUseCase(query, sortOrder.value).collect {
                 _savedRecipes.emit(it)
             }
+        }
+    }
+
+    fun sortCurrentList(sortOrder: SortOrder) = viewModelScope.launch {
+        when (sortOrder) {
+            SortOrder.BY_LIKES -> {
+                val sortedList = _savedRecipes.value.sortedBy { it.aggregateLikes }
+                _savedRecipes.emit(sortedList)
+            }
+            SortOrder.BY_TIME -> {
+                val sortedList = _savedRecipes.value.sortedBy { it.time }
+                _savedRecipes.emit(sortedList)
+            }
+            SortOrder.BY_NAME -> {
+                val sortedList = _savedRecipes.value.sortedBy { it.title }
+                _savedRecipes.emit(sortedList)
+            }
+            SortOrder.NONE -> Unit
         }
     }
 
