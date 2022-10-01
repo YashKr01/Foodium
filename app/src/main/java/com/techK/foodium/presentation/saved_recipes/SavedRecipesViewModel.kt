@@ -4,14 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.techK.foodium.domain.entities.Recipe
 import com.techK.foodium.domain.enums.SortOrder
-import com.techK.foodium.domain.usecases.database.DeleteAllRecipesUseCase
-import com.techK.foodium.domain.usecases.database.DeleteRecipeUseCase
-import com.techK.foodium.domain.usecases.database.GetRecipesByOrderUseCase
-import com.techK.foodium.domain.usecases.database.SaveRecipeUseCase
+import com.techK.foodium.domain.usecases.database.*
 import com.techK.foodium.domain.usecases.datastore.GetSortOrderUserCase
 import com.techK.foodium.domain.usecases.datastore.SetRefreshQueryUseCase
 import com.techK.foodium.domain.usecases.datastore.SetSortOrderUserCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -26,6 +25,7 @@ class SavedRecipesViewModel @Inject constructor(
     private val setRefreshQueryUseCase: SetRefreshQueryUseCase,
     private val setSortOrderUserCase: SetSortOrderUserCase,
     private val saveRecipeUseCase: SaveRecipeUseCase,
+    private val searchRecipeUseCase: SearchRecipeUseCase,
 ) : ViewModel() {
 
     private val _sortOrder = MutableStateFlow(SortOrder.NONE)
@@ -33,6 +33,9 @@ class SavedRecipesViewModel @Inject constructor(
 
     private val _savedRecipes = MutableStateFlow<List<Recipe>>(emptyList())
     val savedRecipes get() = _savedRecipes.asStateFlow()
+
+    val searchQuery = MutableStateFlow("")
+    private var searchJob: Job? = null
 
     init {
         getSortOrder()
@@ -68,6 +71,16 @@ class SavedRecipesViewModel @Inject constructor(
 
     fun saveRecipe(recipe: Recipe) = viewModelScope.launch {
         saveRecipeUseCase(recipe)
+    }
+
+    fun searchRecipe(query: String) = viewModelScope.launch {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            delay(500L)
+            searchRecipeUseCase(query, sortOrder.value).collect{
+                _savedRecipes.emit(it)
+            }
+        }
     }
 
 }

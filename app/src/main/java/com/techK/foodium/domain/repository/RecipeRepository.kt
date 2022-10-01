@@ -27,6 +27,8 @@ interface RecipeRepository {
     suspend fun deleteRecipe(recipe: Recipe)
 
     suspend fun deleteAllRecipes()
+
+    suspend fun searchRecipe(query: String, sortOrder: SortOrder): Flow<List<Recipe>>
     // endregion
 
     // region:: API Responses

@@ -10,13 +10,14 @@ import kotlinx.coroutines.flow.emptyFlow
 interface RecipeDao {
 
     @Query("SELECT * FROM recipes")
-    fun getSavedRecipesByOrder(sortOrder: SortOrder): Flow<List<Recipe>> =
-        when (sortOrder) {
+    fun getSavedRecipesByOrder(sortOrder: SortOrder): Flow<List<Recipe>> {
+        return when (sortOrder) {
             SortOrder.BY_NAME -> sortSavedRecipesByName()
             SortOrder.BY_LIKES -> sortSavedRecipesByLikes()
             SortOrder.BY_TIME -> sortSavedRecipesByTime()
             SortOrder.NONE -> emptyFlow()
         }
+    }
 
     @Query("SELECT * FROM recipes")
     fun getSavedRecipes(): Flow<List<Recipe>>
@@ -38,5 +39,23 @@ interface RecipeDao {
 
     @Query("DELETE FROM recipes")
     suspend fun deleteAllRecipes()
+
+    fun searchRecipe(query: String, sortOrder: SortOrder): Flow<List<Recipe>> {
+        return when (sortOrder) {
+            SortOrder.BY_NAME -> searchRecipeByName(query)
+            SortOrder.BY_TIME -> searchRecipeByTime(query)
+            SortOrder.BY_LIKES -> searchRecipeByLikes(query)
+            SortOrder.NONE -> emptyFlow()
+        }
+    }
+
+    @Query("SELECT * FROM recipes WHERE LOWER(title) LIKE '%' || LOWER(:query) || '%' OR UPPER(:query) == summary ORDER BY title ASC")
+    fun searchRecipeByName(query: String): Flow<List<Recipe>>
+
+    @Query("SELECT * FROM recipes WHERE LOWER(title) LIKE '%' || LOWER(:query) || '%' OR UPPER(:query) == summary ORDER BY time ASC")
+    fun searchRecipeByTime(query: String): Flow<List<Recipe>>
+
+    @Query("SELECT * FROM recipes WHERE LOWER(title) LIKE '%' || LOWER(:query) || '%' OR UPPER(:query) == summary ORDER BY aggregateLikes ASC")
+    fun searchRecipeByLikes(query: String): Flow<List<Recipe>>
 
 }

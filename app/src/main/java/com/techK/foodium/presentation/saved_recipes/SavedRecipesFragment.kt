@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -21,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class SavedRecipesFragment : BaseFragment() {
+class SavedRecipesFragment : BaseFragment(), SearchView.OnQueryTextListener {
 
     private var _binding: FragmentSavedRecipesBinding? = null
     private val binding get() = _binding!!
@@ -52,6 +53,17 @@ class SavedRecipesFragment : BaseFragment() {
                     viewModel.getSavedListByOrder(order)
                 }
             }
+
+            val searchItem = menu.findItem(R.id.search)
+            val searchView = searchItem.actionView as? SearchView
+            if (viewModel.searchQuery.value.isNotEmpty()) {
+                searchItem.expandActionView()
+                searchView?.isActivated = true
+                searchView?.onActionViewExpanded()
+                searchView?.setQuery(viewModel.searchQuery.value, false)
+            }
+            searchView?.setOnQueryTextListener(this@SavedRecipesFragment)
+
         }
 
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -131,6 +143,21 @@ class SavedRecipesFragment : BaseFragment() {
 
     private fun checkMenuItem(menu: Menu, id: Int) {
         menu.findItem(id).isChecked = true
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        when (newText.isNullOrEmpty()) {
+            true -> viewModel.getSavedListByOrder(viewModel.sortOrder.value)
+            false -> {
+                viewModel.searchQuery.value = newText
+                viewModel.searchRecipe(newText)
+            }
+        }
+        return true
     }
 
     override fun onDestroyView() {

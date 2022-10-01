@@ -55,6 +55,11 @@ class RecipeRepositoryImpl @Inject constructor(
     override suspend fun getRecipesByOrder(sortOrder: SortOrder): Flow<List<Recipe>> {
         return dao.getSavedRecipesByOrder(sortOrder)
     }
+
+    override suspend fun searchRecipe(query: String, sortOrder: SortOrder): Flow<List<Recipe>> {
+        return dao.searchRecipe(query, sortOrder)
+    }
+
     // endregion
 
     // region:: API
