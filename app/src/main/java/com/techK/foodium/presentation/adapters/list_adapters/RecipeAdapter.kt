@@ -22,11 +22,11 @@ class RecipeAdapter(
                 val recipe = getItem(position)
                 if (recipe != null) onRecipeClick(recipe)
             },
-            saveRecipe = {position ->
+            saveRecipe = { position ->
                 val recipe = getItem(position)
                 if (recipe != null) saveRecipe(recipe)
             },
-            deleteRecipe = {position ->
+            deleteRecipe = { position ->
                 val recipe = getItem(position)
                 if (recipe != null) deleteRecipe(recipe)
             }
@@ -63,12 +63,15 @@ class RecipeAdapter(
                 imgSave.setOnClickListener {
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
-                        if (item.saved) {
-                            deleteRecipe(position)
-                            imgSave.setImageResource(R.drawable.ic_favorite_hollow)
-                        } else {
-                            saveRecipe(position)
-                            imgSave.setImageResource(R.drawable.ic_favorite_solid)
+                        when (item.saved) {
+                            true -> {
+                                deleteRecipe(position)
+                                imgSave.setImageResource(R.drawable.ic_favorite_hollow)
+                            }
+                            false -> {
+                                saveRecipe(position)
+                                imgSave.setImageResource(R.drawable.ic_favorite_solid)
+                            }
                         }
                         item.saved = !item.saved
                     }

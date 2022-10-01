@@ -34,12 +34,16 @@ class IngredientAdapter :
             override fun areItemsTheSame(
                 oldItem: ExtendedIngredient,
                 newItem: ExtendedIngredient,
-            ) = oldItem.id == newItem.id
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
 
             override fun areContentsTheSame(
                 oldItem: ExtendedIngredient,
                 newItem: ExtendedIngredient,
-            ) = oldItem == newItem
+            ): Boolean {
+                return oldItem == newItem
+            }
 
         }
 
