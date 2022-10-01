@@ -111,4 +111,8 @@ class HomeViewModel @Inject constructor(
         _event.send(HomeEvent.NavigateToDetailsScreen(recipe))
     }
 
+    fun onTabClick(category: Category) = viewModelScope.launch {
+        _event.send(HomeEvent.SearchRecipes(category))
+    }
+
 }

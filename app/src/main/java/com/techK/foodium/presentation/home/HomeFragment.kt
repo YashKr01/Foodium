@@ -93,6 +93,7 @@ class HomeFragment : BaseFragment() {
                 when (event) {
                     is HomeEvent.ShowRecipeDeletedMessage -> showSnackBar(true)
                     is HomeEvent.ShowRecipeSavedMessage -> showSnackBar(false)
+                    is HomeEvent.SearchRecipes -> viewModel.searchRecipe(event.category)
                     is HomeEvent.NavigateToDetailsScreen -> findNavController().navigate(
                         HomeFragmentDirections.actionHomeFragmentToRecipeDetailsActivity(event.recipe)
                     )
@@ -109,7 +110,7 @@ class HomeFragment : BaseFragment() {
             onCategoryClick = { category, position ->
                 viewModel.setSelectedPosition(position)
                 viewModel.setSelectedQuery(category)
-                viewModel.searchRecipe(category)
+                viewModel.onTabClick(category)
             }
         )
 
