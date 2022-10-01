@@ -50,7 +50,8 @@ class SavedRecipesFragment : BaseFragment(), SearchView.OnQueryTextListener {
                         SortOrder.BY_TIME -> checkMenuItem(menu, R.id.menu_sort_by_time)
                         SortOrder.NONE -> Unit
                     }
-                    viewModel.getSavedListByOrder(order)
+                    if (viewModel.searchQuery.value.isEmpty())
+                        viewModel.getSavedListByOrder(order)
                 }
             }
 
@@ -61,6 +62,10 @@ class SavedRecipesFragment : BaseFragment(), SearchView.OnQueryTextListener {
                 searchView?.isActivated = true
                 searchView?.onActionViewExpanded()
                 searchView?.setQuery(viewModel.searchQuery.value, false)
+            }
+            searchView?.setOnCloseListener {
+                viewModel.searchQuery.value = ""
+                false
             }
             searchView?.setOnQueryTextListener(this@SavedRecipesFragment)
 
@@ -146,12 +151,15 @@ class SavedRecipesFragment : BaseFragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        return true
+        return false
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
         when (newText.isNullOrEmpty()) {
-            true -> viewModel.getSavedListByOrder(viewModel.sortOrder.value)
+            true -> {
+                viewModel.searchQuery.value = ""
+                viewModel.getSavedListByOrder(viewModel.sortOrder.value)
+            }
             false -> {
                 viewModel.searchQuery.value = newText
                 viewModel.searchRecipe(newText)
